@@ -29,6 +29,12 @@ export default defineUserConfig({
         children: getChildren("./docs/workflows"),
       },
       {
+        text: "Dashboard Components",
+        link: "/dashboard-components/",
+        collapsable: false,
+        children: getChildren("./docs/dashboard-components"),
+      },
+      {
         text: "Cloud Functions",
         link: "/cloud-functions/",
         collapsable: false,
