@@ -6,6 +6,7 @@ import getChildren from "./childPageScript.js";
 
 export default defineUserConfig({
   lang: "en-US",
+  base: "roar-docs",
 
   title: "ROAR Developer Documentation",
   description: "ROAR Developer Documentation",
