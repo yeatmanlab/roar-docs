@@ -1,10 +1,11 @@
 const { description } = require("../../package");
+var getChildren = require("./childPageScript.js");
 
 module.exports = {
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
-  title: "Vuepress Docs Boilerplate",
+  title: "ROAR Project Documentation",
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#description
    */
@@ -51,44 +52,20 @@ module.exports = {
     ],
     sidebar: [
       {
-        title: "Guide",
-        path: "/guide/",
-        children: ["/guide/", "/guide/using-vue"],
-      },
-      {
-        title: "Config",
-        path: "/config/",
-        children: ["/config/"],
-      },
-      {
         title: "Databases",
         path: "/databases/",
-        children: ["/databases/", "/databases/admin"],
+        children: getChildren("./src/databases"),
       },
       {
         title: "Workflows",
         path: "/workflow/",
-        children: [
-          "/workflow/",
-          "/workflow/assignment-creation",
-          "/workflow/authentication",
-          "/workflow/creating-users",
-        ],
+        children: getChildren("./src/workflow"),
       },
-      // "/guide/": [
-      //   {
-      //     title: "Guide",
-      //     collapsable: false,
-      //     children: ["", "using-vue"],
-      //   },
-      // ],
-      // "/config/": [
-      //   {
-      //     title: "Config",
-      //     collapsable: true,
-      //     children: [""],
-      //   },
-      // ],
+      {
+        title: "Cloud Functions",
+        path: "/cloud-functions/",
+        children: getChildren("./src/cloud-functions"),
+      },
     ],
   },
 

@@ -23,7 +23,7 @@ tags: Array of metadata tags for this administration
 administrationId: Optional ID of an existing administration. If provided, this function will update an existing administration.
 ```
 
-This function will create a new administration document in the `/administrations/` collection in the [Admin Database](/databases/admin). The fields `createdBy` and `dateCreated` will be populated automatically with the calling user's roarUid and the current date respectivly. Other feilds will be filled in with the given values from the function's input.
+This function will create a new administration document in the `/administrations/` collection in the [Admin Database](/databases/admin). The fields `createdBy` and `dateCreated` will be populated automatically with the calling user's roarUid and the current date respectively. Other feilds will be filled in with the given values from the function's input.
 
 When the `administrationId` is provided, this function will update an existing administration document matching the id.
 
@@ -31,4 +31,11 @@ When the `administrationId` is provided, this function will update an existing a
 An administration that is already in progress is unable to be edited.
 :::
 
-## Assignment
+## Assignment to Participants
+
+Assignments are assigned to users via organizations. When an administration is created, it will be assigned to all users in the organizations that are specified. They are assigned exaustively. For example, if a student belongs to a school with a parent district, administrations assigned to that parent district will also be assigned to that student.
+
+Administration: A master copy of an administration. This stores information about administration specifics such as parameters for variants, assigned organizations, group level statistics, et cetera.
+Assignment: A local copy of an adminstration, specific to each user. Assignments are stored in individual user's subcollection `/user/{userId}/assignments/{administrationId}`. Refers to information about the individual student's progress, runIds, et cetera.
+
+This assignment is handled automatically by the firekit functions `syncAssignmentsOnAdministrationUpdate`, `syncAssignmentsOnUserUpdate`, and `syncAssignmentsCreated`.
