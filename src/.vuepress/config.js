@@ -54,16 +54,19 @@ module.exports = {
       {
         title: "Databases",
         path: "/databases/",
+        collapsable: false,
         children: getChildren("./src/databases"),
       },
       {
         title: "Workflows",
         path: "/workflow/",
+        collapsable: false,
         children: getChildren("./src/workflow"),
       },
       {
         title: "Cloud Functions",
         path: "/cloud-functions/",
+        collapsable: false,
         children: getChildren("./src/cloud-functions"),
       },
     ],
