@@ -2,4 +2,4 @@
 
 Hosted on: Admin Firebase Project
 
-Trigger:
+Trigger: HTTPs Callable
