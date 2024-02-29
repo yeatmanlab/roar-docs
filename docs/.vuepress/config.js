@@ -9,12 +9,12 @@ export default defineUserConfig({
   base: "roar-docs",
 
   title: "ROAR Developer Documentation",
-  description: "ROAR Developer Documentation",
+  description: "Documentation for ROAR Developers",
 
   theme: defaultTheme({
     logo: "https://vuejs.press/images/hero.png",
 
-    navbar: ["/", "/databases/", "/workflow/", "/cloud-functions/"],
+    navbar: ["/databases/", "/workflow/", "/cloud-functions/"],
     sidebar: [
       {
         text: "Databases",
@@ -24,9 +24,9 @@ export default defineUserConfig({
       },
       {
         text: "Workflows",
-        link: "/workflow/",
+        link: "/workflows/",
         collapsable: false,
-        children: getChildren("./docs/workflow"),
+        children: getChildren("./docs/workflows"),
       },
       {
         text: "Cloud Functions",
