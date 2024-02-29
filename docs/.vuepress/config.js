@@ -33,6 +33,12 @@ export default defineUserConfig({
         collapsable: false,
         children: getChildren("./docs/cloud-functions"),
       },
+      {
+        text: "Internationalization",
+        link: "/internationalization/",
+        collapsable: false,
+        children: getChildren("./docs/internationalization"),
+      },
     ],
   }),
 
