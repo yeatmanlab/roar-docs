@@ -305,6 +305,6 @@ For testing an specific language we will have to include `/?lng=language`. For e
 
 Roar-sentence has an specific consent form only for english, when adding a new language, we must specify: `consent=false`.
 
-To access the differnt languages, we will have to include the parameters to the link, For example for English no story should be `https://link-testing-or-localhost/?lng=en&consent=false`.
+To access the different languages, we will have to include the parameters to the link, For example for English no story should be `https://link-testing-or-localhost/?lng=en&consent=false`.
 
 Additionally, Roar-sentence is adapted to three different devices with have to be tested: **Desktop** and **Tablet**.
