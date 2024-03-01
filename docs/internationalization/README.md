@@ -18,7 +18,7 @@ ROAR-Sentence is designed to enhance sentence reading efficiency.
 
 ---
 
-### ROAR-Letter: ROAR-Alphabet
+### ROAR-Letter:
 ROAR-Letter targets alphabet learning.
 
 - [Internationalize ROAR-Letter](Letter.md)
