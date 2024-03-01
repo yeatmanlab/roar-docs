@@ -1,4 +1,4 @@
-# 1. ROAR Word
+# ROAR Word
 ## Translation Guide for ROAR Word
 
 #### 1. Introduction
