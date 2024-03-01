@@ -191,4 +191,4 @@ For testing an specific language we will have to include `/?lng=language`. For e
 
 To access the different languages, we will have to include the parameters to the link, For example for English no story should be `https://link-testing-or-localhost/?lng=en`.
 
-Additionally, Roar-letter is adapted to three different devices with have to be tested: **Desktop** and **Tablet**.
+Additionally, Roar-letter is adapted to two different devices with have to be tested: **Desktop** and **Tablet**.
