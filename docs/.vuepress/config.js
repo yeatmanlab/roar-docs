@@ -6,20 +6,14 @@ import getChildren from "./childPageScript.js";
 
 export default defineUserConfig({
   lang: "en-US",
+  base: "roar-docs",
 
   title: "ROAR Developer Documentation",
-  description: "ROAR Developer Documentation",
+  description: "Documentation for ROAR Developers",
 
   theme: defaultTheme({
     logo: "https://vuejs.press/images/hero.png",
-
-    navbar: [
-      "/",
-      "/databases/",
-      "/workflow/",
-      "/cloud-functions/",
-      "/internationalization/",
-    ],
+    navbar: ["/databases/", "/workflow/", "/cloud-functions/","/internationalization/"],
     sidebar: [
       {
         text: "Databases",
@@ -29,9 +23,15 @@ export default defineUserConfig({
       },
       {
         text: "Workflows",
-        link: "/workflow/",
+        link: "/workflows/",
         collapsable: false,
-        children: getChildren("./docs/workflow"),
+        children: getChildren("./docs/workflows"),
+      },
+      {
+        text: "Dashboard Components",
+        link: "/dashboard-components/",
+        collapsable: false,
+        children: getChildren("./docs/dashboard-components"),
       },
       {
         text: "Cloud Functions",
