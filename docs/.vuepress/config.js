@@ -13,8 +13,7 @@ export default defineUserConfig({
 
   theme: defaultTheme({
     logo: "https://vuejs.press/images/hero.png",
-
-    navbar: ["/databases/", "/workflow/", "/cloud-functions/"],
+    navbar: ["/databases/", "/workflow/", "/cloud-functions/","/internationalization/"],
     sidebar: [
       {
         text: "Databases",
@@ -39,6 +38,12 @@ export default defineUserConfig({
         link: "/cloud-functions/",
         collapsable: false,
         children: getChildren("./docs/cloud-functions"),
+      },
+      {
+        text: "Internationalization",
+        link: "/internationalization/",
+        collapsable: false,
+        children: getChildren("./docs/internationalization"),
       },
     ],
   }),

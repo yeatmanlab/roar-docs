@@ -11,6 +11,9 @@ actions:
   - text: Workflows
     link: /workflows/
     type: secondary
+  - text: Internationalization
+    link: /internationalization/
+    type: secondary
 ---
 
 This project is intended to provide documentation for developers of the ROAR Project. Developers wanting to contribute to the docs should send a pull request to the project [GitHub repository](https://github.com/yeatmanlab/roar-docs).
