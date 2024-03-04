@@ -9,7 +9,7 @@ Welcome to the ROAR-Sentence Translation Guide — your comprehensive companion 
 
 - **Internationalization Setup:** Dive into the setup of internationalization using i18next. Discover the process of adding new translations as the app evolves, fostering continuous improvement and expansion into diverse linguistic landscapes.
 
-- **Asset Management:** Collaborate with partners to ensure all required assets from both `assets.json` and `webpAssets.json` are provided. Add the provided assets to Google Buckets. This section also details the importance of proper asset naming and organization.
+- **Asset Management:** Collaborate with partners to ensure all required assets from `assets.json` are provided. Add the provided assets to Google Buckets. This section also details the importance of proper asset naming and organization.
 
 - **Collaboration:** Clearly state the expectations from partners regarding the provision of wordlist corpus files, translation files, and assets.
 
@@ -139,7 +139,6 @@ else {
         aiV1P1: sentenceList[i18next.language].corpusAIV1P1,
         aiV1P2: sentenceList[i18next.language].corpusAIV1P2,
         aiV2Testset: sentenceList[i18next.language].corpusAIV2Testset,
-        tosrec: [],
   };
 }
 ```
@@ -168,14 +167,6 @@ const generateLanguageSpecificCorpus = (csvAssets) => {
       aiV1P1: transformCSVlab(csvAssets.aiV1P1),
       aiV1P2: transformCSVlab(csvAssets.aiV1P2),
       aiV2: formParallelTestForm(transformCSVtestset(csvAssets.aiV2Testset), 50, 5),
-      tosrec1: transformCSVt(csvAssets.tosrec1),
-      tosrec2: transformCSVt(csvAssets.tosrec2),
-      tosrec3: transformCSVt(csvAssets.tosrec3),
-      tosrec4: transformCSVt(csvAssets.tosrec4),
-      tosrec5: transformCSVt(csvAssets.tosrec5),
-      tosrec6: transformCSVt(csvAssets.tosrec6),
-      tosrec7: transformCSVt(csvAssets.tosrec7),
-      tosrec8: transformCSVt(csvAssets.tosrec8),
     };
 
 };
@@ -290,8 +281,8 @@ const feedbackTranslations = {
 
 #### 4. Asset Management
 
-##### 4.1. `assets.json` and `webpAssets.json`
-- Collaborate with partners to ensure all required assets from both  both `assets.json` and `webpAssets.json` are provided.
+##### 4.1. `assets.json`
+- Collaborate with partners to ensure all required assets from `assets.json` are provided.
 - Add the provided assets to google buckets.
 
 ##### 4.2. Google Buckets

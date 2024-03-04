@@ -9,7 +9,7 @@ Welcome to the ROAR-Word Translation Guide — your comprehensive companion for 
 
 - **Internationalization Setup:** Dive into the setup of internationalization using i18next. Discover the process of adding new translations as the app evolves, fostering continuous improvement and expansion into diverse linguistic landscapes.
 
-- **Asset Management:** Collaborate with partners to ensure all required assets from both `assets.json` and `webpAssets.json` are provided. Add the provided assets to Google Buckets. This section also details the importance of proper asset naming and organization.
+- **Asset Management:** Collaborate with partners to ensure all required assets from `assets.json` are provided. Add the provided assets to Google Buckets. This section also details the importance of proper asset naming and organization.
 
 - **Collaboration:** Clearly state the expectations from partners regarding the provision of wordlist corpus files, translation files, and assets.
 
@@ -156,8 +156,8 @@ Make sure to integrate these code snippets into your app's structure, adapting t
 
 #### 3. Asset Management
 
-##### 3.1. `assets.json` and `webpAssets.json`
-- Collaborate with partners to ensure all required assets from both  both `assets.json` and `webpAssets.json` are provided.
+##### 3.1. `assets.json`
+- Collaborate with partners to ensure all required assets from `assets.json` are provided.
 - Add the provided assets to google buckets.
 
 ##### 3.2. Google Buckets
