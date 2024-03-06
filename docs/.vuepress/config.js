@@ -14,8 +14,16 @@ export default defineUserConfig({
   theme: defaultTheme({
     logo: "https://vuejs.press/images/hero.png",
 
-    navbar: ["/databases/", "/workflow/", "/cloud-functions/"],
+    navbar: ["/databases/", "/workflows/", "/cloud-functions/"],
     sidebar: [
+      {
+        text: "Introduction",
+        link: "/",
+      },
+      {
+        text: "Contributing",
+        link: "/contribute.md",
+      },
       {
         text: "Databases",
         link: "/databases/",
