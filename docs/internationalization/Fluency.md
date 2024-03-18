@@ -6,10 +6,10 @@
 Welcome to the ROAM-Fluency Translation Guide — your comprehensive companion for making ROAM-Fluency accessible to a global audience. As we strive to break language barriers and reach learners worldwide, this guide outlines the steps to seamlessly integrate translations into the app. ROAM-Fluency includes two tasks:
 
 1. ROAM Fluency-ARF or ROAM Single-Digit
-2. ROAM FLuency-CalF or ROAM Multi-Digit
+2. ROAM Fluency-CalF or ROAM Multi-Digit
 
 **What This Guide Covers:**
-- **Folder Structure:** Learn how to organize word corpora and translation files within the app's directory.
+- **Folder Structure:** Learn how to organize the translation files within the app's directory.
 
 - **Internationalization Setup:** Dive into the setup of internationalization using i18next. Discover the process of adding new translations as the app evolves, fostering continuous improvement and expansion into diverse linguistic landscapes.
 
@@ -22,7 +22,6 @@ Welcome to the ROAM-Fluency Translation Guide — your comprehensive companion f
 
 #### 2. Folder Structure
 
-##### 2.1. Translation Items
 Create a new folder under `src/i18n/locales` for each language, using the initials of the language. Inside each language folder, include a file named `translation.json`. Ensure that all languages follow the same structure in their translation files. Collaborate with partners to obtain and maintain translation content.
 
 Example:
@@ -39,8 +38,6 @@ src/
 
 
 #### 3. Internationalization Setup
-
-#### 3.1. File `src/i18n/i18n.js`
 
 On `i18n.js`, import all the files from the **translation items**. For example `import enTranslations from '../locales/en/translation.json';`
 Inside the file you will find the initialization of i18next and language detection. 
@@ -104,6 +101,7 @@ Roam-fluency has a specific consent form only for english, when adding a new lan
 
 Roam-fluency asks for participant ID only in english if recruitment is not equal to 'school' and a PID is not provided. To prevent this when adding a new language we must specify a PID as `pid=xxx` or recruitment as `recruitment=school`.
 
-To access the different languages, we will have to include the parameters to the link, For example for English it would be `https://link-testing-or-localhost/?lng=en&consent=false&recruitment=school`.
+To access the different languages, we will have to include the parameters to the link, For example for English it would be:  
+`https://link-testing-or-localhost/?lng=en&consent=false&recruitment=school`.
 
 Additionally, Roam-fluency is adapted only to **Desktop** devices.
