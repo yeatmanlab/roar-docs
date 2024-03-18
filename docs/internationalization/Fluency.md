@@ -22,31 +22,7 @@ Welcome to the ROAM-Fluency Translation Guide — your comprehensive companion f
 
 #### 2. Folder Structure
 
-##### 2.1. Stimuli
-Stimuli are assumed to be language invariant. The stimuli can be found within the Google Bucket `roam-fluency` under the respective task folders.
-
-```
-roam-fluency/
-├─ shared/          // Shared files
-|   ├─ corpora/         
-|       ├─ arf
-|           ├─ items-all.csv
-|           ├─ items-order.csv
-|           ├─ items-practice.csv
-|       ├─ calf
-|           ├─ items-all.csv
-|           ├─ items-order.csv
-|           ├─ items-practice.csv
-```
-
- Each task consists of three files:
- * items-all.csv: Consists of all possible items of four operations. Each item is binned to a specific difficulty level.
- * items-order.csv: Specifies the order in which items are presented based on a preset item difficulty.
- * items-practice.csv: Specifies practice items.
-
-
-
-##### 2.2. Translation Items
+##### 2.1. Translation Items
 Create a new folder under `src/i18n/locales` for each language, using the initials of the language. Inside each language folder, include a file named `translation.json`. Ensure that all languages follow the same structure in their translation files. Collaborate with partners to obtain and maintain translation content.
 
 Example:
@@ -64,11 +40,10 @@ src/
 
 #### 3. Internationalization Setup
 
-#### 3.1. File `src/experiment/i18n.js`
+#### 3.1. File `src/i18n/i18n.js`
 
-On `i18n.js`, import all the files from the **corpus** and **translation items**. For example `import enTranslations from '../locales/en/translation.json';`
+On `i18n.js`, import all the files from the **translation items**. For example `import enTranslations from '../locales/en/translation.json';`
 Inside the file you will find the initialization of i18next and language detection. 
-You must include all `stimuli` items on `letters` to manage different language corpora.
 
 The following code represents the `i18n.js` file with comments on where to add files and define other languages:
 
@@ -76,52 +51,22 @@ The following code represents the `i18n.js` file with comments on where to add f
 // Import the necessary modules and functions
 import i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-
-// Import all your corpus files
-
-// Define the wordlist object for managing URLs
-export const letters = {
-  en: {
-    letterNameLower: enLetterNameLower,
-    letterNameUpper: enLetterNameUpper,
-    letterNamePractice: enLetterNamePractice,
-    letterPhoneme: enLetterPhoneme,
-    letterPhonemePractice: enLetterPhonemePractice,
-    letterTextSoundPseudo: enLetterTextSoundPseudo,
-    storyLion: enStoryLion,
-    storyPhonics: enStoryPhonics,
-    practicePhonics: enPracticePhonics,
-  },
-  es: {
-    letterNameLower: esLetterNameLower,
-    letterNameUpper: esLetterNameUpper,
-    letterNamePractice: esLetterNamePractice,
-    letterPhoneme: esLetterPhoneme,
-    letterPhonemePractice: esLetterPhonemePractice,
-    storyLion: esStoryLion,
-  },
-  it: {
-    letterNameLower: '',
-    letterNameUpper: '',
-    letterNamePractice: '',
-    letterPhoneme: '',
-    letterPhonemePractice: '',
-    storyLion: '',
-    storyTextSoundPseudo: '',
-  },
-  // add additional languages
-};
+import enTranslations from "./locales/en/translation.json"; 
+import esTranslations from "./locales/es/translation.json"; 
+import itTranslations from "./locales/it/translation.json"; 
+// add additional language
 
 // Set up i18next
 i18next
   .use(LanguageDetector)
-  .on('languageChanged', processCSV)
+  // .on('initialized', handleLanguageDetection)
   .init({
     debug: false,
-    load: 'languageOnly',
-    fallbackLng: 'en',
+    // which langauage codes to use. Ex. if 'en-US' detected, will use 'en'
+    load: "languageOnly",
+    fallbackLng: "en",
     detection: {
-      order: ['defaultToEnglish', 'querystring'],
+      order: ["defaultToEnglish", "querystring"],
     },
     resources: {
       en: {
@@ -136,42 +81,29 @@ i18next
       // add additional language
     },
   });
-
-
 ```
 
-#### 3.2. File `src/experiment/experimentSetup.js`
+### 4. Asset Management
 
-In this file, the assets will be loaded accordingly to the files in each language
+##### 4.1. `tasks/fluency/assets.json`
+- Collaborate with partners to ensure all required assets from `assets.json` are provided.
+- Add the provided assets to google buckets.
+- Only the assets listed under `languageSpecific` within `assets.json` need to be generated.
 
-```javascript
-// define the csv corpus files that will be loaded for adding assets
-function getFiles(){
-  let files = [];
-  if (i18next.language === 'es') {
-    files = [
-      esLetterNameLower,
-      esLetterNamePractice,
-      esLetterNameUpper, 
-      esLetterPhoneme, 
-      esLetterPhonemePractice,
-      esStoryLion,
-    ];
-  } // add additional languages
-  else {
-    files = [enLetterNameLower,
-      enLetterNamePractice,
-      enLetterNameUpper, 
-      enLetterPhoneme, 
-      enLetterPhonemePractice,
-      enLetterTextSoundPseudo,
-      enStoryLion,
-      enStoryPhonics,
-      enPracticePhonics
-    ];
-  }
-  return files;
-}
-```
+##### 4.2. Google Buckets
+- Follow the English folder setup in the Google bucket to load the provided assets for each language. The bucket name is `roam-fluency`.
+- Note that this bucket contains assets and corpora for multiple math tasks, so refer to the respective `assets.json` for uploading the required files.
 
-Make sure to integrate these code snippets into your app's structure, adapting them as needed for any additional languages or specific requirements.
+#### 5. Collaboration
+Clearly state the expectations from partners regarding the provision of corpus files, translation files, and assets.
+
+#### 6. Testing
+For testing a specific language we will have to include `/?lng=language`. For example for English, we will use `/?lng=en`.
+
+Roam-fluency has a specific consent form only for english, when adding a new language, we must specify: `consent=false`.
+
+Roam-fluency asks for participant ID only in english if recruitment is not equal to 'school' and a PID is not provided. To prevent this when adding a new language we must specify a PID as `pid=xxx` or recruitment as `recruitment=school`.
+
+To access the different languages, we will have to include the parameters to the link, For example for English it would be `https://link-testing-or-localhost/?lng=en&consent=false&recruitment=school`.
+
+Additionally, Roam-fluency is adapted only to **Desktop** devices.
