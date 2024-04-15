@@ -9,7 +9,7 @@ export default defineUserConfig({
   base: "roar-docs",
 
   title: "ROAR Developer Documentation",
-  description: "Documentation for ROAR Developers",
+  description: "Documentation for developers working in ROAR - Rapid Online Assessment of Reading.",
 
   theme: defaultTheme({
     logo: "https://vuejs.press/images/hero.png",

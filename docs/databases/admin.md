@@ -2,13 +2,17 @@
 sidebarDepth: 3
 ---
 
-# Admin Database
+# gse-roar-admin
+
+## **Admin Database**
 
 The admin database is a NoSQL database hosted by Google's Cloud Firestore. This database keeps
 information regarding administrations, organizations, and identifiable information for all users.
 The database is organized into collections of documents. Each document is able to have a subcollection,
 which itself is a collection of documents. Below is a schema for the structure of the database, as well
 as expected fields in each document. A '?' appended to the field name denotes an optional field.
+
+The admin database (`gse-roar-admin`)  is crucial for managing information about administrations, organizations, users, and legal compliance across various educational entities involved in the project.
 
 ## Information stored
 
@@ -25,367 +29,390 @@ as expected fields in each document. A '?' appended to the field name denotes an
   - User run information
   - User claims information
 
+## **Database Schema Documentation**
+
+### **/administrations/**
+- **Purpose**: Stores metadata about each administration including the sequence of tasks, involved organizations, and visibility control.
+- **Fields**:
+  - `name`: Name of the administration.
+  - `createdBy`: User ID of the person who created the administration.
+  - `sequential`: Indicates if tasks are to be played in a specific order.
+  - `assessments`: Array of tasks and their parameters.
+  - `districts`, `schools`, `classes`, `groups`, `families`: Lists of IDs representing organizational involvement.
+  - `readOrgs`: Defines which organizations have read access to the administration data.
+  - `dateCreated`, `dateOpened`, `dateClosed`: Timestamps marking the administration lifecycle.
+
+### **/districts/**
+- **Purpose**: Manages information about districts, including associated schools and optional details such as contact and sync information.
+- **Fields**:
+  - `name`, `abbreviation`, `id`: Basic identity and optional abbreviation.
+  - `schools`: List of associated school IDs.
+  - `clever`, `districtContact`, `lastSync`, `launchDate`, `loginMethods`, `portalUrl`, `sisType`: Optional fields primarily for districts integrating with external systems like Clever.
+
+### **/schools/**
+- **Purpose**: Contains data about schools, including their districts and optional location details.
+- **Fields**:
+  - `name`, `abbreviation`, `districtId`: Essential identifiers.
+  - `classes`: List of associated class IDs.
+  - `location`, `lowGrade`, `highGrade`, `mdrNumber`, `ncesId`, `phone`, `principal`, `schoolNumber`, `stateId`: Optional detailed information.
+
+### **/classes/**
+- **Purpose**: Details about classes, including school affiliation and optional educational details.
+- **Fields**:
+  - `name`, `districtId`, `grade`, `schoolId`, `schoolLevel`: Core class identifiers.
+  - `created`, `lastModified`, `subject`, `tags`, `clever`, `sectionId`: Optional attributes for further classification and integration.
+
+### **/groups/**
+- **Purpose**: Manages group data, potentially representing subgroups within other organizational units.
+- **Fields**:
+  - `name`, `abbreviation`: Basic identifiers.
+  - `parentOrgType`, `parentOrgId`, `familyId`: Optional fields for hierarchical organization.
+
+### **/families/**
+- **Purpose**: Stores data on family units, useful for organizing user data and permissions.
+- **Fields**:
+  - `name`: Identifier for the family.
+  - `createdAt`, `lastUpdated`: Optional timestamps.
+
+### **/legal/**
+- **Purpose**: Tracks versions of legal documents using GitHub as a reference point.
+- **Fields**:
+  - `currentCommit`, `fileName`, `gitHubOrg`, `gitHubRepository`: Identifiers linking to specific GitHub documents.
+  - `validFrom`: Date from which a version is considered valid.
+
+### **/users/**
+- **Purpose**: Stores comprehensive user data including demographics, assignments, and organizational affiliations.
+- **Fields**: Extensive including demographics, legal compliance, assignment tracking, and organizational history.
+
+### **/userClaims/**
+- **Purpose**: Manages custom claims for users, facilitating access control based on administrative roles or organizational affiliations.
+- **Fields**:
+  - `claims`: Stores administrative and assessment-related UIDs and organizational claims.
+  - `lastUpdated`: Timestamp of the last update.
+
+### **/deleted-users/**
+- **Purpose**: Archives data of users who have been removed from the active users collection.
+- **Fields**: Mirrors `/users/` with adjustments for assignment tracking.
+
+
+
 ## Database Schema
 
-### /administrations/
-
+### /administrations/{administrationId}
 ```json
-/administrations/{administrationId}
 {
-  name: string,
-  createdBy: string, // UserId of administration author
-  sequential: boolean, // Whether tasks should be played in order
-  assessments: [
+  "name": "string",
+  "createdBy": "string",
+  "sequential": true,
+  "assessments": [
     {
-      taskId: string,
-      params: {
-        [x: string]: any
+      "taskId": "string",
+      "params": {
+        "key": "value"
       }
     }
   ],
-  districts: [string],
-  schools: [string],
-  classes: [string],
-  groups: [string],
-  families: [string],
-  readOrgs: { // ReadOrgs is a list of organizations used to determine who can read from this document
-    districts: [string],
-    schools: [string],
-    classes: [string],
-    groups: [string],
-    families: [string],
-  }
-  dateCreated: Date,
-  dateOpened: Date,
-  dateClosed: Date,
+  "districts": ["string"],
+  "schools": ["string"],
+  "classes": ["string"],
+  "groups": ["string"],
+  "families": ["string"],
+  "readOrgs": {
+    "districts": ["string"],
+    "schools": ["string"],
+    "classes": ["string"],
+    "groups": ["string"],
+    "families": ["string"]
+  },
+  "dateCreated": "ISO8601-date-string",
+  "dateOpened": "ISO8601-date-string",
+  "dateClosed": "ISO8601-date-string"
 }
-
 ```
 
+###  /administrations/{administrationId}/stats/completion
 ```json
-/administrations/{administrationId}/stats/completion
 {
-  total: {
-    assignment: {
-      assigned: number,
-      started: number,
-      completed?: number,
+  "total": {
+    "assignment": {
+      "assigned": 0,
+      "started": 0,
+      "completed": 0
     },
-    [taskId]: { // Each task has its own object to track task specific progress
-      assigned: number,
-      started: number,
-      completed?: number,
+    "taskId": {
+      "assigned": 0,
+      "started": 0,
+      "completed": 0
     }
   },
-  [organizationId]: { // Each organization has its own object to track org specific progress
-      assignment: {
-        assigned: number,
-        started: number,
-        completed?: number,
-      },
-      [taskId]: { // Each task has its own object to track task / org specific progress
-        assigned: number,
-        started: number,
-        completed?: number,
-      }
-    }
-}
-```
-
-### /districts/
-
-```json
-/districts/{districtId}
-{
-  name: string
-  schools: [string],
-  abbreviation?: string
-  id?: string, // Matches the document ID.
-  // The following fields are optional and primarily used in districts from Clever.
-  clever?: boolean,
-  districtContact?: {
-    district: string
-    email: string,
-    id: string,
-    name: {
-      first: string,
-      last: string,
+  "organizationId": {
+    "assignment": {
+      "assigned": 0,
+      "started": 0,
+      "completed": 0
     },
-    title: string,
-  },
-  lastSync?: Date,
-  launchDate?: Date,
-  loginMethods?: [string],
-  portalUrl?: string,
-  sisType?: string,
-}
-```
-
-### /schools/
-
-```json
-/schools/{schoolId}
-{
-  name: string
-  abbreviation: string,
-  districtId: string,
-  classes: [string],
-  location?: {
-    address: string,
-    city?: string,
-    state?: string,
-    zip?: string,
-  },
-  lowGrade?: string,
-  highGrade?: string,
-  mdrNumber?: string,
-  ncesId?: string,
-  phone?: string,
-  principal?: {
-    email?: string,
-    name?: string,
+    "taskId": {
+      "assigned": 0,
+      "started": 0,
+      "completed": 0
+    }
   }
-  schoolNumber?: string,
-  stateId?: string,
 }
 ```
 
-### /classes/
-
+### /districts/{districtId}
 ```json
-/classes/{classId}
 {
-  name: string,
-  districtId: string,
-  grade: string,
-  schoolId: string,
-  schoolLevel: string,
-  created?: Date,
-  lastModified?: Date,
-  subject?: string,
-  tags?: [string],
-  clever?: boolean,
-  sectionId?: string,
+  "name": "string",
+  "schools": ["string"],
+  "abbreviation": "string",
+  "id": "string",
+  "clever": true,
+  "districtContact": {
+    "district": "string",
+    "email": "string",
+    "id": "string",
+    "name": {
+      "first": "string",
+      "last": "string"
+    },
+    "title": "string"
+  },
+  "lastSync": "ISO8601-date-string",
+  "launchDate": "ISO8601-date-string",
+  "loginMethods": ["string"],
+  "portalUrl": "string",
+  "sisType": "string"
 }
+
 ```
 
-### /groups/
 
+### /schools/{schoolId}
 ```json
-/groups/{groupId}
 {
-  name: string,
-  abbreviation?: string,
-  // The following fields are optional, but indicate that the group is a sub-group.
-  parentOrgType?: string,
-  parentOrgId?: string,
-  familyId?: string,
+  "name": "string",
+  "abbreviation": "string",
+  "districtId": "string",
+  "classes": ["string"],
+  "location": {
+    "address": "string",
+    "city": "string",
+    "state": "string",
+    "zip": "string"
+  },
+  "lowGrade": "string",
+  "highGrade": "string",
+  "mdrNumber": "string",
+  "ncesId": "string",
+  "phone": "string",
+  "principal": {
+    "email": "string",
+    "name": "string"
+  },
+  "schoolNumber": "string",
+  "stateId": "string"
 }
 ```
 
-### /families/
 
+### /classes/{classId}
 ```json
-/families/{familyId}
 {
-  name: string
-  createdAt?: Date,
-  lastUpdated?: Date,
+  "name": "string",
+  "districtId": "string",
+  "grade": "string",
+  "schoolId": "string",
+  "schoolLevel": "string",
+  "created": "ISO8601-date-string",
+  "lastModified": "ISO8601-date-string",
+  "subject": "string",
+  "tags": ["string"],
+  "clever": true,
+  "sectionId": "string"
 }
 ```
 
-### /legal/
+### /groups/{groupId}
+```json
+{
+  "name": "string",
+  "abbreviation": "string",
+  "parentOrgType": "string",
+  "parentOrgId": "string",
+  "familyId": "string"
+}
+```
+
+### /families/{familyId}
+```json
+{
+  "name": "string",
+  "createdAt": "ISO8601-date-string",
+  "lastUpdated": "ISO8601-date-string"
+}
+```
+
+### /legal/[{assent, consent, tos}]
 
 The legal collection keeps track of which versions of the legal documents are current. For each form (assent, consent, terms of service), we store information to access the github document of the corresponding version.
 
 ```json
-/legal/[{assent, consent, tos}]
 {
-  currentCommit: string,
-  fileName: string,
-  gitHubOrg: string,
-  gitHubRepository: string,
+  "currentCommit": "string",
+  "fileName": "string",
+  "gitHubOrg": "string",
+  "gitHubRepository": "string",
 }
 ```
 
+## /legal/[{assent, consent, tos}]/versions/{versionId}
 ```json
-/legal/[{assent, consent, tos}]/versions/{versionId}
 {
-  validFrom: Date,
+  "validFrom": "ISO8601-date-string"
 }
 ```
 
-### /users/
-
+### /users/{userId}
 ```json
-/users/{userId}
 {
-  assessmentPid: string,
-  assessmentUid: string,
-  assignments?: {
-    assigned?: [string],
-    completed?: [string],
-    started?: [string],
+  "assessmentPid": "string",
+  "assessmentUid": "string",
+  "assignments": {
+    "assigned": ["string"],
+    "completed": ["string"],
+    "started": ["string"]
   },
-  assignmentsAsssigned?: {
-    // A map of assignment ids, where the key is the assignmentId, and the value is the date assigned to the user.
-    [{assignmentId}]: Date,
-  },
-  assignmentsCompleted?: {
-    // A map of assignment ids, where the key is the assignmentId, and the value is the date assigned to the user.
-    [{assignmentId}]: Date,
-  },
-  assignmentsStarted?: {
-    // A map of assignment ids, where the key is the assignmentId, and the value is the date assigned to the user.
-    [{assignmentId}]: Date,
-  },
-  districts: {
-    all: [string],
-    current: [string],
-    dates: {
-      [{districtId}]: {
-        to: Date,
-        from: Date,
+  "districts": {
+    "all": ["string"],
+    "current": ["string"],
+    "dates": {
+      "districtId": {
+        "to": "ISO8601-date-string",
+        "from": "ISO8601-date-string"
       }
     }
   },
-  schools: {
-    all: [string],
-    current: [string],
-    dates: {
-      [{schoolId}]: {
-        to: Date,
-        from: Date,
-      }
-    }
-  }
-  classes: {
-    all: [string],
-    current: [string],
-    dates: {
-      [{classId}]: {
-        to: Date,
-        from: Date,
+  "schools": {
+    "all": ["string"],
+    "current": ["string"],
+    "dates": {
+      "schoolId": {
+        "to": "ISO8601-date-string",
+        "from": "ISO8601-date-string"
       }
     }
   },
-  legal: {
-    [assent, consent, tos]: {
-      {formVersion}: Date,
-    }
+  "name": {
+    "first": "string",
+    "middle": "string",
+    "last": "string"
   },
-  name?: {
-    first: string,
-    middle: string,
-    last: string,
+  "studentData": {
+    "dob": "ISO8601-date-string",
+    "gender": "string",
+    "grade": "string",
+    "hispanic_ethnicity": "string",
+    "race": ["string"],
+    "schoolLevel": "string",
+    "state_id": "string"
   },
-  studentData: {
-    dob: Date,
-    gender?: string,
-    grade: string,
-    hispanic_ethnicity?: string,
-    race?: [string],
-    schoolLevel: string,
-    state_id?: string,
-  },
-  userType: string,
+  "userType": "string"
 }
 ```
 
+### /users/{userId}/assignments/{assignmentId}
 ```json
-/users/{userId}/assignments/{assignmentId}
 {
-  assessments: [
+  "assessments": [
     {
-      // For each assignment, taskId will always be present. If the task has not be started yet, taskId will be the only key present.
-      taskId: string,
-      allRunIds?: [string],
-      completedOn: Date,
-      runId?: string,
-      startedOn?: Date,
+      "taskId": "taskId_example",
+      "allRunIds": ["runId1", "runId2"],
+      "completedOn": "2024-04-15T00:00:00Z",
+      "runId": "runId_example",
+      "startedOn": "2024-04-15T00:00:00Z"
     }
   ],
-  assigningOrgs: {
-    distrcits: [string],
-    schools: [string],
-    classes: [string],
-    groups: [string],
-    families: [string],
+  "assigningOrgs": {
+    "districts": ["districtId1", "districtId2"],
+    "schools": ["schoolId1", "schoolId2"],
+    "classes": ["classId1", "classId2"],
+    "groups": ["groupId1", "groupId2"],
+    "families": ["familyId1", "familyId2"]
   },
-  completed: Boolean,
-  dateAssigned: Date,
-  dateOpened: Date,
-  dateClosed: Date,
-  id: string,
-  readOrgs: {
-    distrcits: [string],
-    schools: [string],
-    classes: [string],
-    groups: [string],
-    families: [string],
+  "completed": true,
+  "dateAssigned": "2024-04-15T00:00:00Z",
+  "dateOpened": "2024-04-15T00:00:00Z",
+  "dateClosed": "2024-04-15T00:00:00Z",
+  "id": "assignmentId_example",
+  "readOrgs": {
+    "districts": ["districtId1", "districtId2"],
+    "schools": ["schoolId1", "schoolId2"],
+    "classes": ["classId1", "classId2"],
+    "groups": ["groupId1", "groupId2"],
+    "families": ["familyId1", "familyId2"]
   },
-  started: Boolean,
-  // We keep a copy of the user's data in this subcollection in order to perform composite queries on user data and assignment data.
-  userData: {
-    assessmentPid?: string,
-    assessmentUid?: string,
-    dob: Date,
-    email?: string,
-    gender?: string,
-    grade: string,
-    hispanic_ethnicity?: string,
-    name?: {
-      first: string,
-      middle: string,
-      last: string,
+  "started": true,
+  "userData": {
+    "assessmentPid": "assessmentPid_example",
+    "assessmentUid": "assessmentUid_example",
+    "dob": "2008-09-15T00:00:00Z",
+    "email": "user@example.com",
+    "gender": "female",
+    "grade": "5",
+    "hispanic_ethnicity": "no",
+    "name": {
+      "first": "Jane",
+      "middle": "Q",
+      "last": "Doe"
     },
-    race?: [string],
-    schoolLevel: string,
-    state_id?: string,
-    username?: string,
+    "race": ["White", "Hispanic"],
+    "schoolLevel": "elementary",
+    "state_id": "stateId_example",
+    "username": "janeqdoe"
   }
 }
+
 ```
 
+### /users/{userId}/externalData/clever
 ```json
-/users/{userId}/externalData/clever
 {
-  created: string,
-  district: string,
-  email: string,
-  id: string,
-  last_modified: string,
-  name: {
-    first: string,
-    middle?: string,
-    last: string,
+  "created": "2024-04-15T00:00:00Z",
+  "district": "districtId_example",
+  "email": "user@example.com",
+  "id": "cleverUserId",
+  "last_modified": "2024-04-15T00:00:00Z",
+  "name": {
+    "first": "John",
+    "middle": "B",
+    "last": "Doe"
   },
-  roles: {
-    student: {
-      dob: string,
-      gender: string,
-      grade: string,
-      hispanic_ethnicity: string,
-      state_id: string,
+  "roles": {
+    "student": {
+      "dob": "2012-05-01",
+      "gender": "male",
+      "grade": "5",
+      "hispanic_ethnicity": "yes",
+      "state_id": "stateId123"
     }
   }
 }
 ```
 
-### /userClaims/
-
+### /userClaims/{userId}
 ```json
-/userClaims/{userId}
 {
-  claims: {
-    adminOrgs?: {
-
+  "claims": {
+    "adminOrgs": {
+      "adminUid": "adminUid_example",
+      "assessmentUid": "assessmentUid_example"
     },
-    adminUid: string,
-    assessmentUid: string,
-    roarUid: string,
+    "minimalAdminOrgs": {
+      "roarUid": "roarUid_example"
+    }
   },
-  lastUpdated: Date,
+  "lastUpdated": "2024-04-15T00:00:00Z"
 }
 ```
 
