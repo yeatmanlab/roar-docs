@@ -9,7 +9,7 @@ export default defineUserConfig({
   base: "roar-docs",
 
   title: "ROAR Developer Documentation",
-  description: "Documentation for developers working in ROAR - Rapid Online Assessment of Reading.",
+  description: "Documentation for developers working on the ROAR - Rapid Online Assessment of Reading Project for Yeatmanlab at Stanford University.",
 
   theme: defaultTheme({
     logo: "https://vuejs.press/images/hero.png",

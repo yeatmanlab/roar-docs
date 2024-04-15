@@ -1,10 +1,8 @@
 # appendToAdminClaims()
 
-Hosted on: Admin Firebase Project
+## gse-roar-admin
 
-Code: [appendToAdminClaims](https://github.com/yeatmanlab/roar-firebase-functions/blob/main/gse-roar-admin/functions/src/index.ts#L120)
-
- This function handles updating administrative claims to adjust access rights within organizational structures like districts, schools, etc.
+#### [appendToAdminClaims](https://github.com/yeatmanlab/roar-firebase-functions/blob/main/gse-roar-admin/functions/src/index.ts#L120)
 
 ### Function Name
 `appendtoadminclaims`
