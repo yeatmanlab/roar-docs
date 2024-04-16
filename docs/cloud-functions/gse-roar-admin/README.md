@@ -1,0 +1,3 @@
+# Admin Database
+
+`gse-roar-admin` is a Firebase Cloud Functions project that provides backend functionality for the administrative side of the ROAR platform. This project is responsible for managing user roles, permissions, and data synchronization between different Firestore collections. The functions in this project handle various administrative tasks, such as creating new user accounts, updating user roles, and synchronizing data across different Firestore databases.

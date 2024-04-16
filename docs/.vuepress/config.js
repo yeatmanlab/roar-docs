@@ -14,6 +14,8 @@ export default defineUserConfig({
   theme: defaultTheme({
     logo: "https://vuejs.press/images/hero.png",
     navbar: ["/databases/", "/workflows/", "/cloud-functions/","/internationalization/"],
+    nextLinks: true,
+    prevLinks: true,
     sidebar: [
       {
         text: "Databases",
@@ -37,7 +39,20 @@ export default defineUserConfig({
         text: "Cloud Functions",
         link: "/cloud-functions/",
         collapsable: false,
-        children: getChildren("./docs/cloud-functions"),
+        children: [
+      {
+        text: "gse-roar-admin",
+        link: "/cloud-functions/gse-roar-admin/",
+        collapsable: false,
+        children: getChildren("./docs/cloud-functions/gse-roar-admin")
+      },
+      {
+        text: "gse-roar-assessment",
+        link: "/cloud-functions/gse-roar-assessment/",
+        collapsable: false,
+        children: getChildren("./docs/cloud-functions/gse-roar-assessment"),
+      },
+        ],
       },
       {
         text: "Internationalization",

@@ -1,0 +1,3 @@
+# Assessment Database
+
+`gse-roar-assessment` is a Firebase Cloud Functions project that focuses on the assessment side of the ROAR platform. This project is responsible for managing assessment data, user responses, and other functionalities related to the assessment process. The functions in this project handle tasks such as creating new assessments, updating assessment data, and processing user responses to generate reports.
