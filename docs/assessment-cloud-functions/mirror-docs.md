@@ -67,6 +67,16 @@ When a family is created, updated, or deleted, we want to trigger any necessary 
 5. Changing the ``familyId`` field - handled in the else if (currData) block
 6. Entire document deleted - handled in the else block below
 
+## Mirror Familes
+
+
+When a family is created, updated, or deleted, we want to trigger any necessary changes to assignments for users in that family. For example, suppose a family changes its ``subGroups`` field. We want to make sure that all users in those subGroups receive assignments for the family.  Here we enumerate the possible changes to a family document:
+
+1. New document created - no action necessary
+2. Adding new groups to the ``subGroups`` field - handled in the else if (currData) block
+3. Removing groups from the ``subGroups`` field - handled in the else if (currData) block
+4. Entire document deleted - handled in the else block below
+
 ## Helper Functions
 
 ### Mirror Doc
