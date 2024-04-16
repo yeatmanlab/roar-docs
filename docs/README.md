@@ -5,8 +5,14 @@ actions:
   - text: Databases
     link: /databases/
     type: secondary
-  - text: Cloud Functions
-    link: /cloud-functions/
+  - text: Admin Cloud Functions
+    link: /admin-cloud-functions/
+    type: secondary
+  - text: Assessment Cloud Functions
+    link: /assessment-cloud-functions/
+    type: secondary
+  - text: Local Functions
+    link: /local-functions/
     type: secondary
   - text: Workflows
     link: /workflows/
