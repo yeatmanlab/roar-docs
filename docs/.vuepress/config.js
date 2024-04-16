@@ -13,7 +13,7 @@ export default defineUserConfig({
 
   theme: defaultTheme({
     logo: "https://vuejs.press/images/hero.png",
-    navbar: ["/databases/", "/workflows/", "/cloud-functions/","/internationalization/"],
+    navbar: ["/databases/", "/workflows/", "/admin-cloud-functions/", "assessment-cloud-functions", "/internationalization/"],
     sidebar: [
       {
         text: "Databases",
@@ -34,10 +34,22 @@ export default defineUserConfig({
         children: getChildren("./docs/dashboard-components"),
       },
       {
-        text: "Cloud Functions",
-        link: "/cloud-functions/",
+        text: "Assessment Cloud Functions",
+        link: "/assessment-cloud-functions/",
         collapsable: false,
-        children: getChildren("./docs/cloud-functions"),
+        children: getChildren("./docs/assessment-cloud-functions"),
+      },
+      {
+        text: "Local Functions",
+        link: "/local-functions/",
+        collapsable: false,
+        children: getChildren("./docs/local-functions"),
+      },
+      {
+        text: "Admin Cloud Functions",
+        link: "/admin-cloud-functions/",
+        collapsable: false,
+        children: getChildren("./docs/admin-cloud-functions"),
       },
       {
         text: "Internationalization",
