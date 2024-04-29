@@ -55,7 +55,4 @@ This function triggers whenever there is a write event on run documents under a 
 
 ### Deployment and Maintenance
 
-- **Deployment**: These functions should be deployed using Firebase CLI tools or through the Firebase Console, with careful configuration of environment settings and permissions.
-- **Maintenance**: Continuous monitoring and logging are recommended to quickly address any issues that arise due to data inconsistencies or function failures.
-
-These functions play a critical role in maintaining the accuracy and integrity of assessment data within the system, ensuring that users' progress and achievements are reflected in real-time and with high reliability.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.
