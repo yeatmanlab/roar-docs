@@ -27,7 +27,7 @@ The function returns the result of the `associateAssessmentUid` operation. This 
 - An error message or object indicating that the operation failed, which may include reasons for the failure (e.g., invalid UIDs, permission issues, database errors).
 
 ### Description
-The `associateassessmentuid` function is designed to create or update the association between an administrator and an assessment. This is part of managing access or responsibilities regarding different assessments within the system. The function takes the UIDs for both an administrator and an assessment and uses these to update relevant records in the database, ensuring that the specified administrator is linked to the specified assessment.
+The `associateassessmentuid` function is designed to create or update the association between a user's authentication UID in the "admin" and "assessment" Firebase projects. This is part of managing access to ROAR two separate Firebase projects: `gse-roar-admin` and `gse-roar-assessment`. The function takes the UIDs for both admin and assessment projects and updates relevant records in the database.
 
 ### Error Handling
 This function should include error handling to manage and log various failure scenarios, such as:
