@@ -51,6 +51,4 @@ The function performs the following key operations:
 
 ### Deployment and Maintenance
 
-- **Deployment**: This function should be deployed using Firebase CLI tools or through the Firebase Console, with careful attention to security settings and permissions.
-  
-- **Maintenance**: Regular monitoring and updating of the function are crucial to adapt to any changes in external API structures or authentication requirements. Logs should be reviewed to ensure that the function performs as expected and to identify potential areas for optimization.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.
