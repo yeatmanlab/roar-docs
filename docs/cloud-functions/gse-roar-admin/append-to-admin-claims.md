@@ -35,4 +35,4 @@ While explicit error handling is not shown in the snippet, it should be implemen
 - **Data Validation**: The function should validate the input data to ensure that all IDs are in a proper format and refer to existing entities in the system. This prevents injection of invalid data into the system.
 
 ### Deployment
-This function, like other Cloud Functions, needs to be deployed through the Firebase CLI or via the Firebase Console. Ensure that all dependencies (like any libraries used in `appendOrRemoveAdminOrgs`) are included in the `package.json` file and are compatible with the deployed environment.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.
