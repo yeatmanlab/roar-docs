@@ -51,4 +51,4 @@ Errors should be logged with sufficient detail to aid in troubleshooting while a
 - **Data Validation**: All inputs should be validated for correctness and integrity before processing, including checks for valid email formats and non-null essential fields.
 
 ### Deployment
-Deploy this function using the Firebase CLI or through the Firebase Console, ensuring that all necessary dependencies and configurations are correctly set up. Include environment-specific configurations and secure handling of any sensitive credentials or data.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.
