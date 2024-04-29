@@ -64,4 +64,4 @@ Errors should be logged to a secure logging service, providing sufficient detail
 - **Secure Data Handling**: Use secure practices for handling passwords and personal information, possibly involving hashing passwords before storage and ensuring secure transmission of sensitive data.
 
 ### Deployment
-Deploy this function using the Firebase CLI or through the Firebase Console. Ensure that the deployment includes configuration for environment variables, secure handling of credentials, and connections to other necessary services like Firebase Authentication and Firestore.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.
