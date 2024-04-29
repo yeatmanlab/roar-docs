@@ -47,6 +47,8 @@ The function returns the result from the `createFamily` operation, which typical
 ### Description
 The `createnewfamily` function is responsible for setting up new family profiles in the system. It orchestrates the creation of user accounts for a caretaker and registers associated children under this new family entity. This function ensures that all necessary data is collected, validated, and securely stored in the system’s database.
 
+It also creates `subGroups` for each family to associate the families children with other ROAR organizations. These orgs are identified as "parent" orgs (not to be confused with the caretaker). For example, a child might be associated with the new family and also the default "ROAR families" group. This child would then also be added to a new group, whose `familyId` is set to this new family and whose `parentOrgType` is "group" and `parentOrgId` is that of the default "ROAR families" group.
+
 ### Error Handling
 The function should include robust error handling to address potential issues such as:
 - Invalid email formats or password strength.
