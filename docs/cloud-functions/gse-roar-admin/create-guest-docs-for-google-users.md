@@ -37,7 +37,7 @@ Errors should be logged appropriately, providing enough detail for troubleshooti
 - **Data Handling**: Secure handling and logging of user data to prevent any leaks or unauthorized access.
 
 ### Deployment
-This function should be deployed using the Firebase CLI or through the Firebase Console. Ensure that all dependencies are correctly configured, especially those related to Firebase Authentication and any database services used for storing guest documents.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.
 
 ### Maintenance and Monitoring
 - **Monitoring**: Set up monitoring on this function to track its execution and any errors that occur. Firebase provides integrated monitoring tools that can be utilized.
