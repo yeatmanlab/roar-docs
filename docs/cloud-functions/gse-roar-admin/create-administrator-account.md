@@ -12,7 +12,7 @@ This Cloud Function is triggered by an `onCall` event, meaning it is directly in
 The function expects a JSON payload with the following parameters:
 - **email** (string): The email address for the new administrator account.
 - **name** (string): The full name of the new administrator.
-- **orgs** (array of strings): A list of organization IDs that the administrator will manage or have access to.
+- **orgs** (array of strings): A list of organization IDs that the administrator is a member of.
 - **adminOrgs** (array of strings): A list of administrative organization IDs specifically granting administrative privileges within those organizations.
 - **isTestData** (boolean, optional): A flag to indicate whether this account is being created for testing purposes. Defaults to `false` if not specified.
 - **requesterAdminUid** (string): The UID of the administrator making the request, derived from `request.auth.uid`.
