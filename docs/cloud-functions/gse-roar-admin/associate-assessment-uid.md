@@ -44,6 +44,4 @@ Errors should be logged appropriately and, where feasible, detailed error inform
 - **Data Validation**: Ensure that both `adminUid` and `assessmentUid` are valid and formatted correctly before attempting any operations with them.
 
 ### Deployment
-This function, like other Cloud Functions, should be deployed through the Firebase CLI or the Firebase Console. Ensure that all dependencies and environment configurations are properly set up during deployment.
-
-This documentation segment provides clear insights into how the `associateassessmentuid` function operates, its purpose, and its integration within the broader system. If additional details about the internal implementation of the `associateAssessmentUid` function are needed, or if specific security rules need elaboration, please let me know!
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.
