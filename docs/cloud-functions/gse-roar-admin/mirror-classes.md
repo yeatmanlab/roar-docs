@@ -1,6 +1,6 @@
 # mirrorClasses()
 
-#### [mirrorClasses](https://github.com/yeatmanlab/roar-firebase-functions/blob/e784650492722d24069aa9b0704d1873ea5dafee/gse-roar-admin/functions/src/index.ts#L1116), [generateMirrorDocFunction](https://github.com/yeatmanlab/roar-firebase-functions/blob/e784650492722d24069aa9b0704d1873ea5dafee/gse-roar-admin/functions/src/index.ts#L1079)
+#### [mirrorClasses](https://github.com/yeatmanlab/roar-firebase-functions/blob/2cf12206a5f484cbd5525a0904becfe85ef1c1e0/gse-roar-admin/functions/src/index.ts#L1680), [mirrorDoc](https://github.com/yeatmanlab/roar-firebase-functions/blob/2cf12206a5f484cbd5525a0904becfe85ef1c1e0/gse-roar-admin/functions/src/index.ts#L1108)
 
 ### Function Name
 `mirrorClasses`
