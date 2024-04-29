@@ -51,9 +51,7 @@ Upon detecting a change to a user document, the function evaluates changes in or
 
 ### Deployment and Maintenance
 
-- **Deployment**: Deploy this function using Firebase CLI tools or through the Firebase Console, ensuring that the trigger configurations and memory settings are correctly set.
-  
-- **Maintenance**: Monitor the function’s operational logs and performance metrics to identify and address any anomalies or inefficiencies. Regularly update the function’s logic and dependencies to adapt to changes in the underlying data model or organizational requirements.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.
 
 [//]: # (This function is designed to sync globally defined administrations with user-sepcific assignments.)
 
