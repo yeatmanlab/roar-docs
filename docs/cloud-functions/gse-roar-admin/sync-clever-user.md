@@ -65,6 +65,4 @@ A backend utility function that handles the actual interaction with the Clever A
 
 ### Deployment and Maintenance
 
-- **Deployment**: Deploy these functions using Firebase CLI tools or through the Firebase Console, ensuring they are configured with the necessary permissions to interact with Firebase Authentication and Firestore.
-
-- **Maintenance**: Regularly monitor these functions for performance issues and errors. Update the logic as necessary, especially in response to changes in the Clever API or Firebase platform updates.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.
