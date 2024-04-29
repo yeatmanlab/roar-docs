@@ -47,9 +47,7 @@ Upon detecting the creation of an assignment document, the function executes sev
 
 ### Deployment and Maintenance
 
-- **Deployment**: This function should be deployed using Firebase CLI tools or through the Firebase Console, ensuring all configurations and permissions are correctly set for accessing and modifying Firestore documents.
-  
-- **Maintenance**: Regular monitoring of this function's operations is recommended to quickly identify and address any performance issues or errors. Logs should be reviewed to ensure that the function performs as expected and adjustments should be made as needed based on observed operational trends or changes in data structure.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.
 
 
 [//]: # (This function will trigger when an assignment is created in a user's assignments subcollection. It serves to update all the places where the assignment is being listed and counted, namely the user's assignments object in the `/users/{userId}` document and the administration's stats document.)

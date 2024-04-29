@@ -42,5 +42,4 @@ The function performs the following steps:
 - **Validation**: Confirm that the paths and file names are correctly formatted and sanitized to avoid path traversal vulnerabilities.
 
 ### Deployment and Maintenance
-- **Deployment**: Deploy the function through your cloud provider's function deployment process, ensuring it is correctly configured to trigger on file events in the appropriate bucket.
-- **Maintenance**: Monitor the function's execution logs and metrics to address any operational issues. Update the handling logic as necessary, especially if changes occur in the storage structure or logging policies.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.

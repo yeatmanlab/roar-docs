@@ -55,4 +55,4 @@ Errors should be securely logged, providing sufficient detail for debugging whil
 - **Secure Data Handling**: Ensure that passwords are handled securely, potentially using Firebase Authentication's built-in mechanisms for password management.
 
 ### Deployment
-This function should be deployed using Firebase CLI or through the Firebase Console, with careful attention to security settings, environment variables, and necessary permissions to access other Firebase services.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.

@@ -45,9 +45,7 @@ Upon detecting the deletion of an assignment document, the function performs sev
 
 ### Deployment and Maintenance
 
-- **Deployment**: This function should be deployed using Firebase CLI tools or through the Firebase Console. It is crucial to ensure that the function is correctly configured to listen to the intended document paths and that it has the necessary permissions to execute read and write operations on the database.
-
-- **Maintenance**: Requires ongoing monitoring to ensure it performs as expected without leading to data inconsistencies or failures. Logs should be reviewed regularly, and the function should be updated to adapt to any changes in the underlying data schema or business logic.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.
 
 
 [//]: # (This function will trigger when an assignment is deleted in a user's assignments subcollection. It serves to update all the places where the assignment is being listed and counted, namely the user's assignments object in the `/users/{userId}` document and the administration's stats document.)

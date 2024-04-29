@@ -41,6 +41,4 @@ The function performs the following operations:
 
 ### Deployment and Maintenance
 
-- **Deployment**: This function should be deployed using Firebase CLI tools or through the Firebase Console. Ensure that it is correctly configured to handle expected traffic and data complexities related to assignment updates.
-  
-- **Maintenance**: Monitor the function's performance and error logs to address any operational issues promptly. Update the handling logic as necessary, especially if changes occur in the assignment data structure or related business logic.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.

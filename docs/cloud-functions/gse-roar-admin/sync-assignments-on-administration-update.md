@@ -57,10 +57,9 @@ The function executes different operations based on the nature of the document e
 
 ### Deployment and Maintenance
 
-- **Deployment**: Deploy this function using Firebase CLI tools or through the Firebase Console, ensuring that memory settings and trigger paths are correctly configured.
-- **Maintenance**: Monitor the function’s performance and error logs to address any operational issues promptly. Regular updates may be necessary to adapt to changes in the data schema or to optimize performance.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.
 
-This function plays a critical role in maintaining the integrity and consistency of administration-related data within the system. It ensures that organizational structures and user assignments reflect the most current state of administration documents, which is crucial for accurate data representation and user management.
+This function plays a critical role in maintaining the integrity and consistency of administration-related data. It ensures that user assignments reflect the most current state of administration documents.
 
 [//]: # (This function is designed to sync globally defined adminstrations with user-specific assignments.)
 

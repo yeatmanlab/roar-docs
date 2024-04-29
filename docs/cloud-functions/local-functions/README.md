@@ -1,3 +1,3 @@
 # Local Functions
 
-Local scripts for manipulating data in the Firestore database.
+Local scripts for manipulating data in the Firestore databases.

@@ -56,4 +56,4 @@ Errors should be logged and, where appropriate, detailed error information shoul
 - **Data Validation**: The function should validate the input data to ensure all IDs are valid and properly formatted before attempting operations on the database.
 
 ### Deployment
-This function, like other Cloud Functions, should be deployed through the Firebase CLI or via the Firebase Console. Ensure that all dependencies (like any libraries used in `appendOrRemoveAdminOrgs`) are correctly configured and compatible with the deployment environment.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.

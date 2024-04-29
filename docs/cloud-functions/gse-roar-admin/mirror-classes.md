@@ -37,5 +37,4 @@ The `mirrorClasses` function is instantiated by `generateMirrorDocFunction` with
   - **Data Integrity**: Ensure robust validation and error-checking to maintain data consistency and integrity between the mirrored collections.
 
 ### Deployment and Maintenance
-- **Deployment**: Deploy this function using the Firebase CLI or through the Firebase Console. Ensure that all environmental settings and permissions are correctly configured to prevent execution failures.
-- **Maintenance**: Regular monitoring is essential to quickly detect and resolve synchronization issues or failures. Logs should be reviewed to ensure that data handling errors are addressed, and updates are applied as necessary to the function logic or Firebase rules.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.

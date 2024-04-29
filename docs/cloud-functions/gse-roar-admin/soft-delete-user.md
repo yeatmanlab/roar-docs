@@ -68,5 +68,4 @@ Constructs Firestore document references for both source and target documents ba
 
 ### Deployment and Maintenance
 
-- **Deployment**: Deploy using Firebase CLI or through the Firebase Console, ensuring all dependencies and permissions are correctly configured.
-- **Maintenance**: Monitor the function's operation, especially focusing on the logging of any operational discrepancies or failures. Update configurations as necessary to adapt to changes in Firestore structure or project requirements.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.

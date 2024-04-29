@@ -58,5 +58,4 @@ This is the Cloud Function that triggers `setUidClaims`. It is an `onCall` funct
 
 ### Deployment and Maintenance
 
-- **Deployment**: These functions should be deployed using Firebase CLI tools or through the Firebase Console, ensuring that all permissions and environment configurations are set correctly.
-- **Maintenance**: Monitor the functions for errors and performance issues, particularly looking out for frequent size limit exceedances or synchronization failures. Regular updates may be required to handle changes in Firebase limits or project requirements.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.

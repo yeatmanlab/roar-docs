@@ -44,8 +44,7 @@ This Cloud Function triggers on document changes in the `userClaims` collection.
 
 ### Deployment and Maintenance
 
-- **Deployment**: This function should be deployed using Firebase CLI tools, ensuring that it is correctly configured to access both the admin and assessment Firebase projects.
-- **Maintenance**: Monitor function executions and logs to address any issues related to data synchronization or permission changes. Update the synchronization logic and error handling as necessary to accommodate changes in user data structures or authentication policies.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.
 
 ### Potential Enhancements
 

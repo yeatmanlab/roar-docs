@@ -48,6 +48,4 @@ This is the Cloud Function that exposes `setUidClaims` as a callable function, e
 
 ### Deployment and Maintenance
 
-- **Deployment**: Deploy these functions using the Firebase CLI or through the Firebase Console, ensuring they are correctly configured to handle expected traffic and data sizes.
-  
-- **Maintenance**: Monitor the functions for performance issues and errors. Update the error handling and validation logic as necessary to adapt to new security standards or changes in Firebase's custom claims limitations.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.

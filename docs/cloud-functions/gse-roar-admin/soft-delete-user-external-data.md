@@ -49,5 +49,4 @@ The `softDeleteUserExternalData` function is crafted to archive documents delete
   - Confirms the integrity and existence of data before proceeding, ensuring only valid and authorized operations are executed.
 
 ### Deployment and Maintenance
-- **Deployment**: Deploy using Firebase CLI tools or through the Firebase Console, ensuring that all trigger paths and permissions are correctly configured to avoid operational discrepancies.
-- **Maintenance**: Continuously monitor function performance and error logs to quickly address any issues. Regular updates may be necessary to adapt to changes in data structure or project requirements.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.

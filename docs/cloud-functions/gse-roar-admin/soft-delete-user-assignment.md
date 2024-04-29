@@ -47,5 +47,4 @@ The `softDeleteUserAssignment` function is designed to handle deletions within t
   - Validation steps confirm the integrity and existence of data before proceeding with the copying process.
 
 ### Deployment and Maintenance
-- **Deployment**: This function should be deployed using Firebase CLI tools or through the Firebase Console, with careful attention to ensuring correct trigger paths and permissions.
-- **Maintenance**: Regular monitoring is crucial to address any functional or performance issues. Logs should be reviewed to ensure the function operates as expected and that no data integrity issues arise.
+This function is deployed automatically using GitHub actions, whenever changes are merged into the `main` branch.
