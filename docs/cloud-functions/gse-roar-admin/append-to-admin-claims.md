@@ -18,7 +18,7 @@ The function expects a JSON payload with the following structure:
 - **familyId**: The ID of the family to append to the user's claims.
 - **groupId**: The ID of the group to append to the user's claims.
 
-The input also contains an **action** key, which is statically set to `"append"`. This function is designed to add organizational affiliations to a user's profile.
+The input also contains an **action** key, which is statically set to `"append"`. This function is designed to add organizational affiliations to a user's administrative permissions.
 
 ### Outputs
 The function outputs the result of the `appendOrRemoveAdminOrgs` function, which is a method handling the database update logic.
