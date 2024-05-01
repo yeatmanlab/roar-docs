@@ -2,7 +2,7 @@
 import fs from "fs";
 
 export default function (path) {
-  const parentPath = path.split("/").slice(-1).join("/");
+  const parentPath = path.split("/").slice(2).join("/");
   var files = fs.readdirSync(path);
   var list = [];
   for (var i in files) {

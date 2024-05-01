@@ -9,11 +9,13 @@ export default defineUserConfig({
   base: "roar-docs",
 
   title: "ROAR Developer Documentation",
-  description: "Documentation for ROAR Developers",
+  description: "Documentation for developers working on the ROAR - Rapid Online Assessment of Reading Project for Yeatmanlab at Stanford University.",
 
   theme: defaultTheme({
     logo: "https://vuejs.press/images/hero.png",
     navbar: ["/databases/", "/workflows/", "/cloud-functions/","/internationalization/"],
+    nextLinks: true,
+    prevLinks: true,
     sidebar: [
       {
         text: "Databases",
@@ -37,7 +39,20 @@ export default defineUserConfig({
         text: "Cloud Functions",
         link: "/cloud-functions/",
         collapsable: false,
-        children: getChildren("./docs/cloud-functions"),
+        children: [
+      {
+        text: "gse-roar-admin",
+        link: "/cloud-functions/gse-roar-admin/",
+        collapsable: false,
+        children: getChildren("./docs/cloud-functions/gse-roar-admin")
+      },
+      {
+        text: "gse-roar-assessment",
+        link: "/cloud-functions/gse-roar-assessment/",
+        collapsable: false,
+        children: getChildren("./docs/cloud-functions/gse-roar-assessment"),
+      },
+        ],
       },
       {
         text: "Internationalization",
