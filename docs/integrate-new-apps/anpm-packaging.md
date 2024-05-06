@@ -338,6 +338,7 @@ Set the deploy targets using Firebase cli:
 }
 `
 - Set up GitHub actions for PR link deployment, Cypress testing, staging deployment, and npm publishing.
+- Use one of the established apps, such as roar-swr, as a template. If you have properly set up staging and hosting targets for the app, then it should suffice to copy and paste the existing workflow files.
 - Add necessary secrets to the GitHub repository for npm auth token, Firebase service account, Cypress, and Sentry.
 
 
