@@ -287,6 +287,56 @@ Set the deploy targets using Firebase cli:
 `firebase target:apply hosting staging my-app`
 
 - Update firebase.json to include deploy targets and bundling configurations.
+`firebase.json`
+`{
+  "hosting": [
+    {
+      "public": "dist",
+      "target": "production",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "headers": [
+        {
+          "source": "**/*",
+          "headers": [
+            {
+              "key": "Feature-Policy",
+              "value": "autoplay=*"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "public": "dist",
+      "target": "staging",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "headers": [
+        {
+          "source": "**/*",
+          "headers": [
+            {
+              "key": "Feature-Policy",
+              "value": "autoplay=*"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+`
 - Set up GitHub actions for PR link deployment, Cypress testing, staging deployment, and npm publishing.
 - Add necessary secrets to the GitHub repository for npm auth token, Firebase service account, Cypress, and Sentry.
 
