@@ -263,6 +263,29 @@ export const roarConfig = {
 const logMessage = `This ROAR app will write data to the ${roarConfig.firebaseConfig.projectId} firestore database`;
 log.info(logMessage);`
 - Modify .firebaserc to deploy to the designated targets.
+`.firebaserc`
+`{
+  "projects": {
+    "default": "gse-roar-assessment"
+  },
+  "targets": {
+    "gse-roar-assessment": {
+      "hosting": {
+        "production": [
+          "[name of production target in gse-roar-assessment hosting]"
+        ],
+        "staging": [
+          "[name of staging target in gse-roar-assessment hosting]"
+        ],
+      }
+    }
+  }
+}`
+
+Set the deploy targets using Firebase cli:
+`firebase target:apply hosting production my-app`
+`firebase target:apply hosting staging my-app`
+
 - Update firebase.json to include deploy targets and bundling configurations.
 - Set up GitHub actions for PR link deployment, Cypress testing, staging deployment, and npm publishing.
 - Add necessary secrets to the GitHub repository for npm auth token, Firebase service account, Cypress, and Sentry.
