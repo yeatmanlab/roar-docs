@@ -227,6 +227,41 @@ export default {
 `
 - Create staging and production hosting targets on gse-roar-assessment.
 - Ensure firebaseConfig.js points to the correct Firebase configs.
+`serve/firebaseConfig.js`
+`/* eslint-disable import/prefer-default-export */
+import { log } from '../src/experiment/config/logger';
+
+/* eslint-disable import/prefer-default-export */
+const devFirebaseConfig = {
+  apiKey: 'AIzaSyCX9WR-j9yv1giYeFsMpbjj2G3p7jNHxIU',
+  authDomain: 'gse-yeatmanlab.firebaseapp.com',
+  projectId: 'gse-yeatmanlab',
+  storageBucket: 'gse-yeatmanlab.appspot.com',
+  messagingSenderId: '292331000426',
+  appId: '1:292331000426:web:91a04220991e3405737013',
+  measurementId: 'G-0TBTMDS993',
+};
+
+const productionFirebaseConfig = {
+  apiKey: 'AIzaSyDw0TnTXbvRyoVo5_oa_muhXk9q7783k_g',
+  authDomain: 'gse-roar-assessment.firebaseapp.com',
+  projectId: 'gse-roar-assessment',
+  storageBucket: 'gse-roar-assessment.appspot.com',
+  messagingSenderId: '757277423033',
+  appId: '1:757277423033:web:d6e204ee2dd1047cb77268',
+};
+
+export const firebaseConfig =
+  // eslint-disable-next-line no-undef
+  ROAR_DB === 'production' ? productionFirebaseConfig : devFirebaseConfig;
+
+export const roarConfig = {
+  firebaseConfig,
+};
+
+// eslint-disable-next-line operator-linebreak
+const logMessage = `This ROAR app will write data to the ${roarConfig.firebaseConfig.projectId} firestore database`;
+log.info(logMessage);`
 - Modify .firebaserc to deploy to the designated targets.
 - Update firebase.json to include deploy targets and bundling configurations.
 - Set up GitHub actions for PR link deployment, Cypress testing, staging deployment, and npm publishing.
