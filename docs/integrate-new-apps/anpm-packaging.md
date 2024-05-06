@@ -12,6 +12,7 @@ This is on the APP SIDE
 - If the web app bundles external html, scripts, or strings:
   - Install @rollup/plugin-html and rollup-plugin-string.
 - Verify package.json is configured correctly, especially the "name" field.
+- ex. "name": "@bdelab/package-name"
 - Check both Webpack and Rollup configurations.
 - Create staging and production hosting targets on gse-roar-assessment.
 - Ensure firebaseConfig.js points to the correct Firebase configs.
