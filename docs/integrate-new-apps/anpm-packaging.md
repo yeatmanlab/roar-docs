@@ -16,7 +16,8 @@ This is on the APP SIDE
 - Check both Webpack and Rollup configurations, changing any relevant fields
 - Sample `webpack.config.cjs` from roar-swr:
 
-`const path = require('path');
+``` javascript
+const path = require('path');
 const webpack = require('webpack');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { merge } = require('webpack-merge');
@@ -182,10 +183,13 @@ module.exports = async (env, args) => {
       throw new Error('No matching configuration was found!');
   }
 };
-`
-- Sample `rollup.config.js` from roar-swr:
 
-`import commonjs from '@rollup/plugin-commonjs';
+```
+### Sample `rollup.config.js` from roar-swr:
+
+``` javascript
+
+import commonjs from '@rollup/plugin-commonjs';
 import postcss from 'rollup-plugin-postcss';
 import dsv from '@rollup/plugin-dsv';
 import json from '@rollup/plugin-json';
@@ -224,11 +228,22 @@ export default {
     },
   ],
 };
-`
-- Create staging and production hosting targets on gse-roar-assessment.
-- Ensure firebaseConfig.js points to the correct Firebase configs.
-`serve/firebaseConfig.js`
-`/* eslint-disable import/prefer-default-export */
+
+```
+## Create staging and production hosting targets on gse-roar-assessment.
+
+From the `gse-roar-assessment` firebase project, navigate to "Hosting" on the left hand side.
+1. Click "add another site" in the top right corner
+2. Name the hosting targets with the following convention:
+  - [roar][roam][roav]-appName
+  - [roar][roam][roab]-appName-staging
+
+
+
+### Ensure firebaseConfig.js points to the correct Firebase configs `serve/firebaseConfig.js`:
+
+``` javascript
+/* eslint-disable import/prefer-default-export */
 import { log } from '../src/experiment/config/logger';
 
 /* eslint-disable import/prefer-default-export */
@@ -280,15 +295,17 @@ log.info(logMessage);`
       }
     }
   }
-}`
+}
+```
 
-Set the deploy targets using Firebase cli:
+### Set the deploy targets using Firebase cli:
 `firebase target:apply hosting production my-app`
 `firebase target:apply hosting staging my-app`
 
-- Update firebase.json to include deploy targets and bundling configurations.
-`firebase.json`
-`{
+- Update firebase.json to include deploy targets and bundling configurations `firebase.json`:
+
+``` javascript
+{
   "hosting": [
     {
       "public": "dist",
@@ -336,7 +353,8 @@ Set the deploy targets using Firebase cli:
     }
   ]
 }
-`
+```
+
 - Set up GitHub actions for PR link deployment, Cypress testing, staging deployment, and npm publishing.
 - Use one of the established apps, such as roar-swr, as a template. If you have properly set up staging and hosting targets for the app, then it should suffice to copy and paste the existing workflow files.
 - Add necessary secrets to the GitHub repository for npm auth token, Firebase service account, Cypress, and Sentry.
