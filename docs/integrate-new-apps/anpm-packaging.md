@@ -410,13 +410,6 @@ Once you run this, copy the secret keys for:
 
    For both webpack and rollup configurations.
 
-**index.js:**
-
-- Remove the "fromDashboard" if statement and always initialize Sentry.
-
-**serve.js:**
-
-- Remove `initSentry` from `serve.js`.
 
 **sentry.js:**
 
