@@ -13,7 +13,7 @@ export default defineUserConfig({
 
   theme: defaultTheme({
     logo: "https://vuejs.press/images/hero.png",
-    navbar: ["/databases/", "/workflows/", "/cloud-functions/","/internationalization/"],
+    navbar: ["/databases/", "/workflows/", "/cloud-functions/","/internationalization/", "/integrate-new-apps/"],
     nextLinks: true,
     prevLinks: true,
     sidebar: [
@@ -59,6 +59,12 @@ export default defineUserConfig({
         link: "/internationalization/",
         collapsable: false,
         children: getChildren("./docs/internationalization"),
+      },
+      {
+        text: "App Dashboard Integration",
+        link: "/integrate-new-apps/",
+        collapsable: false,
+        children: getChildren("./docs/integrate-new-apps"),
       },
     ],
   }),
