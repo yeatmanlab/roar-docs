@@ -236,7 +236,7 @@ From the `gse-roar-assessment` firebase project, navigate to "Hosting" on the le
 1. Click "add another site" in the top right corner
 2. Name the hosting targets with the following convention:
   - [roar][roam][roav]-appName
-  - [roar][roam][roab]-appName-staging
+  - [roar][roam][roav]-appName-staging
 
 
 
