@@ -280,7 +280,8 @@ log.info(logMessage);`
 
 ### Modify .firebaserc to deploy to the designated targets.
 `.firebaserc`:
-```
+
+``` javascript
 {
   "projects": {
     "default": "gse-roar-assessment"
