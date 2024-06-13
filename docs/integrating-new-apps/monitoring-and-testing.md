@@ -161,12 +161,12 @@ We want important alerts, such as bugs, user feedback, and performance issues to
 We can simply duplicate the alerts that have already been set up on the other apps.
 1. Click "Alerts" on the navigation sidebar
 2. Select the "swr" project (although any project will work)
-3. Click "Slack Integration Issue Report - Word"
+3. Click "Slack Integration Issue Report"
 4. Click "Duplicate" in the top right corner
 5. Under "Select an environment and project", select the new Sentry project from the dropdown
-6. Scroll to the bottom of the page and under "Add a name and owner", change the name of the alert to reflect the name of the new Sentry project
+6. Scroll to the bottom of the page and under "Add a name and owner", remove the "copy" part of the alert name and select "#roar" as the team
 7. Click "Save Rule"
-8. Repeat for the "Slack Integration Performance Report - Word" alert
+8. Repeat for the "Slack Integration Performance Report" and any other alerts that are relevant
 
 ## Cypress Integration
 Additional information can be found in the official [Cypress documentation.](https://docs.cypress.io/guides/getting-started/installing-cypress)
