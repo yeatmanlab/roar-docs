@@ -5,14 +5,20 @@ actions:
   - text: Databases
     link: /databases/
     type: secondary
-  - text: Cloud Functions
-    link: /cloud-functions/
-    type: secondary
   - text: Workflows
     link: /workflows/
     type: secondary
+  - text: Dashboard Components
+    link: /dashboard-components/
+    type: secondary
+  - text: Cloud Functions
+    link: /cloud-functions/
+    type: secondary
   - text: Internationalization
     link: /internationalization/
+    type: secondary
+  - text: Integrating New Apps
+    link: /integrating-new-apps/
     type: secondary
 ---
 

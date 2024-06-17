@@ -2,18 +2,17 @@ import { defaultTheme } from "@vuepress/theme-default";
 import { defineUserConfig } from "vuepress/cli";
 import { viteBundler } from "@vuepress/bundler-vite";
 import getChildren from "./childPageScript.js";
-// var getChildren = require("./childPageScript.js");
 
 export default defineUserConfig({
   lang: "en-US",
-  base: "roar-docs",
+  base: "/roar-docs/",
 
   title: "ROAR Developer Documentation",
   description: "Documentation for developers working on the ROAR - Rapid Online Assessment of Reading Project for Yeatmanlab at Stanford University.",
 
   theme: defaultTheme({
     logo: "https://vuejs.press/images/hero.png",
-    navbar: ["/databases/", "/workflows/", "/cloud-functions/","/internationalization/", "/integrate-new-apps/"],
+    navbar: ["/databases/", "/workflows/", "/dashboard-components/", "/cloud-functions/", "/internationalization/", "/integrating-new-apps/"],
     nextLinks: true,
     prevLinks: true,
     sidebar: [
@@ -61,10 +60,10 @@ export default defineUserConfig({
         children: getChildren("./docs/internationalization"),
       },
       {
-        text: "App Dashboard Integration",
-        link: "/integrate-new-apps/",
+        text: "Integrating New Apps",
+        link: "/integrating-new-apps/",
         collapsable: false,
-        children: getChildren("./docs/integrate-new-apps"),
+        children: getChildren("./docs/integrating-new-apps"),
       },
     ],
   }),
