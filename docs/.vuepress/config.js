@@ -31,7 +31,7 @@ export default defineUserConfig({
           { text: "Cloud Functions", link: "/cloud-functions/" },
           { text: "Internationalization", link: "/internationalization/" },
           { text: "Integrating New Apps", link: "/integrating-new-apps/" },
-          { text: "Assets Optimization", link: "/assets-optimization/" },
+          { text: "Optimizing Assets", link: "/assets-optimization/" },
         ],
       },
     ],

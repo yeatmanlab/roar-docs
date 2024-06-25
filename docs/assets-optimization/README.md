@@ -1,4 +1,4 @@
-# Assets Optimization
+# Optimizing Assets
 
 This documentation details the commands to minimize audio and image assets.
 

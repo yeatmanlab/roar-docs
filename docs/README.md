@@ -20,7 +20,7 @@ actions:
   - text: Integrating New Apps
     link: /integrating-new-apps/
     type: secondary
-  - text: Assets Optimization
+  - text: Optimizing Assets
     link: /assets-optimization/
     type: secondary
 ---
