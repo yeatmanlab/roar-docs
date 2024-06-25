@@ -21,7 +21,20 @@ export default defineUserConfig({
 
   theme: defaultTheme({
     logo: "https://vuejs.press/images/hero.png",
-    navbar: ["/databases/", "/workflows/", "/dashboard-components/", "/cloud-functions/", "/internationalization/", "/integrating-new-apps/"],
+    navbar: [
+      {
+        text: "Documentation",
+        children: [
+          { text: "Databases", link: "/databases/" },
+          { text: "Workflows", link: "/workflows/" },
+          { text: "Dashboard Components", link: "/dashboard-components/" },
+          { text: "Cloud Functions", link: "/cloud-functions/" },
+          { text: "Internationalization", link: "/internationalization/" },
+          { text: "Integrating New Apps", link: "/integrating-new-apps/" },
+          { text: "Optimizing Assets", link: "/assets-optimization/" },
+        ],
+      },
+    ],
     nextLinks: true,
     prevLinks: true,
     sidebar: [
@@ -73,6 +86,12 @@ export default defineUserConfig({
         link: "/integrating-new-apps/",
         collapsable: false,
         children: getChildren("./docs/integrating-new-apps"),
+      },
+      {
+        text: "Assets Optimization",
+        link: "/assets-optimization/",
+        collapsable: false,
+        children: getChildren("./docs/assets-optimization"),
       },
     ],
   }),
