@@ -20,6 +20,9 @@ actions:
   - text: Integrating New Apps
     link: /integrating-new-apps/
     type: secondary
+  - text: Assets Optimization
+    link: /assets-optimization/
+    type: secondary
 ---
 
 This project is intended to provide documentation for developers of the ROAR Project. Developers wanting to contribute to the docs should send a pull request to the project [GitHub repository](https://github.com/yeatmanlab/roar-docs).
