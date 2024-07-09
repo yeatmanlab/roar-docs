@@ -1,7 +1,7 @@
 # ROAR Redivis Instance
 
 The ROAR Redivis instance is a convenient want for researchers and partners to share and access their data. It is a fully functional SQL web console with user-friendly features which
-makes querying, sorting, filtering, and merging data easy for the non-programmer. \
+makes querying, sorting, filtering, and merging data easy for the non-programmer. It includes built in functionality for Python Notebooks, R Notebooks, and raw SQL queries.
 
 The ROAR Redivis instance can be found [here](https://redivis.com/roar).
 
