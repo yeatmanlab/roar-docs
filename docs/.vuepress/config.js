@@ -32,7 +32,8 @@ export default defineUserConfig({
           { text: "Internationalization", link: "/internationalization/" },
           { text: "Integrating New Apps", link: "/integrating-new-apps/" },
           { text: "Optimizing Assets", link: "/assets-optimization/" },
-          {text: "ROAR Redivis Instance", link: "/roar-redivis/"}
+          {text: "ROAR Redivis Instance", link: "/roar-redivis/"},
+          {text: "Logging and Querying", link: "/logging-and-querying/"},
         ],
       },
     ],
@@ -99,6 +100,12 @@ export default defineUserConfig({
           link: "/roar-redivis/",
           collapsable: false,
           children: getChildren("./docs/roar-redivis"),
+      },
+      {
+        text: "Logging and Querying",
+        link: "/logging-and-querying-and-querying/",
+        collapsable: false,
+        children: getChildren("./docs/logging-and-querying"),
       },
     ],
   }),
