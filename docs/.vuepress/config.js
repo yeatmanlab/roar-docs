@@ -1,5 +1,6 @@
 import { defaultTheme } from "@vuepress/theme-default";
 import { defineUserConfig } from "vuepress/cli";
+import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
 import { viteBundler } from "@vuepress/bundler-vite";
 import getChildren from "./childPageScript.js";
 
@@ -111,4 +112,11 @@ export default defineUserConfig({
   }),
 
   bundler: viteBundler(),
+
+  plugins: [
+    mdEnhancePlugin({
+      // Enable mermaid
+      mermaid: true,
+    }),
+  ],
 });
