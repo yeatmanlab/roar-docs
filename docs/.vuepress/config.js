@@ -17,6 +17,7 @@ export default defineUserConfig({
 
   theme: defaultTheme({
     logo: "/assets/roar-logo-short.svg",
+    repo: "https://github.com/yeatmanlab/",
     navbar: [
       {
         text: "Documentation",
@@ -28,8 +29,8 @@ export default defineUserConfig({
           { text: "Internationalization", link: "/internationalization/" },
           { text: "Integrating New Apps", link: "/integrating-new-apps/" },
           { text: "Optimizing Assets", link: "/assets-optimization/" },
-          {text: "ROAR Redivis Instance", link: "/roar-redivis/"},
-          {text: "Logging and Querying", link: "/logging-and-querying/"},
+          { text: "ROAR Redivis Instance", link: "/roar-redivis/" },
+          { text: "Logging and Querying", link: "/logging-and-querying/" },
         ],
       }
     ],
@@ -59,18 +60,18 @@ export default defineUserConfig({
         link: "/cloud-functions/",
         collapsable: false,
         children: [
-      {
-        text: "gse-roar-admin",
-        link: "/cloud-functions/gse-roar-admin/",
-        collapsable: false,
-        children: getChildren("./docs/cloud-functions/gse-roar-admin")
-      },
-      {
-        text: "gse-roar-assessment",
-        link: "/cloud-functions/gse-roar-assessment/",
-        collapsable: false,
-        children: getChildren("./docs/cloud-functions/gse-roar-assessment"),
-      },
+          {
+            text: "gse-roar-admin",
+            link: "/cloud-functions/gse-roar-admin/",
+            collapsable: false,
+            children: getChildren("./docs/cloud-functions/gse-roar-admin")
+          },
+          {
+            text: "gse-roar-assessment",
+            link: "/cloud-functions/gse-roar-assessment/",
+            collapsable: false,
+            children: getChildren("./docs/cloud-functions/gse-roar-assessment"),
+          },
         ],
       },
       {
