@@ -59,7 +59,7 @@ export default defineUserConfig({
         collapsable: false,
         children: [
           {
-            text: "Authentication",
+            text: "Auth",
             link: "/application/auth",
           }
         ]
