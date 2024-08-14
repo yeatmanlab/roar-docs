@@ -1,6 +1,7 @@
 ---
 home: true
 title: Home
+heroImage: /assets/roar-logo.svg
 actions:
   - text: Databases
     link: /databases/

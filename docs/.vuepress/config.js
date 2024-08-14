@@ -11,17 +11,12 @@ export default defineUserConfig({
   title: "ROAR Developer Documentation",
   description: "Documentation for developers working on the ROAR - Rapid Online Assessment of Reading Project for Yeatmanlab at Stanford University.",
 
-  // Add the head option to include the favicon
   head: [
-    // ['link', { rel: 'icon', href: '/favicon.ico' }],
-    // For PNG format:
-    ['link', { rel: 'icon', type: 'image/png', href: 'https://vuejs.press/images/hero.png' }],
-    // For SVG format:
-    // ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }]
+    ['link', { rel: 'icon', type: 'image/png', href: '/roar-docs/assets/favicon.png' }],
   ],
 
   theme: defaultTheme({
-    logo: "https://vuejs.press/images/hero.png",
+    logo: "/assets/roar-logo-short.svg",
     navbar: [
       {
         text: "Documentation",
@@ -36,7 +31,7 @@ export default defineUserConfig({
           {text: "ROAR Redivis Instance", link: "/roar-redivis/"},
           {text: "Logging and Querying", link: "/logging-and-querying/"},
         ],
-      },
+      }
     ],
     nextLinks: true,
     prevLinks: true,
