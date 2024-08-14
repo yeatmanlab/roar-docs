@@ -1,6 +1,3 @@
----
-sidebarDepth: 1
----
 # Auth
 
 Authentication and authorization for access to the ROAR Dashboard is handled by Firebase and Google Cloud Identity Platform.
