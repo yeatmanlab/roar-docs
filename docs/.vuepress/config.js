@@ -28,6 +28,7 @@ export default defineUserConfig({
         children: [
           { text: "Databases", link: "/databases/" },
           { text: "Workflows", link: "/workflows/" },
+          { text: "Application", link: "/application/" },
           { text: "Dashboard Components", link: "/dashboard-components/" },
           { text: "Cloud Functions", link: "/cloud-functions/" },
           { text: "Internationalization", link: "/internationalization/" },
@@ -52,6 +53,16 @@ export default defineUserConfig({
         link: "/workflows/",
         collapsable: false,
         children: getChildren("./docs/workflows"),
+      },
+      {
+        text: "Application",
+        collapsable: false,
+        children: [
+          {
+            text: "Auth",
+            link: "/application/auth",
+          }
+        ]
       },
       {
         text: "Dashboard Components",
