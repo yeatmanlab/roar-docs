@@ -3,3 +3,13 @@
     --c-brand-light: #8c1515;
     --c-text-lightest: #3c3c43c7;
 }
+
+.vp-hero-description {
+    font-size: 1.5rem;
+}
+
+.vp-hero-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+}
