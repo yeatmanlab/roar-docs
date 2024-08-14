@@ -19,3 +19,8 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1rem;
 }
+
+html.dark {
+    --c-brand: #var($--c-text);
+    --c-brand-light: var(--c-text);
+}
