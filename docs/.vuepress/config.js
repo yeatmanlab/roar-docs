@@ -26,6 +26,7 @@ export default defineUserConfig({
           { text: "Workflows", link: "/workflows/" },
           { text: "Application", link: "/application/" },
           { text: "Dashboard Components", link: "/dashboard-components/" },
+          {text: "Firebase App Check", link: "/firebase-app-check/"},
           { text: "Cloud Functions", link: "/cloud-functions/" },
           { text: "Internationalization", link: "/internationalization/" },
           { text: "Integrating New Apps", link: "/integrating-new-apps/" },
@@ -65,6 +66,12 @@ export default defineUserConfig({
         link: "/dashboard-components/",
         collapsable: false,
         children: getChildren("./docs/dashboard-components"),
+      },
+      {
+        text: "Firebase App Check",
+        link: "/firebase-app-check/",
+        collapsable: false,
+        children: getChildren("./docs/firebase-app-check"),
       },
       {
         text: "Cloud Functions",

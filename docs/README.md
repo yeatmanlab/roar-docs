@@ -12,6 +12,9 @@ actions:
   - text: Dashboard Components
     link: /dashboard-components/
     type: secondary
+  - text: Firebase App Check
+    link: /firebase-app-check/
+    type: secondary
   - text: Cloud Functions
     link: /cloud-functions/
     type: secondary
