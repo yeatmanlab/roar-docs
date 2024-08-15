@@ -114,7 +114,9 @@ class RoarApp {
   }
 
   async init() {
-    initSentry();
+    if (process.env.NODE_ENV === 'production') {
+      initSentry();
+    }
     await this.firekit.startRun();
     const config = await initConfig(this.firekit, this.gameParams, this.userParams, this.displayElement);
 
