@@ -1,0 +1,26 @@
+/**
+ * Customise VuePress default theme
+ * 
+ * See https://ecosystem.vuejs.press/themes/default/styles.html#style-file for the full list of available variables to
+ * override in the default theme.
+ */
+:root {
+    --c-brand: #8c1515;
+    --c-brand-light: #8c1515;
+    --c-text-lightest: #3c3c43c7;
+}
+
+.vp-hero-description {
+    font-size: 1.5rem;
+}
+
+.vp-hero-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+html.dark {
+    --c-brand: #var($--c-text);
+    --c-brand-light: var(--c-text);
+}

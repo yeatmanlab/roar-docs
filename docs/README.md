@@ -1,6 +1,7 @@
 ---
 home: true
 title: Home
+heroImage: /assets/roar-logo.svg
 actions:
   - text: Databases
     link: /databases/
@@ -31,4 +32,4 @@ actions:
     type: secondary
 ---
 
-This project is intended to provide documentation for developers of the ROAR Project. Developers wanting to contribute to the docs should send a pull request to the project [GitHub repository](https://github.com/yeatmanlab/roar-docs).
+<p style="text-align: center;">This project is intended to provide documentation for developers of the ROAR Project. Developers wanting to contribute to the docs should send a pull request to the project <a href="https://github.com/yeatmanlab/roar-docs" target="_blank">GitHub repository</a>.</p>
