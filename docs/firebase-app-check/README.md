@@ -33,7 +33,7 @@ Firebase App Check is a crucial tool for enhancing the security of your Firebase
 
 When developing in a local environment, you can use a debug token to bypass App Check verification. This allows you to test your app without having to pass the App Check verification step. The debug token is a private key that should not be exposed or shared publicly.
 
-You can generate your own by pulling the main branch and running thd dev server with 
+You can generate your own by pulling the main branch and running the dev server with 
 ```bash
 npm run dev
 ```
@@ -61,7 +61,11 @@ Click the three-dots menu on the right side of the screen and select _"Manage de
 
 Within the modal click _"Add debug token"_.
 
-Name the token whatever you'd like and copy-paste the generated debug token into the field, then click _"Done"_ to save the changes. 
+Name the token using the following pattern and copy-paste the generated debug token into the field, then click _"Done"_ to save the changes. 
+
+\```
+app-check-debug-token-{your-firstname}-{your-lastname}
+\```
 
 You should now be set up to run code on `localhost` without needing App Check verification.
 
