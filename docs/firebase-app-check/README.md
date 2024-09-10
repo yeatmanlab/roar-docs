@@ -33,47 +33,40 @@ Firebase App Check is a crucial tool for enhancing the security of your Firebase
 
 When developing in a local environment, you can use a debug token to bypass App Check verification. This allows you to test your app without having to pass the App Check verification step. The debug token is a private key that should not be exposed or shared publicly.
 
-You can generate your own by pulling the main branch and running the dev server with 
-```bash
-npm run dev
-```
+#### Steps to Generate and Register a Debug Token
 
-Open the developer console, and you will see a message which includes a new debug token.
+1. **Generate the Debug Token:**
+   - Pull the main branch and run the development server:
+     ```bash
+     npm run dev
+     ```
+   - Open the developer console, and you will see a message that includes a new debug token. <br><br>
+     ![Debug Token](../assets/app-check/app-check-debug-token-console.png)
 
-![Debug Token](../assets/app-check/app-check-debug-token-console.png)
+2. **Save the Debug Token:**
+   - Save the generated debug token in your `.env` file:
+     ```dotenv
+     VITE_APPCHECK_DEBUG_TOKEN=the-generated-token-from-developer-console
+     ```
 
-Save that debug token in your .`env` file as
-```dotenv
-VITE_APPCHECK_DEBUG_TOKEN=the-generated-token-from-developer-console
-```
+3. **Register the Debug Token:**
+   - This token **IS NOT** valid until it is registered on the Firebase web console.
+   - Register the token on the Firebase App Check console for **BOTH DEVELOPMENT PROJECTS**:
+     - [gse-roar-admin-dev](https://console.firebase.google.com/u/0/project/gse-roar-admin-dev/appcheck/apps)
+     - [gse-roar-assessment-dev](https://console.firebase.google.com/u/0/project/gse-roar-assessment-dev/appcheck/apps)
+   - Click the three-dots menu on the right side of the screen and select _"Manage debug tokens"_. <br><br>
+     ![Manage Debug Tokens](../assets/app-check/app-check-manage-debug-tokens.png)
+   - Within the modal, click _"Add debug token"_. 
+   - Name the token using the following pattern and copy-paste the generated debug token into the field, then click _"Done"_ to save the changes: <br><br>
+     ```plaintext
+     app-check-debug-token-{your-firstname}-{your-lastname}
+     ```
+     ![Add Debug Token](../assets/app-check/app-check-add-debug-token.png)
 
-This token **IS NOT** valid until it is registered on the Firebase web console.
-<br><br>
-From there, you need to register the token on the Firebase App Check console for **BOTH DEVELOPMENT PROJECTS**:
-<br><br>
-[gse-roar-admin-dev](https://console.firebase.google.com/u/0/project/gse-roar-admin-dev/appcheck/apps)
-<br><br>
-[gse-roar-assessment-dev](https://console.firebase.google.com/u/0/project/gse-roar-assessment-dev/appcheck/apps)
-
-Click the three-dots menu on the right side of the screen and select _"Manage debug tokens"_.
-
-![Manage Debug Tokens](../assets/app-check/app-check-manage-debug-tokens.png)
-
-Within the modal click _"Add debug token"_.
-
-Name the token using the following pattern and copy-paste the generated debug token into the field, then click _"Done"_ to save the changes. 
-
-\```
-app-check-debug-token-{your-firstname}-{your-lastname}
-\```
-
-You should now be set up to run code on `localhost` without needing App Check verification.
-
-![Add Debug Token](../assets/app-check/app-check-add-debug-token.png)
-
-You will not be able to run code locally without a valid debug token. Requests made without a valid debug token will fail with the error message attached.
-
-![Invalid Debug Token Error](../assets/app-check/app-check-error-example.png)
+4. **Verify Local Development Setup:**
+   - You should now be set up to run code on `localhost` without needing App Check verification.
+   - Requests made without a valid debug token will fail with the error message attached. <br><br>
+     ![Invalid Debug Token Error](../assets/app-check/app-check-error-example.png)
 
 ## Environment Setup
 
