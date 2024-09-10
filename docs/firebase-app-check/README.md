@@ -29,6 +29,45 @@ Once App Check is enabled, your project can operate in one of two states:
 Firebase App Check is a crucial tool for enhancing the security of your Firebase projects. By enabling it and moving from Monitored to Enforced mode, you can protect your app and its users from unauthorized access and abuse, ensuring that only legitimate requests are processed by your Firebase services.
 
 
+### Generating a Debug Token for Local Development
+
+When developing in a local environment, you can use a debug token to bypass App Check verification. This allows you to test your app without having to pass the App Check verification step. The debug token is a private key that should not be exposed or shared publicly.
+
+#### Steps to Generate and Register a Debug Token
+
+1. **Generate the Debug Token:**
+   - Pull the main branch and run the development server:
+     ```bash
+     npm run dev
+     ```
+   - Open the developer console, and you will see a message that includes a new debug token. <br><br>
+     ![Debug Token](../assets/app-check/app-check-debug-token-console.png)
+
+2. **Save the Debug Token:**
+   - Save the generated debug token in your `.env` file:
+     ```dotenv
+     VITE_APPCHECK_DEBUG_TOKEN=the-generated-token-from-developer-console
+     ```
+
+3. **Register the Debug Token:**
+   - This token **IS NOT** valid until it is registered on the Firebase web console.
+   - Register the token on the Firebase App Check console for **BOTH DEVELOPMENT PROJECTS**:
+     - [gse-roar-admin-dev](https://console.firebase.google.com/u/0/project/gse-roar-admin-dev/appcheck/apps)
+     - [gse-roar-assessment-dev](https://console.firebase.google.com/u/0/project/gse-roar-assessment-dev/appcheck/apps)
+   - Click the three-dots menu on the right side of the screen and select _"Manage debug tokens"_. <br><br>
+     ![Manage Debug Tokens](../assets/app-check/app-check-manage-debug-tokens.png)
+   - Within the modal, click _"Add debug token"_. 
+   - Name the token using the following pattern and copy-paste the generated debug token into the field, then click _"Done"_ to save the changes: <br><br>
+     ```plaintext
+     app-check-debug-token-{your-firstname}-{your-lastname}
+     ```
+     ![Add Debug Token](../assets/app-check/app-check-add-debug-token.png)
+
+4. **Verify Local Development Setup:**
+   - You should now be set up to run code on `localhost` without needing App Check verification.
+   - Requests made without a valid debug token will fail with the error message attached. <br><br>
+     ![Invalid Debug Token Error](../assets/app-check/app-check-error-example.png)
+
 ## Environment Setup
 
 ### Environment Variables
