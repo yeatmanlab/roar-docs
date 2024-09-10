@@ -38,7 +38,7 @@ You can generate your own by pulling the main branch and running thd dev server 
 npm run dev
 ```
 
-Open the developer console and you will see a message which includes a new debug token.
+Open the developer console, and you will see a message which includes a new debug token.
 
 ![Debug Token](../assets/app-check/app-check-debug-token-console.png)
 
@@ -47,20 +47,21 @@ Save that debug token in your .`env` file as
 VITE_APPCHECK_DEBUG_TOKEN=the-generated-token-from-developer-console
 ```
 
-This token IS NOT valid until it is registered on the Firebase web console.
+This token **IS NOT** valid until it is registered on the Firebase web console.
+<br><br>
 From there, you need to register the token on the Firebase App Check console for **BOTH DEVELOPMENT PROJECTS**:
 <br><br>
 [gse-roar-admin-dev](https://console.firebase.google.com/u/0/project/gse-roar-admin-dev/appcheck/apps)
 <br><br>
 [gse-roar-assessment-dev](https://console.firebase.google.com/u/0/project/gse-roar-assessment-dev/appcheck/apps)
 
-Click the three-dots menu on the right side of the screen and select "Manage Debug Tokens".
+Click the three-dots menu on the right side of the screen and select _"Manage debug tokens"_.
 
 ![Manage Debug Tokens](../assets/app-check/app-check-manage-debug-tokens.png)
 
-Within the modal click "Add debug token",
+Within the modal click _"Add debug token"_.
 
-Name the token whatever you'd like and copy-paste the generated debug token into the field, then click "Done" to save the changes. 
+Name the token whatever you'd like and copy-paste the generated debug token into the field, then click _"Done"_ to save the changes. 
 
 You should now be set up to run code on `localhost` without needing App Check verification.
 
