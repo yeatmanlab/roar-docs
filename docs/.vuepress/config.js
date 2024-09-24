@@ -33,6 +33,7 @@ export default defineUserConfig({
           { text: "Optimizing Assets", link: "/assets-optimization/" },
           { text: "ROAR Redivis Instance", link: "/roar-redivis/" },
           { text: "Logging and Querying", link: "/logging-and-querying/" },
+          {text: "Emulation", link: "/emulation/"}
         ],
       }
     ],
@@ -122,6 +123,12 @@ export default defineUserConfig({
         collapsable: false,
         children: getChildren("./docs/logging-and-querying"),
       },
+      {
+        text: "Emulation",
+        link: "/emulation/",
+        collapsable: false,
+        children: getChildren("./docs/emulation"),
+      }
     ],
   }),
 
