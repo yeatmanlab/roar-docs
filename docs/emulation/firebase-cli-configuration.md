@@ -1,1 +1,0 @@
-# Firebase CLI Tools and Configuration
