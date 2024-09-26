@@ -25,6 +25,7 @@ export default defineUserConfig({
           { text: "Databases", link: "/databases/" },
           { text: "Workflows", link: "/workflows/" },
           { text: "Application", link: "/application/" },
+          {text: "GitHub Actions", link: "/github-actions/"},
           { text: "Dashboard Components", link: "/dashboard-components/" },
           {text: "Firebase App Check", link: "/firebase-app-check/"},
           { text: "Cloud Functions", link: "/cloud-functions/" },
@@ -61,6 +62,25 @@ export default defineUserConfig({
             link: "/application/auth",
           }
         ]
+      },
+      {
+        text: "GitHub Actions",
+        link: "/github-actions/",
+        collapsable: false,
+        children: [
+          {
+            text: "ROAR Apps GitHub Actions",
+            link: "/github-actions/apps",
+            collapsable: false,
+            children: getChildren("./docs/github-actions/apps"),
+          },
+          {
+            text: "ROAR Dashboard GitHub Actions",
+            link: "/github-actions/dashboard",
+            collapsable: false,
+            children: getChildren("./docs/github-actions/dashboard"),
+          }
+        ],
       },
       {
         text: "Dashboard Components",
@@ -119,7 +139,7 @@ export default defineUserConfig({
       },
       {
         text: "Logging and Querying",
-        link: "/logging-and-querying-and-querying/",
+        link: "/logging-and-querying/",
         collapsable: false,
         children: getChildren("./docs/logging-and-querying"),
       },
@@ -127,7 +147,20 @@ export default defineUserConfig({
         text: "Emulation",
         link: "/emulation/",
         collapsable: false,
-        children: getChildren("./docs/emulation"),
+        children: [
+          {
+            text: "Running the Emulator",
+            link: "/emulation/running-the-emulator/",
+            collapsable: false,
+            children: getChildren("./docs/emulation/running-the-emulator"),
+          },
+          {
+            text: "Emulator Configuration Guide",
+            link: "/emulation/emulator-configuration-guide/",
+            collapsable: false,
+            children: getChildren("./docs/emulation/emulator-configuration-guide"),
+          },
+        ],
       }
     ],
   }),
