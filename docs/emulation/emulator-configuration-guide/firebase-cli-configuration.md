@@ -1,4 +1,5 @@
 # Firebase CLI Configuration
+We can use the Firebase CLI to configure the Firebase Emulator for the ROAR app. The Firebase CLI is a command-line tool that allows you to interact with Firebase services from the terminal.
 
 ## Initializing the Emulators
 

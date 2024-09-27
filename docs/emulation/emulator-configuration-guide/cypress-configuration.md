@@ -1,6 +1,33 @@
 # Cypress Configuration
 We can set up Cypress so that it can run tests against the Firebase Emulator Suite. This allows us to test the Firebase services that are used in the project locally and inspect the data that is being sent to the Firebase services.
 
+## Directory Structure
+The following directory structure is used to configure Cypress to run tests against the Firebase Emulator Suite:
+
+```
+cypress/
+├── e2e/
+│   ├── default-tests/
+│   │   ├── test1.cy.js
+│   │   ├── test2.cy.js
+│   │   ├── variant-tests/
+│   │   │   ├── test1.cy.js
+│   │   │   └── test2.cy.js
+│   ├── generateVariantTests.cy.js
+├── fixtures/
+│   ├── generatedTestTemplate.js
+│   ├── data1.json
+│   └── data2.json
+├── support/
+│   ├── commands.js
+│   ├── constants.js
+│   ├── devFirebase.js
+│   ├── devFirebaseConfig.js
+│   ├── e2e.js
+│   ├── query.js
+│   └── utils.js
+```
+
 ## cypress.config.js
 The `cypress.config.js` file is used to configure the Cypress test runner. This file is located in the root of the project directory. The following configuration options are used to setup Cypress to run tests against the Firebase Emulator Suite:
 
