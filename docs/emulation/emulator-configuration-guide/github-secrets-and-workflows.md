@@ -45,7 +45,7 @@ concurrency:
 jobs:
   firebase_emulate_and_cypress_run:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 120
     strategy:
       fail-fast: false
       matrix:
