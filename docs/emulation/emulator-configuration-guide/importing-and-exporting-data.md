@@ -6,7 +6,7 @@ To export data from the Firestore database, use the following command:
 
 ```bash
 gcloud config set project gse-roar-assessment-dev
-gsutil -m rm -r gs://roar-assessment-dev-export/emulator-exports
+gsutil -m rm -rf gs://roar-assessment-dev-export/emulator-exports
 gcloud firestore export gs://roar-assessment-dev-export/emulator-exports --collection-ids=tasks,variants
 ```
 These commands set the project to `gse-roar-assessment-dev`,

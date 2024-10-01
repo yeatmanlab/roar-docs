@@ -39,7 +39,7 @@ on:
     types: [opened, reopened, synchronize]
 
 concurrency:
-  group: ci-preview-tests-${{ github.ref }}-0
+  group: $ {{ env.CYPRESS_PARALLEL_GROUP }}
   cancel-in-progress: true
 
 jobs:
@@ -55,6 +55,7 @@ jobs:
     env:
       CYPRESS_BASE_URL: 'http://localhost:8000'
       CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      CYPRESS_PARALLEL_GROUP: ci-preview-tests-${{ github.run_id }}-${{ github.ref }}
       COMMIT_INFO_MESSAGE: E2E Tests for PR ${{ github.event.number }} "${{ github.event.pull_request.title }}" from commit "${{ github.event.pull_request.head.sha }}"
       COMMIT_INFO_SHA: ${{ github.event.pull_request.head.sha }}
       SUPER_ADMIN_USERNAME: ${{ secrets.SUPER_ADMIN_USERNAME }}
@@ -63,6 +64,8 @@ jobs:
       SUPER_ADMIN_ID: ${{ secrets.SUPER_ADMIN_ID }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       APPCHECK_DEBUG_TOKEN: ${{ secrets.APPCHECK_DEBUG_TOKEN }}
+      EXPORT_BUCKET: gs://roar-assessment-dev-export
+      EXPORT_DIR: emulator-exports-ci-${{ matrix.browser }}-${{ matrix.containers }}-${{ github.run_id }}-${{ github.job }}
 
     steps:
       - name: Checkout
@@ -84,9 +87,17 @@ jobs:
         with:
           project_id: gse-roar-assessment-dev
 
+      - name: Export Firestore Data
+        run: |
+          gcloud firestore export $EXPORT_BUCKET/$EXPORT_DIR --collection-ids=tasks,variants
+
+      - name: Download Firestore Data
+        run: |
+          gsutil -m cp -r $EXPORT_BUCKET/$EXPORT_DIR .
+
       - name: Start Firestore Emulator and Import Data
         run: |
-          npm run emulate:import &
+          npx firebase emulators:start --project=gse-roar-assessment-dev --import=./$EXPORT_DIR &
           npx wait-on tcp:4000 --timeout 60000
 
       - name: Build the App
@@ -107,7 +118,6 @@ jobs:
           parallel: false
           wait-on: ${{ env.CYPRESS_BASE_URL }}
           spec: 'cypress/e2e/generateVariantTests.cy.js'
-          ci-build-id: ${{ matrix.containers }}-${{ matrix.browser }}-${{ github.run_id }}-${{ github.ref }}
 
       - name: Cypress Default Tests
         uses: cypress-io/github-action@v6
@@ -119,5 +129,9 @@ jobs:
           wait-on: ${{ env.CYPRESS_BASE_URL }}
           spec: 'cypress/e2e/default-tests/**/*'
           wait-on-timeout: 300
-          ci-build-id: ${{ matrix.containers }}-${{ matrix.browser }}-${{ github.run_id }}-${{ github.ref }}
+
+      - name: Clean up Firestore Exports
+        if: always()
+        run: |
+          gsutil -m -q rm -rf $EXPORT_BUCKET/$EXPORT_DIR || true
 ```

@@ -82,4 +82,5 @@ ui-debug.log
 ui-debug.*.log
 firebase/
 .firebase/
+emulator-exports/
 ```

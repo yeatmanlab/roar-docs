@@ -309,13 +309,13 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { getDevFirebase } from './devFirebase';
 
 /**
- * Retrieves the Firebase app, Auth, and Firestore services for the specified environment (e.g., 'adminDev' or 'assessmentDev').
+ * Retrieves the Firebase app, Auth, and Firestore services for the specified environment.
  * This function abstracts the process of accessing Firebase services based on the provided environment name.
  *
  * @param {string} name - The environment name (e.g., 'adminDev', 'assessmentDev') used to get the corresponding Firebase configuration.
  * @returns {Object} - An object containing the Firebase app, Auth, and Firestore services for the specified environment.
  */
-export const useDevFirebase = (name) => {
+export const useFirebaseEmulator = (name) => {
   const firebase = getDevFirebase(name);
   return {
     app: firebase?.app,
