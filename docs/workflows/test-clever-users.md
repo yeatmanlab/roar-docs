@@ -1,6 +1,6 @@
 # How to Impersonate a Clever User on Localhost
 
-This guide walks you through the steps needed to impersonate a Clever user on your localhost environment for testing purposes.
+This guide walks you through the steps needed to impersonate a Clever user on your localhost for testing purposes.
 
 ## Steps to Impersonate a Clever User
 
