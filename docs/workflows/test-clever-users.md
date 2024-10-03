@@ -11,6 +11,8 @@ This guide walks you through the steps needed to impersonate a Clever user on yo
      ```
    This will start the development server and prepare the app for Clever testing.
 
+   > **Note:** You need to use `dev:live` because impersonating users through Clever requires interacting with live production data.
+
 2. **Access Clever Data Browser**
    - Open your browser and navigate to [Clever](https://apps.clever.com).
    - Log in to your Clever account.
@@ -23,6 +25,8 @@ This guide walks you through the steps needed to impersonate a Clever user on yo
 4. **Ensure Data Loading Completes**
    - Once you click `Login as {User's Name}`, it will open the `roar.education` page wait until all data is fully loaded.
    - You should be able to see the dashboard corresponding to the user you are impersonating.
+
+    > **Note** When you select "Login as {User's Name}" in Clever, a session for that user gets initialized, including authentication tokens and necessary user information. If the data hasn't fully loaded, this session might not be completely established, which can lead to login issues or incomplete data when you try to access your local application.
 
 5. **Log In on Localhost**
    - After the data is fully loaded on `roar.education`, open go to your running localhost page (`https://localhost:5173`).
