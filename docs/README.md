@@ -6,6 +6,9 @@ actions:
   - text: Databases
     link: /databases/
     type: secondary
+  - text: GitHub Actions
+    link: /github-actions/
+    type: secondary
   - text: Workflows
     link: /workflows/
     type: secondary
@@ -32,6 +35,9 @@ actions:
     type: secondary
   - text: Logging and Querying
     link: /logging-and-querying/
+    type: secondary
+  - text: Emulation
+    link: /emulation/
     type: secondary
 ---
 
