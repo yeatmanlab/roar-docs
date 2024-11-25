@@ -26,8 +26,8 @@ graph TD
   Start([Start]) --> Ugrade[Update grade]
   Ugrade --> UGfirestore[
     Update grade in
-    Firestore `/users`,
-    `/assignments`, and `/runs`
+    Firestore `/users` and
+    open `/assignments`
   ]
   UGfirestore --> GradeCheck{
     Has user been
