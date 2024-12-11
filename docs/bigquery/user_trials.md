@@ -17,7 +17,7 @@ The BigQuery table `gse-roar-assessment:assessment.user_trials` conforms to the 
 | corpus_id | STRING || |
 | correct | INTEGER || Indicates whether the response was correct |
 | correct_response | STRING || Indicates the expected correct response |
-| difficulty | FLOAT || Item difficulty parameter |
+| difficulty | STRING || Item difficulty parameter |
 | goal | STRING || |
 | internal_node_id | STRING || The internal node ID of this trial in the jsPsych timeline |
 | item | STRING || |
