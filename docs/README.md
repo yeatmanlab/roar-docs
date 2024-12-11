@@ -6,6 +6,9 @@ actions:
   - text: Databases
     link: /databases/
     type: secondary
+  - text: BigQuery
+    link: /bigquery/
+    type: secondary
   - text: GitHub Actions
     link: /github-actions/
     type: secondary
