@@ -174,6 +174,14 @@ export default defineUserConfig({
           },
         ],
       },
+      {
+        text: "Clowder Implementation",
+        link: "/clowder-implementation/",
+        collapsable: false,
+          children: getChildren(
+            "./docs/clowder-implementation"
+          ),
+      },
     ],
   }),
 
