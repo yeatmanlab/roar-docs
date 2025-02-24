@@ -9,10 +9,14 @@ export default defineUserConfig({
   base: "/roar-docs/",
 
   title: "ROAR Developer Documentation",
-  description: "Documentation for developers working on the ROAR - Rapid Online Assessment of Reading Project for Yeatmanlab at Stanford University.",
+  description:
+    "Documentation for developers working on the ROAR - Rapid Online Assessment of Reading Project for Yeatmanlab at Stanford University.",
 
   head: [
-    ['link', { rel: 'icon', type: 'image/png', href: '/roar-docs/assets/favicon.png' }],
+    [
+      "link",
+      { rel: "icon", type: "image/png", href: "/roar-docs/assets/favicon.png" },
+    ],
   ],
 
   theme: defaultTheme({
@@ -25,18 +29,18 @@ export default defineUserConfig({
           { text: "Databases", link: "/databases/" },
           { text: "Workflows", link: "/workflows/" },
           { text: "Application", link: "/application/" },
-          {text: "GitHub Actions", link: "/github-actions/"},
+          { text: "GitHub Actions", link: "/github-actions/" },
           { text: "Dashboard Components", link: "/dashboard-components/" },
-          {text: "Firebase App Check", link: "/firebase-app-check/"},
+          { text: "Firebase App Check", link: "/firebase-app-check/" },
           { text: "Cloud Functions", link: "/cloud-functions/" },
           { text: "Internationalization", link: "/internationalization/" },
           { text: "Integrating New Apps", link: "/integrating-new-apps/" },
           { text: "Optimizing Assets", link: "/assets-optimization/" },
           { text: "ROAR Redivis Instance", link: "/roar-redivis/" },
           { text: "Logging and Querying", link: "/logging-and-querying/" },
-          {text: "Emulation", link: "/emulation/"}
+          { text: "Emulation", link: "/emulation/" },
         ],
-      }
+      },
     ],
     nextLinks: true,
     prevLinks: true,
@@ -46,6 +50,12 @@ export default defineUserConfig({
         link: "/databases/",
         collapsable: false,
         children: getChildren("./docs/databases"),
+      },
+      {
+        text: "BigQuery",
+        link: "/bigquery/",
+        collapsable: false,
+        children: getChildren("./docs/bigquery"),
       },
       {
         text: "Workflows",
@@ -60,8 +70,8 @@ export default defineUserConfig({
           {
             text: "Auth",
             link: "/application/auth",
-          }
-        ]
+          },
+        ],
       },
       {
         text: "GitHub Actions",
@@ -79,7 +89,7 @@ export default defineUserConfig({
             link: "/github-actions/dashboard",
             collapsable: false,
             children: getChildren("./docs/github-actions/dashboard"),
-          }
+          },
         ],
       },
       {
@@ -103,7 +113,7 @@ export default defineUserConfig({
             text: "gse-roar-admin",
             link: "/cloud-functions/gse-roar-admin/",
             collapsable: false,
-            children: getChildren("./docs/cloud-functions/gse-roar-admin")
+            children: getChildren("./docs/cloud-functions/gse-roar-admin"),
           },
           {
             text: "gse-roar-assessment",
@@ -132,10 +142,10 @@ export default defineUserConfig({
         children: getChildren("./docs/assets-optimization"),
       },
       {
-          text: "ROAR Redivis Instance",
-          link: "/roar-redivis/",
-          collapsable: false,
-          children: getChildren("./docs/roar-redivis"),
+        text: "ROAR Redivis Instance",
+        link: "/roar-redivis/",
+        collapsable: false,
+        children: getChildren("./docs/roar-redivis"),
       },
       {
         text: "Logging and Querying",
@@ -158,10 +168,20 @@ export default defineUserConfig({
             text: "Emulator Configuration Guide",
             link: "/emulation/emulator-configuration-guide/",
             collapsable: false,
-            children: getChildren("./docs/emulation/emulator-configuration-guide"),
+            children: getChildren(
+              "./docs/emulation/emulator-configuration-guide"
+            ),
           },
         ],
-      }
+      },
+      {
+        text: "Clowder Implementation",
+        link: "/clowder-implementation/",
+        collapsable: false,
+          children: getChildren(
+            "./docs/clowder-implementation"
+          ),
+      },
     ],
   }),
 

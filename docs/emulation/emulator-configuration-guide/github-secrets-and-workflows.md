@@ -46,10 +46,12 @@ jobs:
   firebase_emulate_and_cypress_run:
     runs-on: ubuntu-latest
     timeout-minutes: 120
+    container:
+      image: cypress/browsers:latest
+      options: --user 1001
     strategy:
       fail-fast: false
       matrix:
-        browser: [chromium, edge]
         containers: [1, 2]
 
     env:
@@ -76,6 +78,12 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
 
       - name: Authenticate with Google Cloud SDK
         uses: google-github-actions/auth@v2
@@ -107,12 +115,11 @@ jobs:
         run: |
           npm run emulate:serve-ci & 
           npx wait-on http://127.0.0.1:8000 --timeout 60000;
-          echo "Server started and is accessible at http://127.0.0.1:8000"
 
       - name: Generate Variant Tests
         uses: cypress-io/github-action@v6
         with:
-          browser: ${{ matrix.browser }}
+          browser: electron
           headed: false,
           record: true
           parallel: false
@@ -122,10 +129,11 @@ jobs:
       - name: Cypress Default Tests
         uses: cypress-io/github-action@v6
         with:
-          browser: ${{ matrix.browser }}
+          browser: chrome
           headed: true
           record: true
           parallel: true
+          start: npm run emulate:serve-ci
           wait-on: ${{ env.CYPRESS_BASE_URL }}
           spec: 'cypress/e2e/default-tests/**/*'
           wait-on-timeout: 300

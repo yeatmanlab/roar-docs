@@ -6,6 +6,9 @@ actions:
   - text: Databases
     link: /databases/
     type: secondary
+  - text: BigQuery
+    link: /bigquery/
+    type: secondary
   - text: GitHub Actions
     link: /github-actions/
     type: secondary
@@ -38,6 +41,9 @@ actions:
     type: secondary
   - text: Emulation
     link: /emulation/
+    type: secondary
+  - text: Clowder Implementation
+    link: /clowder-implementation/
     type: secondary
 ---
 
