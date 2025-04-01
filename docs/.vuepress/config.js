@@ -96,7 +96,7 @@ export default defineUserConfig({
           children: [
             {
               text: "Auth",
-              link: "/application/auth",
+              link: "/developer/application/auth",
             },
           ],
         },

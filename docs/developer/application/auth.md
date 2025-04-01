@@ -17,7 +17,7 @@ npm i @bdelab/roar-firekit
 
 ## Authentication
 
-As we rely on [two distinct databases](/roar-docs/databases/), the `roar-firekit` package allows us to authenticate with
+As we rely on [two distinct databases](/roar-docs/developer/databases/), the `roar-firekit` package allows us to authenticate with
 both the admin and the assessment databases by providing the corresponding `RoarConfig` object during SDK initialization
 ([example](https://github.com/yeatmanlab/roar-dashboard/blob/main/src/config/firebaseRoar.js)).
 
