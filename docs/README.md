@@ -4,47 +4,56 @@ title: Home
 heroImage: /assets/roar-logo.svg
 actions:
   - text: Databases
-    link: /databases/
+    link: /developer/databases/
     type: secondary
   - text: BigQuery
-    link: /bigquery/
+    link: /developer/bigquery/
     type: secondary
   - text: GitHub Actions
-    link: /github-actions/
+    link: /developer/github-actions/
     type: secondary
   - text: Workflows
-    link: /workflows/
+    link: /developer/workflows/
     type: secondary
   - text: Dashboard Components
-    link: /dashboard-components/
+    link: /developer/dashboard-components/
     type: secondary
   - text: Firebase App Check
-    link: /firebase-app-check/
+    link: /developer/firebase-app-check/
     type: secondary
   - text: Cloud Functions
-    link: /cloud-functions/
+    link: /developer/cloud-functions/
     type: secondary
   - text: Internationalization
-    link: /internationalization/
+    link: /developer/internationalization/
     type: secondary
   - text: Integrating New Apps
-    link: /integrating-new-apps/
+    link: /developer/integrating-new-apps/
     type: secondary
   - text: Optimizing Assets
-    link: /assets-optimization/
+    link: /developer/assets-optimization/
     type: secondary
   - text: ROAR Redivis
-    link: /roar-redivis/
+    link: /developer/roar-redivis/
     type: secondary
   - text: Logging and Querying
-    link: /logging-and-querying/
+    link: /developer/logging-and-querying/
     type: secondary
   - text: Emulation
-    link: /emulation/
+    link: /developer/emulation/
     type: secondary
   - text: Clowder Implementation
-    link: /clowder-implementation/
+    link: /developer/clowder-implementation/
+    type: secondary
+  - text: Data Guidelines
+    link: /researcher/data-guidelines/
+    type: secondary
+  - text: Data Organization
+    link: /researcher/data-organization/
+    type: secondary
+  - text: Data Requests
+    link: /researcher/data-requests/
     type: secondary
 ---
 
-<p style="text-align: center;">This project is intended to provide documentation for developers of the ROAR Project. Developers wanting to contribute to the docs should send a pull request to the project <a href="https://github.com/yeatmanlab/roar-docs" target="_blank">GitHub repository</a>.</p>
+<p style="text-align: center;">This project is intended to provide documentation for developers and researchers of the ROAR Project. Developers wanting to contribute to the docs should send a pull request to the project <a href="https://github.com/yeatmanlab/roar-docs" target="_blank">GitHub repository</a>.</p>
