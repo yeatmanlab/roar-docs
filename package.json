@@ -18,5 +18,14 @@
     "vue": "^3.4.0",
     "vuepress": "^2.0.0-rc.18",
     "vuepress-plugin-md-enhance": "^2.0.0-rc.63"
+  },
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "keywords": [],
+  "author": "",
+  "dependencies": {
+    "express": "^5.1.0"
   }
 }
