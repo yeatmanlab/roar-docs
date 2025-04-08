@@ -1,10 +1,10 @@
 # Data Organization
 
 ## BigQuery - a tool to help researchers pull ROAR data in an efficient way  
-- Please read Adam’s documentation and introduction to BigQuery. 
-    1. Installing BigQuery
-    2. Learning SQL to query data
-    3. Exporting data to a google cloud bucket 
+- Please read Adam’s documentation and introduction to [BigQuery](https://yeatmanlab.github.io/roar-docs/bigquery/). 
+    1. [Installing BigQuery](https://yeatmanlab.github.io/roar-docs/bigquery/#installation-and-initialization)
+    2. [Learning SQL to query data](https://yeatmanlab.github.io/roar-docs/bigquery/#querying-data)
+    3. [Exporting data to a google cloud bucket](https://yeatmanlab.github.io/roar-docs/bigquery/#exporting-large-queries-to-a-google-cloud-bucket) 
     4. Learn more about ROAR data through the BigQuery Schemas 
 
 ## Guidelines to organizing pulled data
@@ -22,7 +22,7 @@
 5. In the google bucket, you will find a large set of csv’s which should be labeled with year-month-day_assessment_abbreviation_all_runs_###############.csv. 
 6. Select all of the ones you would like to download. Google bucket will create code for you to download to your system. 
 7. Create a singular folder with all downloaded csv’s.
-8. Direct yourself to the GitHub Repository “Clean-ROAR-Data”. 
+8. Direct yourself to the GitHub Repository “[Clean-ROAR-Data](https://github.com/yeatmanlab/Clean-ROAR-Data)”. 
 9. Clone the repository by clicking the “<> Code” button → “Open with GitHub Desktop” OR “Clone using the web URL”. 
 10. Find the Rmd file that matches the assessment suite of the data you have pulled. (e.g., if you pull Morphology runs, direct yourself to Clean_ROARComp_Runs.Rmd). 
 11. Find the code chunks that match the assessment of the data you have pulled. 
@@ -71,7 +71,7 @@ WHERE
 5. In the google bucket, you will find a large set of csv’s which should be labeled with year-month-day_assessment_abbreviation_alltrials_###############.csv. 
 6. Select all of the ones you would like to download. Google bucket will create code for you to download to your system. 
 7. Create a singular folder with all downloaded csv’s.
-8. Direct yourself to the GitHub Repository “Clean-ROAR-Data”. 
+8. Direct yourself to the GitHub Repository “[Clean-ROAR-Data](https://github.com/yeatmanlab/Clean-ROAR-Data)”. 
 9. Clone the repository by clicking the “<> Code” button → “Open with GitHub Desktop” OR “Clone using the web URL”. 
 10. Find the Rmd file that matches the assessment suite of the data you have pulled. (e.g., if you pull Morphology trials, direct yourself to Clean_ROARComp_Trials.Rmd). 
 11. Find the code chunks that match the assessment of the data you have pulled. 
