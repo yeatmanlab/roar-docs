@@ -1,18 +1,17 @@
-# @roar-firebase-functions/core
+# Overview
+## @roar-firebase-functions/core
 
-**@roar-firebase-functions/core**
+This documentation covers the complete API for the ROAR Firebase Functions core library, organized into the following sections:
 
-***
-
-# @roar-firebase-functions/core
-
-## Enumerations
+### [Enumerations](enumerations/README.md)
+Type-safe sets of named constants used throughout the system, including collection types, SSO provider types, and query operators.
 
 - [CollectionType](enumerations/CollectionType.md)
 - [IdentityProviderType](enumerations/IdentityProviderType.md)
 - [Operator](enumerations/Operator.md)
 
-## Classes
+### [Classes](classes/README.md)
+Core implementation classes organized into repository classes for data access, error classes for handling exceptions, and utility classes for support functionality.
 
 - [AdministrationServiceError](classes/AdministrationServiceError.md)
 - [FirebaseClientError](classes/FirebaseClientError.md)
@@ -32,7 +31,8 @@
 - [FirestoreUserRepositoryError](classes/FirestoreUserRepositoryError.md)
 - [IdentityProviderServiceError](classes/IdentityProviderServiceError.md)
 
-## Interfaces
+### [Interfaces](interfaces/README.md)
+Core data structures and contracts covering administration, identity/authorization, organizations, repositories, parameters, Firestore implementation, and legal documentation.
 
 - [\_setAdministrationIdsParams](interfaces/setAdministrationIdsParams.md)
 - [Administration](interfaces/Administration.md)
@@ -90,7 +90,8 @@
 - [UserClaim](interfaces/UserClaim.md)
 - [UserClaimBaseRepository](interfaces/UserClaimBaseRepository.md)
 
-## Type Aliases
+### [Type Aliases](type-aliases/README.md)
+Reusable type definitions for filters, Firestore events, parameter values and conditions.
 
 - [BaseFilter](type-aliases/BaseFilter.md)
 - [ComparisonOperator](type-aliases/ComparisonOperator.md)
@@ -102,14 +103,16 @@
 - [ParameterValue](type-aliases/ParameterValue.md)
 - [SelectAllCondition](type-aliases/SelectAllCondition.md)
 
-## Variables
+### [Variables](variables/README.md)
+Essential Firebase client instances and system constants providing access to Firebase services and configuration.
 
 - [FirebaseAppClient](variables/FirebaseAppClient.md)
 - [FirebaseAuthClient](variables/FirebaseAuthClient.md)
 - [FirestoreClient](variables/FirestoreClient.md)
 - [ORG\_NAMES](variables/ORG_NAMES.md)
 
-## Functions
+### [Functions](functions/README.md)
+Utility and factory functions for service creation, data processing and system setup.
 
 - [chunkOrgs](functions/chunkOrgs.md)
 - [createAdministrationService](functions/createAdministrationService.md)
