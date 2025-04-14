@@ -20,7 +20,8 @@ Each level in this chain serves a specific purpose:
 class AdministrationService {
   constructor(
     private adminRepo: AdministrationBaseRepository,
-    private orgRepo: OrgBaseRepository
+    private orgRepo: OrgBaseRepository,
+    private userClaimRepo: UserClaimBaseRepository
   ) {}
 
   async getAdministration(id: string): Promise<Result<Administration>> {
