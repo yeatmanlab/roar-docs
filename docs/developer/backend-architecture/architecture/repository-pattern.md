@@ -1,5 +1,78 @@
 # Repository Pattern Architecture in ROAR
 
+The ROAR backend implements a sophisticated repository pattern that provides a flexible and maintainable approach to data access. This architecture is illustrated through three key structural layers:
+
+## 1. Base Repository Interface Layer
+
+The foundation of our repository pattern is the generic `BaseRepository<T>` interface, which defines standard CRUD operations:
+
+- create()
+- get()
+- getAll()
+- update()
+- delete()
+- runTransaction()
+
+This interface ensures consistent data access patterns across all entity types while maintaining type safety through generics.
+
+## 2. Specialized Repository Interfaces
+
+Building on the base interface, we define specialized repository interfaces for specific entity types:
+
+- AdministrationBaseRepository
+- UserBaseRepository
+- UserClaimBaseRepository
+- IdentityProviderBaseRepository
+- OrgBaseRepository
+
+Each specialized interface extends BaseRepository and adds entity-specific operations where needed. For example:
+
+- AdministrationBaseRepository adds `getByName()`
+- UserClaimBaseRepository adds `getByRoarUid()`
+- IdentityProviderBaseRepository adds `getByProviderId()`
+
+## 3. Concrete Implementation Layer
+
+These concrete implementations encapsulate the logic required to operate within the context of that backend. The classes of the concrete implementation extend the contract defined by the base repository classes. In the example of Firestore, the FirestoreBaseRepository class provides a Firestore-specific implementation of the base repository contract which encapsulates the Firestore-specific logic required to interact with Firestore.
+
+A Postgres or SQL implementation could be built by extending the base repository contract and implementing the required methods.
+
+The concrete implementation layer is built around Firestore as the data store:
+
+### FirestoreBaseRepository
+
+An abstract class that:
+
+- Implements the BaseRepository interface
+- Provides Firestore-specific functionality
+- Manages collection references and groups
+- Handles filtering and transactions
+- Serves as the foundation for all Firestore-specific repositories
+
+### Concrete Repositories
+
+Each entity type has its own concrete repository class that:
+
+- Extends FirestoreBaseRepository
+- Implements its corresponding specialized interface
+- Provides entity-specific implementation details
+- Manages Firestore collections for that entity
+
+### Supporting Components
+
+- FirestoreFilterAdapter: Transforms generic filters into Firestore-compatible queries
+- FirestoreImplementation: Acts as a factory, providing access to repository and service instances
+
+## Benefits of This Architecture
+
+1. **Abstraction**: The interface-based approach abstracts data access details from business logic
+2. **Flexibility**: Easily switch between different data stores by implementing new concrete repositories
+3. **Type Safety**: Generic typing ensures compile-time type checking
+4. **Maintainability**: Consistent patterns make the codebase easier to maintain
+5. **Testability**: Interface-based design enables easy mocking for unit tests
+6. **Scalability**: New entity types can be added by following the established pattern
+
+## Base Repository Hierarchy
 ```mermaid
 classDiagram
 %% Base Repository Interface
@@ -53,104 +126,7 @@ class BaseRepository~T~ {
     note for OrgBaseRepository "Manages Organization entities\\nAdds method to get administration IDs from orgs"
 ```
 
-```mermaid
-classDiagram
-%% Base Repository Interfaces
-class BaseRepository~T~ {
-<<interface>>
-+create(params): Promise~Result~T~~
-+get(params): Promise~Result~T~ | Result~T~[]~
-+getAll(params): Promise~Result~T~[]~
-+update(params): Promise~Result~T~~
-+delete(params): Promise~void~
-+runTransaction(params): Promise~any~
-}
-
-    class AdministrationBaseRepository {
-    <<interface>>
-    +getByName(params): Promise~Result~Administration~[]~
-    }
-
-    class UserBaseRepository {
-    <<interface>>
-    }
-
-    class UserClaimBaseRepository {
-    <<interface>>
-    +getByRoarUid(params): Promise~Result~UserClaim~~
-    }
-
-    class IdentityProviderBaseRepository {
-    <<interface>>
-    +getByProviderId(params): Promise~Result~IdentityProvider~[]~
-    }
-
-    class OrgBaseRepository {
-    <<interface>>
-    +getAdministrationIdsFromOrgs(params): Promise~string[]~
-    }
-
-    %% Firestore Base Repository
-    class FirestoreBaseRepository~T~ {
-    <<abstract>>
-    #collection: CollectionReference
-    #collectionGroup: CollectionGroup
-    #collectionType: CollectionType
-    #filterAdapter: FirestoreFilterAdapter
-    +getCollection(): CollectionReference
-    +getCollectionGroup(): CollectionGroup
-    +getCollectionType(): CollectionType
-    +get(params): Promise~Result~T~ | Result~T~[]~
-    +getById(params): Promise~Result~T~~
-    +fetchDocument(params): Promise~Result~T~~
-    +getAll(): Promise~Result~T~[]~
-    +create(params): Promise~Result~T~~
-    +update(params): Promise~Result~T~~
-    +delete(params): Promise~void~
-    +getWithFilters(params): Promise~Result~T~[]~
-    +runTransaction(params): Promise~any~
-    }
-
-    %% Concrete Firestore Repositories
-    class FirestoreAdministrationRepository {
-    +getByName(params): Promise~Result~Administration~[]~
-    }
-
-    class FirestoreUserRepository {
-    }
-
-    class FirestoreUserClaimRepository {
-    +getByRoarUid(params): Promise~Result~UserClaim~~
-    }
-
-    class FirestoreIdentityProviderRepository {
-    +getByProviderId(params): Promise~Result~IdentityProvider~[]~
-    }
-
-    class FirestoreOrgRepository {
-    +getAdministrationIdsFromOrgs(params): Promise~string[]~
-    }
-
-    %% Define implementation relationships
-    BaseRepository <|.. FirestoreBaseRepository : implements
-
-    FirestoreBaseRepository <|-- FirestoreAdministrationRepository : extends with Administration type
-    FirestoreBaseRepository <|-- FirestoreUserRepository : extends with User type
-    FirestoreBaseRepository <|-- FirestoreUserClaimRepository : extends with UserClaim type
-    FirestoreBaseRepository <|-- FirestoreIdentityProviderRepository : extends with IdentityProvider type
-    FirestoreBaseRepository <|-- FirestoreOrgRepository : extends with OrgBase type
-
-    AdministrationBaseRepository <|.. FirestoreAdministrationRepository : implements
-    UserBaseRepository <|.. FirestoreUserRepository : implements
-    UserClaimBaseRepository <|.. FirestoreUserClaimRepository : implements
-    IdentityProviderBaseRepository <|.. FirestoreIdentityProviderRepository : implements
-    OrgBaseRepository <|.. FirestoreOrgRepository : implements
-
-    %% Add notes to explain the implementation pattern
-    note for FirestoreBaseRepository "Abstract class implementing common\\nrepository operations using Firestore"
-    note for FirestoreAdministrationRepository "Concrete implementation for\\nAdministration entities in Firestore"
-```
-
+## Firestore Implementation
 ```mermaid
 classDiagram
 %% Base Repository Interface
