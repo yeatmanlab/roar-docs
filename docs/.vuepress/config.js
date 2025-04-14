@@ -25,6 +25,7 @@ export default defineUserConfig({
     navbar: [
       {
         text: "Developer",
+        collapsible: true,
         children: [
           { text: "Databases", link: "/developer/databases/" },
           { text: "Workflows", link: "/developer/workflows/" },
@@ -39,6 +40,10 @@ export default defineUserConfig({
             link: "/developer/firebase-app-check/",
           },
           { text: "Cloud Functions", link: "/developer/cloud-functions/" },
+          {
+            text: "Backend Architecture",
+            link: "/developer/backend-architecture/",
+          },
           {
             text: "Internationalization",
             link: "/developer/internationalization/",
@@ -61,6 +66,7 @@ export default defineUserConfig({
       },
       {
         text: "Researcher",
+        collapsible: true,
         children: [
           { text: "Data Guidelines", link: "/researcher/data-guidelines/" },
           { text: "Data Organization", link: "/researcher/data-organization/" },
@@ -75,48 +81,49 @@ export default defineUserConfig({
         {
           text: "Databases",
           link: "/developer/databases/",
-          collapsable: false,
+          collapsible: true,
           children: getChildren("./docs/developer/databases"),
         },
         {
           text: "BigQuery",
           link: "/developer/bigquery/",
-          collapsable: false,
+          collapsible: true,
           children: getChildren("./docs/developer/bigquery"),
         },
         {
           text: "Workflows",
           link: "/developer/workflows/",
-          collapsable: false,
+          collapsible: true,
           children: getChildren("./docs/developer/workflows"),
         },
         {
           text: "Application",
-          collapsable: false,
+          collapsible: true,
           children: [
             {
               text: "Auth",
               link: "/developer/application/auth",
+              collapsible: true,
             },
           ],
         },
         {
           text: "GitHub Actions",
           link: "/developer/github-actions/",
-          collapsable: false,
+          collapsible: true,
           children: [
             {
               text: "ROAR Apps GitHub Actions",
               link: "/developer/github-actions/apps",
-              collapsable: false,
+              collapsible: true,
               children: getChildren("./docs/developer/github-actions/apps"),
             },
             {
               text: "ROAR Dashboard GitHub Actions",
               link: "/developer/github-actions/dashboard",
-              collapsable: false,
+              collapsible: true,
               children: getChildren(
-                "./docs/developer/github-actions/dashboard"
+                "./docs/developer/github-actions/dashboard",
               ),
             },
           ],
@@ -124,34 +131,120 @@ export default defineUserConfig({
         {
           text: "Dashboard Components",
           link: "/developer/dashboard-components/",
-          collapsable: false,
+          collapsible: true,
           children: getChildren("./docs/developer/dashboard-components"),
         },
         {
           text: "Firebase App Check",
           link: "/developer/firebase-app-check/",
-          collapsable: false,
+          collapsible: true,
           children: getChildren("./docs/developer/firebase-app-check"),
+        },
+        {
+          text: "Backend Architecture",
+          link: "/developer/backend-architecture/",
+          collapsible: true,
+          children: [
+            {
+              text: "Architecture",
+              link: "/developer/backend-architecture/architecture/",
+              collapsible: true,
+              children: getChildren(
+                "./docs/developer/backend-architecture/architecture",
+              ),
+            },
+            {
+              text: "API",
+              link: "/developer/backend-architecture/api/",
+              collapsible: true,
+              children: [
+                {
+                  text: "Classes",
+                  link: "/developer/backend-architecture/api/classes/",
+                  collapsible: true,
+                  children: getChildren(
+                    "./docs/developer/backend-architecture/api/classes",
+                  ),
+                },
+                {
+                  text: "Enumerations",
+                  link: "/developer/backend-architecture/api/enumerations/",
+                  collapsible: true,
+                  children: getChildren(
+                    "./docs/developer/backend-architecture/api/enumerations",
+                  ),
+                },
+                {
+                  text: "Functions",
+                  link: "/developer/backend-architecture/api/functions/",
+                  collapsible: true,
+                  children: getChildren(
+                    "./docs/developer/backend-architecture/api/functions",
+                  ),
+                },
+                {
+                  text: "Interfaces",
+                  link: "/developer/backend-architecture/api/interfaces/",
+                  collapsible: true,
+                  children: getChildren(
+                    "./docs/developer/backend-architecture/api/interfaces",
+                  ),
+                },
+                {
+                  text: "Type Aliases",
+                  link: "/developer/backend-architecture/api/type-aliases/",
+                  collapsible: true,
+                  children: getChildren(
+                    "./docs/developer/backend-architecture/api/type-aliases",
+                  ),
+                },
+                {
+                  text: "Variables",
+                  link: "/developer/backend-architecture/api/variables/",
+                  collapsible: true,
+                  children: getChildren(
+                    "./docs/developer/backend-architecture/api/variables",
+                  ),
+                },
+              ],
+            },
+            {
+              text: "Examples",
+              link: "/developer/backend-architecture/examples/",
+              collapsible: true,
+              children: getChildren(
+                "./docs/developer/backend-architecture/examples",
+              ),
+            },
+            {
+              text: "Guides",
+              link: "/developer/backend-architecture/guides/",
+              collapsible: true,
+              children: getChildren(
+                "./docs/developer/backend-architecture/guides",
+              ),
+            },
+          ],
         },
         {
           text: "Cloud Functions",
           link: "/developer/cloud-functions/",
-          collapsable: false,
+          collapsible: true,
           children: [
             {
               text: "gse-roar-admin",
               link: "/developer/cloud-functions/gse-roar-admin/",
-              collapsable: false,
+              collapsible: true,
               children: getChildren(
-                "./docs/developer/cloud-functions/gse-roar-admin"
+                "./docs/developer/cloud-functions/gse-roar-admin",
               ),
             },
             {
               text: "gse-roar-assessment",
               link: "/developer/cloud-functions/gse-roar-assessment/",
-              collapsable: false,
+              collapsible: true,
               children: getChildren(
-                "./docs/developer/cloud-functions/gse-roar-assessment"
+                "./docs/developer/cloud-functions/gse-roar-assessment",
               ),
             },
           ],
@@ -159,52 +252,52 @@ export default defineUserConfig({
         {
           text: "Internationalization",
           link: "/developer/internationalization/",
-          collapsable: false,
+          collapsible: true,
           children: getChildren("./docs/developer/internationalization"),
         },
         {
           text: "Integrating New Apps",
           link: "/developer/integrating-new-apps/",
-          collapsable: false,
+          collapsible: true,
           children: getChildren("./docs/developer/integrating-new-apps"),
         },
         {
           text: "Assets Optimization",
           link: "/developer/assets-optimization/",
-          collapsable: false,
+          collapsible: true,
           children: getChildren("./docs/developer/assets-optimization"),
         },
         {
           text: "ROAR Redivis Instance",
           link: "/developer/roar-redivis/",
-          collapsable: false,
+          collapsible: true,
           children: getChildren("./docs/developer/roar-redivis"),
         },
         {
           text: "Logging and Querying",
           link: "/developer/logging-and-querying/",
-          collapsable: false,
+          collapsible: true,
           children: getChildren("./docs/developer/logging-and-querying"),
         },
         {
           text: "Emulation",
           link: "/developer/emulation/",
-          collapsable: false,
+          collapsible: true,
           children: [
             {
               text: "Running the Emulator",
               link: "/developer/emulation/running-the-emulator/",
-              collapsable: false,
+              collapsible: true,
               children: getChildren(
-                "./docs/developer/emulation/running-the-emulator"
+                "./docs/developer/emulation/running-the-emulator",
               ),
             },
             {
               text: "Emulator Configuration Guide",
               link: "/developer/emulation/emulator-configuration-guide/",
-              collapsable: false,
+              collapsible: true,
               children: getChildren(
-                "./docs/developer/emulation/emulator-configuration-guide"
+                "./docs/developer/emulation/emulator-configuration-guide",
               ),
             },
           ],
@@ -212,7 +305,7 @@ export default defineUserConfig({
         {
           text: "Clowder Implementation",
           link: "/developer/clowder-implementation/",
-          collapsable: false,
+          collapsible: true,
           children: getChildren("./docs/developer/clowder-implementation"),
         },
       ],
@@ -220,19 +313,19 @@ export default defineUserConfig({
         {
           text: "Data Organization",
           link: "/researcher/data-organization/",
-          collapsable: false,
+          collapsible: true,
           children: getChildren("./docs/researcher/data-organization"),
         },
         {
           text: "Data Guidelines",
           link: "/researcher/data-guidelines/",
-          collapsable: false,
+          collapsible: true,
           children: getChildren("./docs/researcher/data-guidelines"),
         },
         {
           text: "Data Requests",
           link: "/researcher/data-requests/",
-          collapsable: false,
+          collapsible: true,
           children: getChildren("./docs/researcher/data-requests"),
         },
       ],

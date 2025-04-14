@@ -21,6 +21,9 @@ actions:
   - text: Firebase App Check
     link: /developer/firebase-app-check/
     type: secondary
+  - text: Backend Architecture
+    link: /developer/backend-architecture/
+    type: secondary
   - text: Cloud Functions
     link: /developer/cloud-functions/
     type: secondary
