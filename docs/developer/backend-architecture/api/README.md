@@ -1,16 +1,14 @@
-# API Architecture in ROAR
-
 **@roar-firebase-functions/core**
 
----
+***
 
 # @roar-firebase-functions/core
 
 ## Enumerations
 
-- [CollectionType](./enumerations/CollectionType.md)
-- [IdentityProviderType](./enumerations/IdentityProviderType.md)
-- [Operator](./enumerations/Operator.md)
+- [CollectionType](enumerations/CollectionType.md)
+- [IdentityProviderType](enumerations/IdentityProviderType.md)
+- [Operator](enumerations/Operator.md)
 
 ## Classes
 
@@ -107,7 +105,7 @@
 - [FirebaseAppClient](variables/FirebaseAppClient.md)
 - [FirebaseAuthClient](variables/FirebaseAuthClient.md)
 - [FirestoreClient](variables/FirestoreClient.md)
-- [ORG_NAMES](variables/ORG_NAMES.md)
+- [ORG\_NAMES](variables/ORG_NAMES.md)
 
 ## Functions
 
