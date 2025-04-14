@@ -1,4 +1,4 @@
-# Service Layer Architecture in ROAR
+# Service Layer Architecture
 
 ## Core Principles
 
@@ -6,7 +6,6 @@
 The service layer operates on a chain of repository abstractions that provide increasingly specialized functionality:
 
 ```typescript
-// Example abstraction chain
 BaseRepository<T>
   └─> AdministrationBaseRepository
        └─> FirestoreAdministrationRepository
@@ -18,23 +17,21 @@ Each level in this chain serves a specific purpose:
 - **Concrete Implementations**: Provide actual database interactions
 
 ```typescript
-// Example service construction
 class AdministrationService {
   constructor(
-    private adminRepo: AdministrationBaseRepository, // Interface, not implementation
+    private adminRepo: AdministrationBaseRepository,
     private orgRepo: OrgBaseRepository
   ) {}
 
   async getAdministration(id: string): Promise<Result<Administration>> {
-    // Works with any repository implementation
     return this.adminRepo.get({ id });
   }
 }
 ```
 
 ```typescript
-// Example data contract
 interface Result<T> {
+  id: string;
   data: T;
   error?: Error;
   metadata?: Record<string, unknown>;
@@ -70,14 +67,12 @@ The service layer in ROAR's repository pattern is implemented through factory fu
 
 ### Service Creation Example
 ```typescript
-// Creating an administration service
 const adminService = createAdministrationService({
   administrationRepository, // AdministrationBaseRepository implementation
   orgRepository,           // OrgBaseRepository implementation
   userClaimRepository     // UserClaimBaseRepository implementation
 });
 
-// Creating an identity provider service
 const idpService = createIdentityProviderService({
   identityProviderRepository, // IdentityProviderBaseRepository implementation
   userClaimRepository,       // UserClaimBaseRepository implementation
