@@ -40,6 +40,10 @@ export default defineUserConfig({
           },
           { text: "Cloud Functions", link: "/developer/cloud-functions/" },
           {
+            text: "Backend Architecture",
+            link: "/developer/backend-architecture/",
+          },
+          {
             text: "Internationalization",
             link: "/developer/internationalization/",
           },
@@ -116,7 +120,7 @@ export default defineUserConfig({
               link: "/developer/github-actions/dashboard",
               collapsable: false,
               children: getChildren(
-                "./docs/developer/github-actions/dashboard"
+                "./docs/developer/github-actions/dashboard",
               ),
             },
           ],
@@ -134,6 +138,12 @@ export default defineUserConfig({
           children: getChildren("./docs/developer/firebase-app-check"),
         },
         {
+          text: "Backend Architecture",
+          link: "/developer/backend-architecture/",
+          collapsable: false,
+          children: getChildren("./docs/developer/backend-architecture"),
+        },
+        {
           text: "Cloud Functions",
           link: "/developer/cloud-functions/",
           collapsable: false,
@@ -143,7 +153,7 @@ export default defineUserConfig({
               link: "/developer/cloud-functions/gse-roar-admin/",
               collapsable: false,
               children: getChildren(
-                "./docs/developer/cloud-functions/gse-roar-admin"
+                "./docs/developer/cloud-functions/gse-roar-admin",
               ),
             },
             {
@@ -151,7 +161,7 @@ export default defineUserConfig({
               link: "/developer/cloud-functions/gse-roar-assessment/",
               collapsable: false,
               children: getChildren(
-                "./docs/developer/cloud-functions/gse-roar-assessment"
+                "./docs/developer/cloud-functions/gse-roar-assessment",
               ),
             },
           ],
@@ -196,7 +206,7 @@ export default defineUserConfig({
               link: "/developer/emulation/running-the-emulator/",
               collapsable: false,
               children: getChildren(
-                "./docs/developer/emulation/running-the-emulator"
+                "./docs/developer/emulation/running-the-emulator",
               ),
             },
             {
@@ -204,7 +214,7 @@ export default defineUserConfig({
               link: "/developer/emulation/emulator-configuration-guide/",
               collapsable: false,
               children: getChildren(
-                "./docs/developer/emulation/emulator-configuration-guide"
+                "./docs/developer/emulation/emulator-configuration-guide",
               ),
             },
           ],
