@@ -1,3 +1,5 @@
+# @roar-firebase-functions/core
+
 **@roar-firebase-functions/core**
 
 ***
