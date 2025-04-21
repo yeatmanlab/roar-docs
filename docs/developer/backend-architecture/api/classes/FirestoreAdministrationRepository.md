@@ -1,15 +1,15 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / FirestoreAdministrationRepository
 
 # Class: FirestoreAdministrationRepository
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreAdministrationRepository.repository.firestore.ts:19](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreAdministrationRepository.repository.firestore.ts#L19)
+Defined in: [packages/core/src/repositories/firestore/FirestoreAdministrationRepository.repository.firestore.ts:19](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreAdministrationRepository.repository.firestore.ts#L19)
 
 The AdministrationRepository class is used to interact with the Firestore Administrations collection.
- AdministrationRepository
+AdministrationRepository
 
 ## Throws
 
@@ -33,7 +33,7 @@ AdministrationRepositoryError - Thrown if an error occurs.
 
 > **new FirestoreAdministrationRepository**(): `FirestoreAdministrationRepository`
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreAdministrationRepository.repository.firestore.ts:23](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreAdministrationRepository.repository.firestore.ts#L23)
+Defined in: [packages/core/src/repositories/firestore/FirestoreAdministrationRepository.repository.firestore.ts:23](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreAdministrationRepository.repository.firestore.ts#L23)
 
 #### Returns
 
@@ -49,7 +49,7 @@ Defined in: [packages/core/src/repositories/firestore/FirestoreAdministrationRep
 
 > `protected` **collection**: `CollectionReference`
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:46](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L46)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:46](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L46)
 
 Collection reference
 
@@ -57,13 +57,13 @@ Collection reference
 
 [`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`collection`](FirestoreBaseRepository.md#collection)
 
-***
+---
 
 ### collectionGroup
 
 > `protected` **collectionGroup**: `CollectionGroup`
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:47](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L47)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:47](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L47)
 
 Collection group reference
 {getCollectionName} - Get collection reference
@@ -83,25 +83,25 @@ Collection group reference
 
 [`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`collectionGroup`](FirestoreBaseRepository.md#collectiongroup)
 
-***
+---
 
 ### collectionType
 
 > `protected` **collectionType**: [`CollectionType`](../enumerations/CollectionType.md)
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:48](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L48)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:48](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L48)
 
 #### Inherited from
 
 [`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`collectionType`](FirestoreBaseRepository.md#collectiontype)
 
-***
+---
 
 ### filterAdapter
 
 > `protected` **filterAdapter**: [`FirestoreFilterAdapter`](FirestoreFilterAdapter.md)
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:49](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L49)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:49](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L49)
 
 #### Inherited from
 
@@ -109,112 +109,105 @@ Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.re
 
 ## Methods
 
-### create()
+### getByName()
 
-> **create**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>\>
+> **getByName**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>[]\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:229](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L229)
+Defined in: [packages/core/src/repositories/firestore/FirestoreAdministrationRepository.repository.firestore.ts:36](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreAdministrationRepository.repository.firestore.ts#L36)
 
-Creates a new entity in the repository.
+Retrieves administrations by name by wrapping the BaseRepository's getWithFilters method
 
 #### Parameters
 
 ##### params
 
-[`FirestoreCreateParams`](../interfaces/FirestoreCreateParams.md)
+[`FirestoreGetByNameParams`](../interfaces/FirestoreGetByNameParams.md)
 
-CreateParams
+The GetAdministrationsByNameParams object.
 
 #### Returns
 
-`Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>\>
+`Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>[]\>
 
-- Document data or null
+A list of administrations.
 
 #### Throws
 
-- Error creating document
+AdministrationRepositoryError
 
 #### Implementation of
 
-[`AdministrationBaseRepository`](../interfaces/AdministrationBaseRepository.md).[`create`](../interfaces/AdministrationBaseRepository.md#create)
+[`AdministrationBaseRepository`](../interfaces/AdministrationBaseRepository.md).[`getByName`](../interfaces/AdministrationBaseRepository.md#getbyname)
 
-#### Inherited from
+---
 
-[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`create`](FirestoreBaseRepository.md#create)
+### getCollection()
 
-***
+> **getCollection**(): `CollectionReference`
 
-### delete()
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:66](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L66)
 
-> **delete**(`params`): `Promise`\<`void`\>
-
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:280](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L280)
-
-Deletes an entity from the repository.
-
-#### Parameters
-
-##### params
-
-[`FirestoreDeleteParams`](../interfaces/FirestoreDeleteParams.md)
-
-DeleteParams
+Get collection reference
+getCollection
 
 #### Returns
 
-`Promise`\<`void`\>
+`CollectionReference`
 
-#### Throws
-
-- Error deleting document
-
-#### Implementation of
-
-[`AdministrationBaseRepository`](../interfaces/AdministrationBaseRepository.md).[`delete`](../interfaces/AdministrationBaseRepository.md#delete)
+- Collection reference
 
 #### Inherited from
 
-[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`delete`](FirestoreBaseRepository.md#delete)
+[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getCollection`](FirestoreBaseRepository.md#getcollection)
 
-***
+---
 
-### fetchDocument()
+### getCollectionGroup()
 
-> **fetchDocument**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>\>
+> **getCollectionGroup**(): `CollectionGroup`
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:178](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L178)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:75](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L75)
 
-Helper function to fetch a document
- fetchDocument
-
-#### Parameters
-
-##### params
-
-[`FirestoreFetchDocumentParams`](../interfaces/FirestoreFetchDocumentParams.md)
-
-FetchDocumentParams
+Get collection group reference
+getCollectionGroup
 
 #### Returns
 
-`Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>\>
+`CollectionGroup`
 
-- Document data or null
-
-#### Throws
-
-- Error fetching document
+- Collection group reference
 
 #### Inherited from
 
-[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`fetchDocument`](FirestoreBaseRepository.md#fetchdocument)
+[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getCollectionGroup`](FirestoreBaseRepository.md#getcollectiongroup)
 
-***
+---
+
+### getCollectionType()
+
+> **getCollectionType**(): [`CollectionType`](../enumerations/CollectionType.md)
+
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:84](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L84)
+
+Get collection type
+getCollectionType
+
+#### Returns
+
+[`CollectionType`](../enumerations/CollectionType.md)
+
+- Collection type
+
+#### Inherited from
+
+[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getCollectionType`](FirestoreBaseRepository.md#getcollectiontype)
+
+---
 
 ### get()
 
 Get document(s) based on parameters
+
 - If `id` is provided, returns a single document
 - If `filters` are provided, returns multiple documents that match the filters
 - Requires either `id` or `filters` to be specified
@@ -251,10 +244,10 @@ If neither ID nor filters are provided
 
 > **get**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:94](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L94)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:94](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L94)
 
 Get document by ID
- get
+get
 
 ##### Parameters
 
@@ -310,10 +303,10 @@ If neither ID nor filters are provided
 
 > **get**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>[]\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:102](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L102)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:102](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L102)
 
 Get documents by filters
- get
+get
 
 ##### Parameters
 
@@ -365,44 +358,16 @@ If neither ID nor filters are provided
 
 [`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`get`](FirestoreBaseRepository.md#get)
 
-***
-
-### getAll()
-
-> **getAll**(): `Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>[]\>
-
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:204](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L204)
-
-Retrieves all entities with optional filtering.
-
-#### Returns
-
-`Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>[]\>
-
-- Array of document data
-
-#### Throws
-
-- Error getting all documents
-
-#### Implementation of
-
-[`AdministrationBaseRepository`](../interfaces/AdministrationBaseRepository.md).[`getAll`](../interfaces/AdministrationBaseRepository.md#getall)
-
-#### Inherited from
-
-[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getAll`](FirestoreBaseRepository.md#getall)
-
-***
+---
 
 ### getById()
 
 > **getById**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:154](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L154)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:154](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L154)
 
 Helper function to get document by ID
- getById
+getById
 
 #### Parameters
 
@@ -426,111 +391,183 @@ GetByIdParams
 
 [`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getById`](FirestoreBaseRepository.md#getbyid)
 
-***
+---
 
-### getByName()
+### fetchDocument()
 
-> **getByName**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>[]\>
+> **fetchDocument**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreAdministrationRepository.repository.firestore.ts:36](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreAdministrationRepository.repository.firestore.ts#L36)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:178](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L178)
 
-Retrieves administrations by name by wrapping the BaseRepository's getWithFilters method
+Helper function to fetch a document
+fetchDocument
 
 #### Parameters
 
 ##### params
 
-[`FirestoreGetByNameParams`](../interfaces/FirestoreGetByNameParams.md)
+[`FirestoreFetchDocumentParams`](../interfaces/FirestoreFetchDocumentParams.md)
 
-The GetAdministrationsByNameParams object.
+FetchDocumentParams
+
+#### Returns
+
+`Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>\>
+
+- Document data or null
+
+#### Throws
+
+- Error fetching document
+
+#### Inherited from
+
+[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`fetchDocument`](FirestoreBaseRepository.md#fetchdocument)
+
+---
+
+### getAll()
+
+> **getAll**(): `Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>[]\>
+
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:204](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L204)
+
+Retrieves all entities with optional filtering.
 
 #### Returns
 
 `Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>[]\>
 
-A list of administrations.
+- Array of document data
 
 #### Throws
 
-AdministrationRepositoryError
+- Error getting all documents
 
 #### Implementation of
 
-[`AdministrationBaseRepository`](../interfaces/AdministrationBaseRepository.md).[`getByName`](../interfaces/AdministrationBaseRepository.md#getbyname)
-
-***
-
-### getCollection()
-
-> **getCollection**(): `CollectionReference`
-
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:66](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L66)
-
-Get collection reference
- getCollection
-
-#### Returns
-
-`CollectionReference`
-
-- Collection reference
+[`AdministrationBaseRepository`](../interfaces/AdministrationBaseRepository.md).[`getAll`](../interfaces/AdministrationBaseRepository.md#getall)
 
 #### Inherited from
 
-[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getCollection`](FirestoreBaseRepository.md#getcollection)
+[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getAll`](FirestoreBaseRepository.md#getall)
 
-***
+---
 
-### getCollectionGroup()
+### create()
 
-> **getCollectionGroup**(): `CollectionGroup`
+> **create**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:75](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L75)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:229](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L229)
 
-Get collection group reference
- getCollectionGroup
+Creates a new entity in the repository.
 
-#### Returns
+#### Parameters
 
-`CollectionGroup`
+##### params
 
-- Collection group reference
+[`FirestoreCreateParams`](../interfaces/FirestoreCreateParams.md)
 
-#### Inherited from
-
-[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getCollectionGroup`](FirestoreBaseRepository.md#getcollectiongroup)
-
-***
-
-### getCollectionType()
-
-> **getCollectionType**(): [`CollectionType`](../enumerations/CollectionType.md)
-
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:84](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L84)
-
-Get collection type
- getCollectionType
+CreateParams
 
 #### Returns
 
-[`CollectionType`](../enumerations/CollectionType.md)
+`Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>\>
 
-- Collection type
+- Document data or null
+
+#### Throws
+
+- Error creating document
+
+#### Implementation of
+
+[`AdministrationBaseRepository`](../interfaces/AdministrationBaseRepository.md).[`create`](../interfaces/AdministrationBaseRepository.md#create)
 
 #### Inherited from
 
-[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getCollectionType`](FirestoreBaseRepository.md#getcollectiontype)
+[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`create`](FirestoreBaseRepository.md#create)
 
-***
+---
+
+### update()
+
+> **update**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>\>
+
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:256](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L256)
+
+Updates an existing entity in the repository.
+
+#### Parameters
+
+##### params
+
+[`FirestoreUpdateParams`](../interfaces/FirestoreUpdateParams.md)
+
+UpdateParams
+
+#### Returns
+
+`Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>\>
+
+- Document data or null
+
+#### Throws
+
+- Error updating document
+
+#### Implementation of
+
+[`AdministrationBaseRepository`](../interfaces/AdministrationBaseRepository.md).[`update`](../interfaces/AdministrationBaseRepository.md#update)
+
+#### Inherited from
+
+[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`update`](FirestoreBaseRepository.md#update)
+
+---
+
+### delete()
+
+> **delete**(`params`): `Promise`\<`void`\>
+
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:280](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L280)
+
+Deletes an entity from the repository.
+
+#### Parameters
+
+##### params
+
+[`FirestoreDeleteParams`](../interfaces/FirestoreDeleteParams.md)
+
+DeleteParams
+
+#### Returns
+
+`Promise`\<`void`\>
+
+#### Throws
+
+- Error deleting document
+
+#### Implementation of
+
+[`AdministrationBaseRepository`](../interfaces/AdministrationBaseRepository.md).[`delete`](../interfaces/AdministrationBaseRepository.md#delete)
+
+#### Inherited from
+
+[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`delete`](FirestoreBaseRepository.md#delete)
+
+---
 
 ### getWithFilters()
 
 > **getWithFilters**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>[]\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:300](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L300)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:300](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L300)
 
 Get documents with filters
- getWithFilters
+getWithFilters
 
 #### Parameters
 
@@ -554,13 +591,13 @@ GetWithFiltersParams
 
 [`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getWithFilters`](FirestoreBaseRepository.md#getwithfilters)
 
-***
+---
 
 ### runTransaction()
 
 > **runTransaction**(`params`): `Promise`\<[`Administration`](../interfaces/Administration.md)\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:360](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L360)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:357](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L357)
 
 Executes operations within a transaction context.
 
@@ -595,39 +632,3 @@ await runTransaction({ fn: async (transaction) => { ... } });
 #### Inherited from
 
 [`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`runTransaction`](FirestoreBaseRepository.md#runtransaction)
-
-***
-
-### update()
-
-> **update**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>\>
-
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:256](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L256)
-
-Updates an existing entity in the repository.
-
-#### Parameters
-
-##### params
-
-[`FirestoreUpdateParams`](../interfaces/FirestoreUpdateParams.md)
-
-UpdateParams
-
-#### Returns
-
-`Promise`\<[`Result`](../interfaces/Result.md)\<[`Administration`](../interfaces/Administration.md)\>\>
-
-- Document data or null
-
-#### Throws
-
-- Error updating document
-
-#### Implementation of
-
-[`AdministrationBaseRepository`](../interfaces/AdministrationBaseRepository.md).[`update`](../interfaces/AdministrationBaseRepository.md#update)
-
-#### Inherited from
-
-[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`update`](FirestoreBaseRepository.md#update)

@@ -1,12 +1,12 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / AdministrationBaseRepository
 
 # Interface: AdministrationBaseRepository
 
-Defined in: [packages/core/src/repositories/base/administration.base.repository.interface.ts:23](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/administration.base.repository.interface.ts#L23)
+Defined in: [packages/core/src/repositories/base/administration.base.repository.interface.ts:23](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/administration.base.repository.interface.ts#L23)
 
 Base repository interface for Administration entities
 Extends the generic BaseRepository with Administration-specific functionality
@@ -18,53 +18,25 @@ Provides methods for CRUD operations and specialized queries on administrations
 
 ## Methods
 
-### create()
+### getByName()
 
-> **create**(`params`): `Promise`\<[`Result`](Result.md)\<[`Administration`](Administration.md)\>\>
+> **getByName**(`params`): `Promise`\<[`Result`](Result.md)\<[`Administration`](Administration.md)\>[]\>
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:84](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L84)
+Defined in: [packages/core/src/repositories/base/administration.base.repository.interface.ts:25](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/administration.base.repository.interface.ts#L25)
 
-Creates a new entity in the repository.
-
-#### Parameters
-
-##### params
-
-`unknown`
-
-#### Returns
-
-`Promise`\<[`Result`](Result.md)\<[`Administration`](Administration.md)\>\>
-
-#### Inherited from
-
-[`BaseRepository`](BaseRepository.md).[`create`](BaseRepository.md#create)
-
-***
-
-### delete()
-
-> **delete**(`params`): `Promise`\<`void`\>
-
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:86](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L86)
-
-Deletes an entity from the repository.
+Retrieves administrations by name by wrapping the BaseRepository's getWithFilters method
 
 #### Parameters
 
 ##### params
 
-`unknown`
+[`GetByNameParams`](GetByNameParams.md)
 
 #### Returns
 
-`Promise`\<`void`\>
+`Promise`\<[`Result`](Result.md)\<[`Administration`](Administration.md)\>[]\>
 
-#### Inherited from
-
-[`BaseRepository`](BaseRepository.md).[`delete`](BaseRepository.md#delete)
-
-***
+---
 
 ### get()
 
@@ -74,7 +46,7 @@ Retrieves one or more entities based on provided parameters.
 
 > **get**(`params`): `Promise`\<[`Result`](Result.md)\<[`Administration`](Administration.md)\>\>
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:80](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L80)
+Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:80](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/base.repository.interface.ts#L80)
 
 Retrieves one or more entities based on provided parameters.
 
@@ -96,7 +68,7 @@ Retrieves one or more entities based on provided parameters.
 
 > **get**(`params`): `Promise`\<[`Result`](Result.md)\<[`Administration`](Administration.md)\>[]\>
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:81](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L81)
+Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:81](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/base.repository.interface.ts#L81)
 
 Retrieves one or more entities based on provided parameters.
 
@@ -118,7 +90,7 @@ Retrieves one or more entities based on provided parameters.
 
 > **get**(`params`): `Promise`\<[`Result`](Result.md)\<[`Administration`](Administration.md)\> \| [`Result`](Result.md)\<[`Administration`](Administration.md)\>[]\>
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:82](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L82)
+Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:82](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/base.repository.interface.ts#L82)
 
 Retrieves one or more entities based on provided parameters.
 
@@ -136,13 +108,13 @@ Retrieves one or more entities based on provided parameters.
 
 [`BaseRepository`](BaseRepository.md).[`get`](BaseRepository.md#get)
 
-***
+---
 
 ### getAll()
 
 > **getAll**(`params`): `Promise`\<[`Result`](Result.md)\<[`Administration`](Administration.md)\>[]\>
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:83](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L83)
+Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:83](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/base.repository.interface.ts#L83)
 
 Retrieves all entities with optional filtering.
 
@@ -160,35 +132,15 @@ Retrieves all entities with optional filtering.
 
 [`BaseRepository`](BaseRepository.md).[`getAll`](BaseRepository.md#getall)
 
-***
+---
 
-### getByName()
+### create()
 
-> **getByName**(`params`): `Promise`\<[`Result`](Result.md)\<[`Administration`](Administration.md)\>[]\>
+> **create**(`params`): `Promise`\<[`Result`](Result.md)\<[`Administration`](Administration.md)\>\>
 
-Defined in: [packages/core/src/repositories/base/administration.base.repository.interface.ts:25](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/administration.base.repository.interface.ts#L25)
+Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:84](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/base.repository.interface.ts#L84)
 
-Retrieves administrations by name by wrapping the BaseRepository's getWithFilters method
-
-#### Parameters
-
-##### params
-
-[`GetByNameParams`](GetByNameParams.md)
-
-#### Returns
-
-`Promise`\<[`Result`](Result.md)\<[`Administration`](Administration.md)\>[]\>
-
-***
-
-### runTransaction()
-
-> **runTransaction**(`params`): `Promise`\<`any`\>
-
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:87](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L87)
-
-Executes operations within a transaction context.
+Creates a new entity in the repository.
 
 #### Parameters
 
@@ -198,19 +150,19 @@ Executes operations within a transaction context.
 
 #### Returns
 
-`Promise`\<`any`\>
+`Promise`\<[`Result`](Result.md)\<[`Administration`](Administration.md)\>\>
 
 #### Inherited from
 
-[`BaseRepository`](BaseRepository.md).[`runTransaction`](BaseRepository.md#runtransaction)
+[`BaseRepository`](BaseRepository.md).[`create`](BaseRepository.md#create)
 
-***
+---
 
 ### update()
 
 > **update**(`params`): `Promise`\<[`Result`](Result.md)\<[`Administration`](Administration.md)\>\>
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:85](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L85)
+Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:85](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/base.repository.interface.ts#L85)
 
 Updates an existing entity in the repository.
 
@@ -227,3 +179,51 @@ Updates an existing entity in the repository.
 #### Inherited from
 
 [`BaseRepository`](BaseRepository.md).[`update`](BaseRepository.md#update)
+
+---
+
+### delete()
+
+> **delete**(`params`): `Promise`\<`void`\>
+
+Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:86](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/base.repository.interface.ts#L86)
+
+Deletes an entity from the repository.
+
+#### Parameters
+
+##### params
+
+`unknown`
+
+#### Returns
+
+`Promise`\<`void`\>
+
+#### Inherited from
+
+[`BaseRepository`](BaseRepository.md).[`delete`](BaseRepository.md#delete)
+
+---
+
+### runTransaction()
+
+> **runTransaction**(`params`): `Promise`\<`any`\>
+
+Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:87](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/base.repository.interface.ts#L87)
+
+Executes operations within a transaction context.
+
+#### Parameters
+
+##### params
+
+`unknown`
+
+#### Returns
+
+`Promise`\<`any`\>
+
+#### Inherited from
+
+[`BaseRepository`](BaseRepository.md).[`runTransaction`](BaseRepository.md#runtransaction)

@@ -1,6 +1,6 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / createIdentityProviderService
 
@@ -8,7 +8,7 @@
 
 > **createIdentityProviderService**\<`IDPRepo`, `UserClaimRepo`, `UserRepo`\>(`params`): [`IdentityProviderService`](../interfaces/IdentityProviderService.md)
 
-Defined in: [packages/core/src/services/createIdentityProviderService.service.ts:23](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/services/createIdentityProviderService.service.ts#L23)
+Defined in: [packages/core/src/services/createIdentityProviderService.service.ts:23](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/services/createIdentityProviderService.service.ts#L23)
 
 Creates and returns an Identity Provider Service
 
@@ -20,19 +20,19 @@ various identity providers.
 
 ### IDPRepo
 
-`IDPRepo` *extends* [`IdentityProviderBaseRepository`](../interfaces/IdentityProviderBaseRepository.md)
+`IDPRepo` _extends_ [`IdentityProviderBaseRepository`](../interfaces/IdentityProviderBaseRepository.md)
 
 Type extending IdentityProviderBaseRepository
 
 ### UserClaimRepo
 
-`UserClaimRepo` *extends* [`UserClaimBaseRepository`](../interfaces/UserClaimBaseRepository.md)
+`UserClaimRepo` _extends_ [`UserClaimBaseRepository`](../interfaces/UserClaimBaseRepository.md)
 
 Type extending UserClaimBaseRepository
 
 ### UserRepo
 
-`UserRepo` *extends* [`UserBaseRepository`](../interfaces/UserBaseRepository.md)
+`UserRepo` _extends_ [`UserBaseRepository`](../interfaces/UserBaseRepository.md)
 
 Type extending UserBaseRepository
 

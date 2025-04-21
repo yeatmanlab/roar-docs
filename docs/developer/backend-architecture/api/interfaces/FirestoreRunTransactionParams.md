@@ -1,15 +1,15 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / FirestoreRunTransactionParams
 
 # Interface: FirestoreRunTransactionParams\<T\>
 
-Defined in: [packages/core/src/types/firestore/params/base.params.ts:112](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/types/firestore/params/base.params.ts#L112)
+Defined in: [packages/core/src/types/firestore/params/base.params.ts:112](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/types/firestore/params/base.params.ts#L112)
 
 Params for running a transaction in Firestore.
- FirestoreRunTransactionParams
+FirestoreRunTransactionParams
 
 ## Extends
 
@@ -27,7 +27,7 @@ Params for running a transaction in Firestore.
 
 > **fn**: (`transaction`) => `Promise`\<`T`\>
 
-Defined in: [packages/core/src/types/firestore/params/base.params.ts:114](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/types/firestore/params/base.params.ts#L114)
+Defined in: [packages/core/src/types/firestore/params/base.params.ts:114](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/types/firestore/params/base.params.ts#L114)
 
 Function to be executed within the transaction.
 

@@ -1,12 +1,12 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / FilterAdapter
 
 # Interface: FilterAdapter\<T\>
 
-Defined in: [packages/core/src/filters/base.filter.ts:72](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/filters/base.filter.ts#L72)
+Defined in: [packages/core/src/filters/base.filter.ts:72](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/filters/base.filter.ts#L72)
 
 Interface that defines a function to create filters from a BaseFilter object.
 
@@ -29,7 +29,7 @@ The target filter type that BaseFilter objects will be converted to
 
 > **adapt**(`filter`): `T`
 
-Defined in: [packages/core/src/filters/base.filter.ts:73](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/filters/base.filter.ts#L73)
+Defined in: [packages/core/src/filters/base.filter.ts:73](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/filters/base.filter.ts#L73)
 
 #### Parameters
 

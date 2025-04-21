@@ -1,12 +1,12 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / CreateAdministrationServiceParams
 
 # Interface: CreateAdministrationServiceParams\<AdminRepo, OrgRepo, UserClaimRepo\>
 
-Defined in: [packages/core/src/services/administration.service.interface.ts:45](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/services/administration.service.interface.ts#L45)
+Defined in: [packages/core/src/services/administration.service.interface.ts:45](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/services/administration.service.interface.ts#L45)
 
 The parameters for the createAdministrationService method.
 
@@ -26,15 +26,15 @@ The user claim repository.
 
 ### AdminRepo
 
-`AdminRepo` *extends* [`AdministrationBaseRepository`](AdministrationBaseRepository.md)
+`AdminRepo` _extends_ [`AdministrationBaseRepository`](AdministrationBaseRepository.md)
 
 ### OrgRepo
 
-`OrgRepo` *extends* [`OrgBaseRepository`](OrgBaseRepository.md)
+`OrgRepo` _extends_ [`OrgBaseRepository`](OrgBaseRepository.md)
 
 ### UserClaimRepo
 
-`UserClaimRepo` *extends* [`UserClaimBaseRepository`](UserClaimBaseRepository.md)
+`UserClaimRepo` _extends_ [`UserClaimBaseRepository`](UserClaimBaseRepository.md)
 
 ## Properties
 
@@ -42,20 +42,20 @@ The user claim repository.
 
 > **administrationRepository**: `AdminRepo`
 
-Defined in: [packages/core/src/services/administration.service.interface.ts:50](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/services/administration.service.interface.ts#L50)
+Defined in: [packages/core/src/services/administration.service.interface.ts:50](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/services/administration.service.interface.ts#L50)
 
-***
+---
 
 ### orgRepository
 
 > **orgRepository**: `OrgRepo`
 
-Defined in: [packages/core/src/services/administration.service.interface.ts:51](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/services/administration.service.interface.ts#L51)
+Defined in: [packages/core/src/services/administration.service.interface.ts:51](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/services/administration.service.interface.ts#L51)
 
-***
+---
 
 ### userClaimRepository
 
 > **userClaimRepository**: `UserClaimRepo`
 
-Defined in: [packages/core/src/services/administration.service.interface.ts:52](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/services/administration.service.interface.ts#L52)
+Defined in: [packages/core/src/services/administration.service.interface.ts:52](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/services/administration.service.interface.ts#L52)

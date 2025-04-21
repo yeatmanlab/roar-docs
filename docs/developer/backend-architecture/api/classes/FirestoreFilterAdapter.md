@@ -1,12 +1,12 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / FirestoreFilterAdapter
 
 # Class: FirestoreFilterAdapter
 
-Defined in: [packages/core/src/filters/firestore.filter.ts:14](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/filters/firestore.filter.ts#L14)
+Defined in: [packages/core/src/filters/firestore.filter.ts:14](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/filters/firestore.filter.ts#L14)
 
 Adapter for converting application filter models to Firestore Filter objects
 
@@ -30,7 +30,7 @@ Adapter for converting application filter models to Firestore Filter objects
 
 > **adapt**(`filter`): `Filter`
 
-Defined in: [packages/core/src/filters/firestore.filter.ts:42](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/filters/firestore.filter.ts#L42)
+Defined in: [packages/core/src/filters/firestore.filter.ts:42](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/filters/firestore.filter.ts#L42)
 
 Adapts an application filter to a Firestore Filter
 

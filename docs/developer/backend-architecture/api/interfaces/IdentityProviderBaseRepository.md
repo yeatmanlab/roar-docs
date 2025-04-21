@@ -1,69 +1,21 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / IdentityProviderBaseRepository
 
 # Interface: IdentityProviderBaseRepository
 
-Defined in: [packages/core/src/repositories/base/identityProvider.base.repository.interface.ts:25](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/identityProvider.base.repository.interface.ts#L25)
+Defined in: [packages/core/src/repositories/base/identityProvider.base.repository.interface.ts:25](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/identityProvider.base.repository.interface.ts#L25)
 
 Base interface for identity provider repositories.
- IdentityProviderBaseRepository
+IdentityProviderBaseRepository
 
 ## Extends
 
 - [`BaseRepository`](BaseRepository.md)\<[`IdentityProvider`](IdentityProvider.md)\>
 
 ## Methods
-
-### create()
-
-> **create**(`params`): `Promise`\<[`Result`](Result.md)\<[`IdentityProvider`](IdentityProvider.md)\>\>
-
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:84](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L84)
-
-Creates a new entity in the repository.
-
-#### Parameters
-
-##### params
-
-`unknown`
-
-#### Returns
-
-`Promise`\<[`Result`](Result.md)\<[`IdentityProvider`](IdentityProvider.md)\>\>
-
-#### Inherited from
-
-[`BaseRepository`](BaseRepository.md).[`create`](BaseRepository.md#create)
-
-***
-
-### delete()
-
-> **delete**(`params`): `Promise`\<`void`\>
-
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:86](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L86)
-
-Deletes an entity from the repository.
-
-#### Parameters
-
-##### params
-
-`unknown`
-
-#### Returns
-
-`Promise`\<`void`\>
-
-#### Inherited from
-
-[`BaseRepository`](BaseRepository.md).[`delete`](BaseRepository.md#delete)
-
-***
 
 ### get()
 
@@ -73,7 +25,7 @@ Retrieves one or more entities based on provided parameters.
 
 > **get**(`params`): `Promise`\<[`Result`](Result.md)\<[`IdentityProvider`](IdentityProvider.md)\>\>
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:80](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L80)
+Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:80](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/base.repository.interface.ts#L80)
 
 Retrieves one or more entities based on provided parameters.
 
@@ -95,7 +47,7 @@ Retrieves one or more entities based on provided parameters.
 
 > **get**(`params`): `Promise`\<[`Result`](Result.md)\<[`IdentityProvider`](IdentityProvider.md)\>[]\>
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:81](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L81)
+Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:81](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/base.repository.interface.ts#L81)
 
 Retrieves one or more entities based on provided parameters.
 
@@ -117,7 +69,7 @@ Retrieves one or more entities based on provided parameters.
 
 > **get**(`params`): `Promise`\<[`Result`](Result.md)\<[`IdentityProvider`](IdentityProvider.md)\> \| [`Result`](Result.md)\<[`IdentityProvider`](IdentityProvider.md)\>[]\>
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:82](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L82)
+Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:82](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/base.repository.interface.ts#L82)
 
 Retrieves one or more entities based on provided parameters.
 
@@ -135,13 +87,13 @@ Retrieves one or more entities based on provided parameters.
 
 [`BaseRepository`](BaseRepository.md).[`get`](BaseRepository.md#get)
 
-***
+---
 
 ### getAll()
 
 > **getAll**(`params`): `Promise`\<[`Result`](Result.md)\<[`IdentityProvider`](IdentityProvider.md)\>[]\>
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:83](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L83)
+Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:83](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/base.repository.interface.ts#L83)
 
 Retrieves all entities with optional filtering.
 
@@ -159,33 +111,85 @@ Retrieves all entities with optional filtering.
 
 [`BaseRepository`](BaseRepository.md).[`getAll`](BaseRepository.md#getall)
 
-***
+---
 
-### getByProviderId()
+### create()
 
-> **getByProviderId**(`params`): `Promise`\<[`Result`](Result.md)\<[`IdentityProvider`](IdentityProvider.md)\>[]\>
+> **create**(`params`): `Promise`\<[`Result`](Result.md)\<[`IdentityProvider`](IdentityProvider.md)\>\>
 
-Defined in: [packages/core/src/repositories/base/identityProvider.base.repository.interface.ts:27](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/identityProvider.base.repository.interface.ts#L27)
+Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:84](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/base.repository.interface.ts#L84)
 
-Retrieves an identity provider by provider ID.
+Creates a new entity in the repository.
 
 #### Parameters
 
 ##### params
 
-[`GetByProviderIdParams`](GetByProviderIdParams.md)
+`unknown`
 
 #### Returns
 
-`Promise`\<[`Result`](Result.md)\<[`IdentityProvider`](IdentityProvider.md)\>[]\>
+`Promise`\<[`Result`](Result.md)\<[`IdentityProvider`](IdentityProvider.md)\>\>
 
-***
+#### Inherited from
+
+[`BaseRepository`](BaseRepository.md).[`create`](BaseRepository.md#create)
+
+---
+
+### update()
+
+> **update**(`params`): `Promise`\<[`Result`](Result.md)\<[`IdentityProvider`](IdentityProvider.md)\>\>
+
+Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:85](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/base.repository.interface.ts#L85)
+
+Updates an existing entity in the repository.
+
+#### Parameters
+
+##### params
+
+`unknown`
+
+#### Returns
+
+`Promise`\<[`Result`](Result.md)\<[`IdentityProvider`](IdentityProvider.md)\>\>
+
+#### Inherited from
+
+[`BaseRepository`](BaseRepository.md).[`update`](BaseRepository.md#update)
+
+---
+
+### delete()
+
+> **delete**(`params`): `Promise`\<`void`\>
+
+Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:86](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/base.repository.interface.ts#L86)
+
+Deletes an entity from the repository.
+
+#### Parameters
+
+##### params
+
+`unknown`
+
+#### Returns
+
+`Promise`\<`void`\>
+
+#### Inherited from
+
+[`BaseRepository`](BaseRepository.md).[`delete`](BaseRepository.md#delete)
+
+---
 
 ### runTransaction()
 
 > **runTransaction**(`params`): `Promise`\<`any`\>
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:87](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L87)
+Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:87](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/base.repository.interface.ts#L87)
 
 Executes operations within a transaction context.
 
@@ -203,26 +207,22 @@ Executes operations within a transaction context.
 
 [`BaseRepository`](BaseRepository.md).[`runTransaction`](BaseRepository.md#runtransaction)
 
-***
+---
 
-### update()
+### getByProviderId()
 
-> **update**(`params`): `Promise`\<[`Result`](Result.md)\<[`IdentityProvider`](IdentityProvider.md)\>\>
+> **getByProviderId**(`params`): `Promise`\<[`Result`](Result.md)\<[`IdentityProvider`](IdentityProvider.md)\>[]\>
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:85](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L85)
+Defined in: [packages/core/src/repositories/base/identityProvider.base.repository.interface.ts:27](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/base/identityProvider.base.repository.interface.ts#L27)
 
-Updates an existing entity in the repository.
+Retrieves an identity provider by provider ID.
 
 #### Parameters
 
 ##### params
 
-`unknown`
+[`GetByProviderIdParams`](GetByProviderIdParams.md)
 
 #### Returns
 
-`Promise`\<[`Result`](Result.md)\<[`IdentityProvider`](IdentityProvider.md)\>\>
-
-#### Inherited from
-
-[`BaseRepository`](BaseRepository.md).[`update`](BaseRepository.md#update)
+`Promise`\<[`Result`](Result.md)\<[`IdentityProvider`](IdentityProvider.md)\>[]\>

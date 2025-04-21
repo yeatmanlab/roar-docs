@@ -1,15 +1,15 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / FirestoreIdentityProviderRepository
 
 # Class: FirestoreIdentityProviderRepository
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreIdentityProviderRepository.repository.firestore.ts:15](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreIdentityProviderRepository.repository.firestore.ts#L15)
+Defined in: [packages/core/src/repositories/firestore/FirestoreIdentityProviderRepository.repository.firestore.ts:15](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreIdentityProviderRepository.repository.firestore.ts#L15)
 
 Base interface for identity provider repositories.
- IdentityProviderBaseRepository
+IdentityProviderBaseRepository
 
 ## Extends
 
@@ -25,7 +25,7 @@ Base interface for identity provider repositories.
 
 > **new FirestoreIdentityProviderRepository**(): `FirestoreIdentityProviderRepository`
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreIdentityProviderRepository.repository.firestore.ts:19](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreIdentityProviderRepository.repository.firestore.ts#L19)
+Defined in: [packages/core/src/repositories/firestore/FirestoreIdentityProviderRepository.repository.firestore.ts:19](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreIdentityProviderRepository.repository.firestore.ts#L19)
 
 #### Returns
 
@@ -41,7 +41,7 @@ Defined in: [packages/core/src/repositories/firestore/FirestoreIdentityProviderR
 
 > `protected` **collection**: `CollectionReference`
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:46](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L46)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:46](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L46)
 
 Collection reference
 
@@ -49,13 +49,13 @@ Collection reference
 
 [`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`collection`](FirestoreBaseRepository.md#collection)
 
-***
+---
 
 ### collectionGroup
 
 > `protected` **collectionGroup**: `CollectionGroup`
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:47](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L47)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:47](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L47)
 
 Collection group reference
 {getCollectionName} - Get collection reference
@@ -75,25 +75,25 @@ Collection group reference
 
 [`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`collectionGroup`](FirestoreBaseRepository.md#collectiongroup)
 
-***
+---
 
 ### collectionType
 
 > `protected` **collectionType**: [`CollectionType`](../enumerations/CollectionType.md)
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:48](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L48)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:48](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L48)
 
 #### Inherited from
 
 [`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`collectionType`](FirestoreBaseRepository.md#collectiontype)
 
-***
+---
 
 ### filterAdapter
 
 > `protected` **filterAdapter**: [`FirestoreFilterAdapter`](FirestoreFilterAdapter.md)
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:49](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L49)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:49](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L49)
 
 #### Inherited from
 
@@ -101,112 +101,73 @@ Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.re
 
 ## Methods
 
-### create()
+### getCollection()
 
-> **create**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>\>
+> **getCollection**(): `CollectionReference`
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:229](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L229)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:66](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L66)
 
-Creates a new entity in the repository.
-
-#### Parameters
-
-##### params
-
-[`FirestoreCreateParams`](../interfaces/FirestoreCreateParams.md)
-
-CreateParams
+Get collection reference
+getCollection
 
 #### Returns
 
-`Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>\>
+`CollectionReference`
 
-- Document data or null
-
-#### Throws
-
-- Error creating document
-
-#### Implementation of
-
-[`IdentityProviderBaseRepository`](../interfaces/IdentityProviderBaseRepository.md).[`create`](../interfaces/IdentityProviderBaseRepository.md#create)
+- Collection reference
 
 #### Inherited from
 
-[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`create`](FirestoreBaseRepository.md#create)
+[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getCollection`](FirestoreBaseRepository.md#getcollection)
 
-***
+---
 
-### delete()
+### getCollectionGroup()
 
-> **delete**(`params`): `Promise`\<`void`\>
+> **getCollectionGroup**(): `CollectionGroup`
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:280](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L280)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:75](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L75)
 
-Deletes an entity from the repository.
-
-#### Parameters
-
-##### params
-
-[`FirestoreDeleteParams`](../interfaces/FirestoreDeleteParams.md)
-
-DeleteParams
+Get collection group reference
+getCollectionGroup
 
 #### Returns
 
-`Promise`\<`void`\>
+`CollectionGroup`
 
-#### Throws
-
-- Error deleting document
-
-#### Implementation of
-
-[`IdentityProviderBaseRepository`](../interfaces/IdentityProviderBaseRepository.md).[`delete`](../interfaces/IdentityProviderBaseRepository.md#delete)
+- Collection group reference
 
 #### Inherited from
 
-[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`delete`](FirestoreBaseRepository.md#delete)
+[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getCollectionGroup`](FirestoreBaseRepository.md#getcollectiongroup)
 
-***
+---
 
-### fetchDocument()
+### getCollectionType()
 
-> **fetchDocument**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>\>
+> **getCollectionType**(): [`CollectionType`](../enumerations/CollectionType.md)
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:178](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L178)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:84](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L84)
 
-Helper function to fetch a document
- fetchDocument
-
-#### Parameters
-
-##### params
-
-[`FirestoreFetchDocumentParams`](../interfaces/FirestoreFetchDocumentParams.md)
-
-FetchDocumentParams
+Get collection type
+getCollectionType
 
 #### Returns
 
-`Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>\>
+[`CollectionType`](../enumerations/CollectionType.md)
 
-- Document data or null
-
-#### Throws
-
-- Error fetching document
+- Collection type
 
 #### Inherited from
 
-[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`fetchDocument`](FirestoreBaseRepository.md#fetchdocument)
+[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getCollectionType`](FirestoreBaseRepository.md#getcollectiontype)
 
-***
+---
 
 ### get()
 
 Get document(s) based on parameters
+
 - If `id` is provided, returns a single document
 - If `filters` are provided, returns multiple documents that match the filters
 - Requires either `id` or `filters` to be specified
@@ -243,10 +204,10 @@ If neither ID nor filters are provided
 
 > **get**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:94](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L94)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:94](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L94)
 
 Get document by ID
- get
+get
 
 ##### Parameters
 
@@ -302,10 +263,10 @@ If neither ID nor filters are provided
 
 > **get**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>[]\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:102](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L102)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:102](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L102)
 
 Get documents by filters
- get
+get
 
 ##### Parameters
 
@@ -357,44 +318,16 @@ If neither ID nor filters are provided
 
 [`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`get`](FirestoreBaseRepository.md#get)
 
-***
-
-### getAll()
-
-> **getAll**(): `Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>[]\>
-
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:204](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L204)
-
-Retrieves all entities with optional filtering.
-
-#### Returns
-
-`Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>[]\>
-
-- Array of document data
-
-#### Throws
-
-- Error getting all documents
-
-#### Implementation of
-
-[`IdentityProviderBaseRepository`](../interfaces/IdentityProviderBaseRepository.md).[`getAll`](../interfaces/IdentityProviderBaseRepository.md#getall)
-
-#### Inherited from
-
-[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getAll`](FirestoreBaseRepository.md#getall)
-
-***
+---
 
 ### getById()
 
 > **getById**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:154](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L154)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:154](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L154)
 
 Helper function to get document by ID
- getById
+getById
 
 #### Parameters
 
@@ -418,107 +351,183 @@ GetByIdParams
 
 [`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getById`](FirestoreBaseRepository.md#getbyid)
 
-***
+---
 
-### getByProviderId()
+### fetchDocument()
 
-> **getByProviderId**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>[]\>
+> **fetchDocument**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreIdentityProviderRepository.repository.firestore.ts:95](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreIdentityProviderRepository.repository.firestore.ts#L95)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:178](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L178)
 
-Retrieves an identity provider by provider ID.
+Helper function to fetch a document
+fetchDocument
 
 #### Parameters
 
 ##### params
 
-[`GetByProviderIdParams`](../interfaces/GetByProviderIdParams.md)
+[`FirestoreFetchDocumentParams`](../interfaces/FirestoreFetchDocumentParams.md)
 
-The parameters for the query
+FetchDocumentParams
+
+#### Returns
+
+`Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>\>
+
+- Document data or null
+
+#### Throws
+
+- Error fetching document
+
+#### Inherited from
+
+[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`fetchDocument`](FirestoreBaseRepository.md#fetchdocument)
+
+---
+
+### getAll()
+
+> **getAll**(): `Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>[]\>
+
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:204](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L204)
+
+Retrieves all entities with optional filtering.
 
 #### Returns
 
 `Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>[]\>
 
-An array of Identity Provider objects
+- Array of document data
+
+#### Throws
+
+- Error getting all documents
 
 #### Implementation of
 
-[`IdentityProviderBaseRepository`](../interfaces/IdentityProviderBaseRepository.md).[`getByProviderId`](../interfaces/IdentityProviderBaseRepository.md#getbyproviderid)
-
-***
-
-### getCollection()
-
-> **getCollection**(): `CollectionReference`
-
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:66](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L66)
-
-Get collection reference
- getCollection
-
-#### Returns
-
-`CollectionReference`
-
-- Collection reference
+[`IdentityProviderBaseRepository`](../interfaces/IdentityProviderBaseRepository.md).[`getAll`](../interfaces/IdentityProviderBaseRepository.md#getall)
 
 #### Inherited from
 
-[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getCollection`](FirestoreBaseRepository.md#getcollection)
+[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getAll`](FirestoreBaseRepository.md#getall)
 
-***
+---
 
-### getCollectionGroup()
+### create()
 
-> **getCollectionGroup**(): `CollectionGroup`
+> **create**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:75](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L75)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:229](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L229)
 
-Get collection group reference
- getCollectionGroup
+Creates a new entity in the repository.
 
-#### Returns
+#### Parameters
 
-`CollectionGroup`
+##### params
 
-- Collection group reference
+[`FirestoreCreateParams`](../interfaces/FirestoreCreateParams.md)
 
-#### Inherited from
-
-[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getCollectionGroup`](FirestoreBaseRepository.md#getcollectiongroup)
-
-***
-
-### getCollectionType()
-
-> **getCollectionType**(): [`CollectionType`](../enumerations/CollectionType.md)
-
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:84](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L84)
-
-Get collection type
- getCollectionType
+CreateParams
 
 #### Returns
 
-[`CollectionType`](../enumerations/CollectionType.md)
+`Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>\>
 
-- Collection type
+- Document data or null
+
+#### Throws
+
+- Error creating document
+
+#### Implementation of
+
+[`IdentityProviderBaseRepository`](../interfaces/IdentityProviderBaseRepository.md).[`create`](../interfaces/IdentityProviderBaseRepository.md#create)
 
 #### Inherited from
 
-[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getCollectionType`](FirestoreBaseRepository.md#getcollectiontype)
+[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`create`](FirestoreBaseRepository.md#create)
 
-***
+---
+
+### update()
+
+> **update**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>\>
+
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:256](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L256)
+
+Updates an existing entity in the repository.
+
+#### Parameters
+
+##### params
+
+[`FirestoreUpdateParams`](../interfaces/FirestoreUpdateParams.md)
+
+UpdateParams
+
+#### Returns
+
+`Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>\>
+
+- Document data or null
+
+#### Throws
+
+- Error updating document
+
+#### Implementation of
+
+[`IdentityProviderBaseRepository`](../interfaces/IdentityProviderBaseRepository.md).[`update`](../interfaces/IdentityProviderBaseRepository.md#update)
+
+#### Inherited from
+
+[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`update`](FirestoreBaseRepository.md#update)
+
+---
+
+### delete()
+
+> **delete**(`params`): `Promise`\<`void`\>
+
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:280](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L280)
+
+Deletes an entity from the repository.
+
+#### Parameters
+
+##### params
+
+[`FirestoreDeleteParams`](../interfaces/FirestoreDeleteParams.md)
+
+DeleteParams
+
+#### Returns
+
+`Promise`\<`void`\>
+
+#### Throws
+
+- Error deleting document
+
+#### Implementation of
+
+[`IdentityProviderBaseRepository`](../interfaces/IdentityProviderBaseRepository.md).[`delete`](../interfaces/IdentityProviderBaseRepository.md#delete)
+
+#### Inherited from
+
+[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`delete`](FirestoreBaseRepository.md#delete)
+
+---
 
 ### getWithFilters()
 
 > **getWithFilters**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>[]\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:300](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L300)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:300](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L300)
 
 Get documents with filters
- getWithFilters
+getWithFilters
 
 #### Parameters
 
@@ -542,13 +551,13 @@ GetWithFiltersParams
 
 [`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`getWithFilters`](FirestoreBaseRepository.md#getwithfilters)
 
-***
+---
 
 ### runTransaction()
 
 > **runTransaction**(`params`): `Promise`\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:360](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L360)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:357](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L357)
 
 Executes operations within a transaction context.
 
@@ -584,38 +593,30 @@ await runTransaction({ fn: async (transaction) => { ... } });
 
 [`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`runTransaction`](FirestoreBaseRepository.md#runtransaction)
 
-***
+---
 
-### update()
+### getByProviderId()
 
-> **update**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>\>
+> **getByProviderId**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>[]\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:256](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L256)
+Defined in: [packages/core/src/repositories/firestore/FirestoreIdentityProviderRepository.repository.firestore.ts:95](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreIdentityProviderRepository.repository.firestore.ts#L95)
 
-Updates an existing entity in the repository.
+Retrieves an identity provider by provider ID.
 
 #### Parameters
 
 ##### params
 
-[`FirestoreUpdateParams`](../interfaces/FirestoreUpdateParams.md)
+[`GetByProviderIdParams`](../interfaces/GetByProviderIdParams.md)
 
-UpdateParams
+The parameters for the query
 
 #### Returns
 
-`Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>\>
+`Promise`\<[`Result`](../interfaces/Result.md)\<[`IdentityProvider`](../interfaces/IdentityProvider.md)\>[]\>
 
-- Document data or null
-
-#### Throws
-
-- Error updating document
+An array of Identity Provider objects
 
 #### Implementation of
 
-[`IdentityProviderBaseRepository`](../interfaces/IdentityProviderBaseRepository.md).[`update`](../interfaces/IdentityProviderBaseRepository.md#update)
-
-#### Inherited from
-
-[`FirestoreBaseRepository`](FirestoreBaseRepository.md).[`update`](FirestoreBaseRepository.md#update)
+[`IdentityProviderBaseRepository`](../interfaces/IdentityProviderBaseRepository.md).[`getByProviderId`](../interfaces/IdentityProviderBaseRepository.md#getbyproviderid)

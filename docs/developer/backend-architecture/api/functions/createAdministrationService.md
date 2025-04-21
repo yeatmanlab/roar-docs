@@ -1,6 +1,6 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / createAdministrationService
 
@@ -8,7 +8,7 @@
 
 > **createAdministrationService**\<`AdminRepo`, `OrgRepo`, `UserClaimRepo`\>(`params`): [`AdministrationService`](../interfaces/AdministrationService.md)
 
-Defined in: [packages/core/src/services/createAdministrationService.service.ts:18](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/services/createAdministrationService.service.ts#L18)
+Defined in: [packages/core/src/services/createAdministrationService.service.ts:18](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/services/createAdministrationService.service.ts#L18)
 
 Creates an administration service.
 
@@ -16,15 +16,15 @@ Creates an administration service.
 
 ### AdminRepo
 
-`AdminRepo` *extends* [`AdministrationBaseRepository`](../interfaces/AdministrationBaseRepository.md)
+`AdminRepo` _extends_ [`AdministrationBaseRepository`](../interfaces/AdministrationBaseRepository.md)
 
 ### OrgRepo
 
-`OrgRepo` *extends* [`OrgBaseRepository`](../interfaces/OrgBaseRepository.md)
+`OrgRepo` _extends_ [`OrgBaseRepository`](../interfaces/OrgBaseRepository.md)
 
 ### UserClaimRepo
 
-`UserClaimRepo` *extends* [`UserClaimBaseRepository`](../interfaces/UserClaimBaseRepository.md)
+`UserClaimRepo` _extends_ [`UserClaimBaseRepository`](../interfaces/UserClaimBaseRepository.md)
 
 ## Parameters
 

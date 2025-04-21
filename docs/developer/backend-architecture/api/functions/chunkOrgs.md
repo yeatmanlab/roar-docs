@@ -1,6 +1,6 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / chunkOrgs
 
@@ -8,7 +8,7 @@
 
 > **chunkOrgs**(`orgs`, `chunkSize`): [`OrgsList`](../interfaces/OrgsList.md)[]
 
-Defined in: [packages/core/src/utils/chunkOrgs.utils.ts:14](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/utils/chunkOrgs.utils.ts#L14)
+Defined in: [packages/core/src/utils/chunkOrgs.utils.ts:14](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/utils/chunkOrgs.utils.ts#L14)
 
 Chunks an OrgsList into smaller IOrgsLists of a specified size.
 

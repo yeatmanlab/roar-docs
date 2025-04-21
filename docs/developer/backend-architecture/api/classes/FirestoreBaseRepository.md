@@ -1,16 +1,16 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / FirestoreBaseRepository
 
 # Class: `abstract` FirestoreBaseRepository\<T\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:45](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L45)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:45](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L45)
 
 The FirestoreRepository base class is used to interact with Firestore collections.
- FirestoreRepository
- FirestoreRepository
+FirestoreRepository
+FirestoreRepository
 
 ## Throws
 
@@ -40,7 +40,7 @@ The FirestoreRepository base class is used to interact with Firestore collection
 
 > **new FirestoreBaseRepository**\<`T`\>(`firestore`, `collection`, `collectionType`): `FirestoreBaseRepository`\<`T`\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:51](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L51)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:51](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L51)
 
 #### Parameters
 
@@ -66,17 +66,17 @@ Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.re
 
 > `protected` **collection**: `CollectionReference`
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:46](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L46)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:46](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L46)
 
 Collection reference
 
-***
+---
 
 ### collectionGroup
 
 > `protected` **collectionGroup**: `CollectionGroup`
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:47](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L47)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:47](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L47)
 
 Collection group reference
 {getCollectionName} - Get collection reference
@@ -92,118 +92,79 @@ Collection group reference
 {delete} - Delete document
 {getWithFilters} - Get documents with filters, helper function for get()
 
-***
+---
 
 ### collectionType
 
 > `protected` **collectionType**: [`CollectionType`](../enumerations/CollectionType.md)
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:48](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L48)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:48](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L48)
 
-***
+---
 
 ### filterAdapter
 
 > `protected` **filterAdapter**: [`FirestoreFilterAdapter`](FirestoreFilterAdapter.md)
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:49](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L49)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:49](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L49)
 
 ## Methods
 
-### create()
+### getCollection()
 
-> **create**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>\>
+> **getCollection**(): `CollectionReference`
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:229](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L229)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:66](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L66)
 
-Creates a new entity in the repository.
-
-#### Parameters
-
-##### params
-
-[`FirestoreCreateParams`](../interfaces/FirestoreCreateParams.md)
-
-CreateParams
+Get collection reference
+getCollection
 
 #### Returns
 
-`Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>\>
+`CollectionReference`
 
-- Document data or null
+- Collection reference
 
-#### Throws
+---
 
-- Error creating document
+### getCollectionGroup()
 
-#### Implementation of
+> **getCollectionGroup**(): `CollectionGroup`
 
-[`BaseRepository`](../interfaces/BaseRepository.md).[`create`](../interfaces/BaseRepository.md#create)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:75](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L75)
 
-***
-
-### delete()
-
-> **delete**(`params`): `Promise`\<`void`\>
-
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:280](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L280)
-
-Deletes an entity from the repository.
-
-#### Parameters
-
-##### params
-
-[`FirestoreDeleteParams`](../interfaces/FirestoreDeleteParams.md)
-
-DeleteParams
+Get collection group reference
+getCollectionGroup
 
 #### Returns
 
-`Promise`\<`void`\>
+`CollectionGroup`
 
-#### Throws
+- Collection group reference
 
-- Error deleting document
+---
 
-#### Implementation of
+### getCollectionType()
 
-[`BaseRepository`](../interfaces/BaseRepository.md).[`delete`](../interfaces/BaseRepository.md#delete)
+> **getCollectionType**(): [`CollectionType`](../enumerations/CollectionType.md)
 
-***
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:84](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L84)
 
-### fetchDocument()
-
-> **fetchDocument**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>\>
-
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:178](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L178)
-
-Helper function to fetch a document
- fetchDocument
-
-#### Parameters
-
-##### params
-
-[`FirestoreFetchDocumentParams`](../interfaces/FirestoreFetchDocumentParams.md)
-
-FetchDocumentParams
+Get collection type
+getCollectionType
 
 #### Returns
 
-`Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>\>
+[`CollectionType`](../enumerations/CollectionType.md)
 
-- Document data or null
+- Collection type
 
-#### Throws
-
-- Error fetching document
-
-***
+---
 
 ### get()
 
 Get document(s) based on parameters
+
 - If `id` is provided, returns a single document
 - If `filters` are provided, returns multiple documents that match the filters
 - Requires either `id` or `filters` to be specified
@@ -240,10 +201,10 @@ If neither ID nor filters are provided
 
 > **get**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:94](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L94)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:94](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L94)
 
 Get document by ID
- get
+get
 
 ##### Parameters
 
@@ -295,10 +256,10 @@ If neither ID nor filters are provided
 
 > **get**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>[]\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:102](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L102)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:102](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L102)
 
 Get documents by filters
- get
+get
 
 ##### Parameters
 
@@ -346,40 +307,16 @@ If neither ID nor filters are provided
 
 [`BaseRepository`](../interfaces/BaseRepository.md).[`get`](../interfaces/BaseRepository.md#get)
 
-***
-
-### getAll()
-
-> **getAll**(): `Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>[]\>
-
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:204](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L204)
-
-Retrieves all entities with optional filtering.
-
-#### Returns
-
-`Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>[]\>
-
-- Array of document data
-
-#### Throws
-
-- Error getting all documents
-
-#### Implementation of
-
-[`BaseRepository`](../interfaces/BaseRepository.md).[`getAll`](../interfaces/BaseRepository.md#getall)
-
-***
+---
 
 ### getById()
 
 > **getById**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:154](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L154)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:154](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L154)
 
 Helper function to get document by ID
- getById
+getById
 
 #### Parameters
 
@@ -399,67 +336,163 @@ GetByIdParams
 
 - Error getting document by ID
 
-***
+---
 
-### getCollection()
+### fetchDocument()
 
-> **getCollection**(): `CollectionReference`
+> **fetchDocument**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:66](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L66)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:178](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L178)
 
-Get collection reference
- getCollection
+Helper function to fetch a document
+fetchDocument
 
-#### Returns
+#### Parameters
 
-`CollectionReference`
+##### params
 
-- Collection reference
+[`FirestoreFetchDocumentParams`](../interfaces/FirestoreFetchDocumentParams.md)
 
-***
-
-### getCollectionGroup()
-
-> **getCollectionGroup**(): `CollectionGroup`
-
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:75](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L75)
-
-Get collection group reference
- getCollectionGroup
+FetchDocumentParams
 
 #### Returns
 
-`CollectionGroup`
+`Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>\>
 
-- Collection group reference
+- Document data or null
 
-***
+#### Throws
 
-### getCollectionType()
+- Error fetching document
 
-> **getCollectionType**(): [`CollectionType`](../enumerations/CollectionType.md)
+---
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:84](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L84)
+### getAll()
 
-Get collection type
- getCollectionType
+> **getAll**(): `Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>[]\>
+
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:204](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L204)
+
+Retrieves all entities with optional filtering.
 
 #### Returns
 
-[`CollectionType`](../enumerations/CollectionType.md)
+`Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>[]\>
 
-- Collection type
+- Array of document data
 
-***
+#### Throws
+
+- Error getting all documents
+
+#### Implementation of
+
+[`BaseRepository`](../interfaces/BaseRepository.md).[`getAll`](../interfaces/BaseRepository.md#getall)
+
+---
+
+### create()
+
+> **create**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>\>
+
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:229](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L229)
+
+Creates a new entity in the repository.
+
+#### Parameters
+
+##### params
+
+[`FirestoreCreateParams`](../interfaces/FirestoreCreateParams.md)
+
+CreateParams
+
+#### Returns
+
+`Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>\>
+
+- Document data or null
+
+#### Throws
+
+- Error creating document
+
+#### Implementation of
+
+[`BaseRepository`](../interfaces/BaseRepository.md).[`create`](../interfaces/BaseRepository.md#create)
+
+---
+
+### update()
+
+> **update**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>\>
+
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:256](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L256)
+
+Updates an existing entity in the repository.
+
+#### Parameters
+
+##### params
+
+[`FirestoreUpdateParams`](../interfaces/FirestoreUpdateParams.md)
+
+UpdateParams
+
+#### Returns
+
+`Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>\>
+
+- Document data or null
+
+#### Throws
+
+- Error updating document
+
+#### Implementation of
+
+[`BaseRepository`](../interfaces/BaseRepository.md).[`update`](../interfaces/BaseRepository.md#update)
+
+---
+
+### delete()
+
+> **delete**(`params`): `Promise`\<`void`\>
+
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:280](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L280)
+
+Deletes an entity from the repository.
+
+#### Parameters
+
+##### params
+
+[`FirestoreDeleteParams`](../interfaces/FirestoreDeleteParams.md)
+
+DeleteParams
+
+#### Returns
+
+`Promise`\<`void`\>
+
+#### Throws
+
+- Error deleting document
+
+#### Implementation of
+
+[`BaseRepository`](../interfaces/BaseRepository.md).[`delete`](../interfaces/BaseRepository.md#delete)
+
+---
 
 ### getWithFilters()
 
 > **getWithFilters**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>[]\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:300](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L300)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:300](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L300)
 
 Get documents with filters
- getWithFilters
+getWithFilters
 
 #### Parameters
 
@@ -479,13 +512,13 @@ GetWithFiltersParams
 
 - Error getting documents with filters
 
-***
+---
 
 ### runTransaction()
 
 > **runTransaction**(`params`): `Promise`\<`T`\>
 
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:360](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L360)
+Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:357](https://github.com/yeatmanlab/roar-firebase-functions/blob/0fc701649174b7557e55644b1065be2fa3d3d7ca/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L357)
 
 Executes operations within a transaction context.
 
@@ -516,35 +549,3 @@ await runTransaction({ fn: async (transaction) => { ... } });
 #### Implementation of
 
 [`BaseRepository`](../interfaces/BaseRepository.md).[`runTransaction`](../interfaces/BaseRepository.md#runtransaction)
-
-***
-
-### update()
-
-> **update**(`params`): `Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>\>
-
-Defined in: [packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts:256](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/firestore/FirestoreBaseRepository.repository.firestore.ts#L256)
-
-Updates an existing entity in the repository.
-
-#### Parameters
-
-##### params
-
-[`FirestoreUpdateParams`](../interfaces/FirestoreUpdateParams.md)
-
-UpdateParams
-
-#### Returns
-
-`Promise`\<[`Result`](../interfaces/Result.md)\<`T`\>\>
-
-- Document data or null
-
-#### Throws
-
-- Error updating document
-
-#### Implementation of
-
-[`BaseRepository`](../interfaces/BaseRepository.md).[`update`](../interfaces/BaseRepository.md#update)
