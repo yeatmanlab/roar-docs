@@ -1,7 +1,5 @@
 # Multichoice - Clowder
 
-> 📝 **NOTE:** Multichoice will use the URL param `adaptive=true` to switch between adaptive and non-adaptive modes.
-
 ### 1. **Parameter Extraction from URL (`serve/serve.js`)**
 - Extract Clowder-specific parameters such as `earlyStopping`, `tolerance`, and `logicalOperation`.
 - Add these parameters to the `gameParams` array.
@@ -38,24 +36,15 @@ store.session.set('previousAnswer', null);
 
 ``` js
 const config = {
-    adaptive: adaptive ?? false,
-    practiceCorpus:
-      task === "cva"
-        ? adaptive
-          ? "cva-practice-cat"
-          : practiceCorpus || "cva-assessment-practice-items"
-        : adaptive
-        ? "morphology-practice-cat"
-        : practiceCorpus || "morphology-surveyPractice-11-17-2023",
+  practiceCorpus:
+    task === "cva"
+      ? practiceCorpus || "cva-practice-catv2"
+      : practiceCorpus || "morphology-practice-catv2",
 
-    stimulusCorpus:
-      task === "cva"
-        ? adaptive
-          ? "cva-stimulus-cat"
-          : stimulusCorpus || "cva-assessment-stimulus-items-all-2024-09-25"
-        : adaptive
-        ? "morphology-group-cat"
-        : stimulusCorpus || "morphology-items-2024-10-03",
+  stimulusCorpus:
+    task === "cva"
+      ? stimulusCorpus || "cva-stimulus-catv2"
+      : stimulusCorpus || "morphology-catv2",
 };
 ```
 
@@ -93,6 +82,13 @@ export let clowder;
 export const initializeClowder = () => {
   // Define the `cats` configuration
   const catsConfig = {
+    practice: {
+      method: "EAP", // MLE
+      itemSelect: store.session("itemSelect"),
+      minTheta: -8,
+      maxTheta: 8,
+      randomSeed: "seed-cat",
+    },
     total: {
       method: "EAP", // MLE
       itemSelect: store.session("itemSelect"),
@@ -158,9 +154,11 @@ export const initializeClowder = () => {
 
   const corpus = store.session.get("corpora");
 
+  const combinedCorpus = [...corpus.practice, ...corpus.stimulus];
+
   const clowderCorpus = prepareClowderCorpus(
-    corpus.stimulus,
-    ["total", "core", "new", "spare"],
+    combinedCorpus,
+    ["total", "core", "new", "spare", "practice"],
     ".",
   );
 
@@ -170,6 +168,8 @@ export const initializeClowder = () => {
     randomSeed: store.session.get("config").randomSeed ?? "random-seed",
     // earlyStopping: earlyStoppingCats,
   });
+
+  store.session.set("clowder", clowder);
 };
 
 export const setNextStimulus = () => {
@@ -177,28 +177,44 @@ export const setNextStimulus = () => {
   const coreRemaining = store.session.get("coreRemaining");
   const newRemaining = store.session.get("newRemaining");
   const spareRemaining = store.session.get("spareRemaining");
+  const practiceRemaining = store.session.get("practiceRemaining");
 
-  // Concise selection logic
-  const catToSelect =
-    coreRemaining > 0 && itemGroupCounter % 4 !== 0
-      ? "new"
-      : newRemaining > 0
-      ? "core"
-      : spareRemaining > 0
-      ? "spare"
-      : undefined;
+  let catToSelect;
 
-  if (catToSelect) {
-    if (catToSelect === "core") {
-      store.session.set("coreRemaining", coreRemaining - 1);
-    } else if (catToSelect === "new") {
-      store.session.set("newRemaining", newRemaining - 1);
-      store.session.set("itemGroupCounter", 0);
-    } else if (catToSelect === "spare") {
-      store.session.set("spareRemaining", spareRemaining - 1);
+  if (practiceRemaining > 0) {
+    catToSelect = "practice";
+    store.session.set("practiceRemaining", practiceRemaining - 1);
+  } else {
+    // Your existing logic
+    catToSelect =
+      coreRemaining > 0
+        ? itemGroupCounter % 4 === 0 && newRemaining > 0 && itemGroupCounter > 0
+          ? "new"
+          : "core"
+        : newRemaining > 0
+        ? itemGroupCounter % 4 === 0 &&
+          spareRemaining > 0 &&
+          itemGroupCounter > 0
+          ? "spare"
+          : "new"
+        : spareRemaining > 0
+        ? "spare"
+        : undefined;
+
+    if (catToSelect) {
+      if (catToSelect === "core") {
+        store.session.set("coreRemaining", coreRemaining - 1);
+        store.session.set("itemGroupCounter", itemGroupCounter + 1);
+      } else if (catToSelect === "new") {
+        store.session.set("newRemaining", newRemaining - 1);
+        store.session.set("itemGroupCounter", 0);
+      } else if (catToSelect === "spare") {
+        store.session.set("spareRemaining", spareRemaining - 1);
+        store.session.set("itemGroupCounter", 0);
+      }
+      // Update remaining items and reset counters
+      store.session.set("itemGroupCounter", itemGroupCounter + 1);
     }
-    // Update remaining items and reset counters
-    store.session.set("itemGroupCounter", itemGroupCounter + 1);
   }
 
   store.session.set("catName", catToSelect);
@@ -213,6 +229,8 @@ export const setNextStimulus = () => {
     answers: previousAnswer ?? undefined,
     randomlySelectUnvalidated: false,
   });
+
+  console.log("nextStimulus", nextStimulus);
 
   if (nextStimulus === undefined) {
     store.session.remove("nextStimulus");
@@ -237,29 +255,24 @@ export const setNextStimulus = () => {
 
 ### 4. **Stimulus Control (`experiment/trials/setup.js`) **
 
-- import `setNextStimulus` from `experiment/experimentHelpers` and `store` from `store2`
+- import `setNextStimulus` from `experiment/experimentHelpers`
 
 ```js
 import { setNextStimulus } from '../experimentHelpers';
-import store from 'store2';
 ```
 
-- Call `setNextStimulus` on  setSurveyData when adaptive is true
+- Call `setNextStimulus` on  setSurveyData
 
 ```js
 const setupSurveyData = [
   {
     onFinish: () => {
-      store.session.get("config").adaptive
-        ? setNextStimulus("practice")
-        : getStimulus("practice");
+      setNextStimulus();
     },
   },
   {
     onFinish: () => {
-      store.session.get("config").adaptive
-        ? setNextStimulus("stimulus")
-        : getStimulus("stimulus");
+      setNextStimulus();
     },
   },
 ];
@@ -267,49 +280,21 @@ const setupSurveyData = [
 
 ---
 
-### 5. **setNextStimulus and saving responses (`experiment/trials/stimulus.js`)**
-
-- store the `previousAnswer` and `previousItem`
-
-```js
-if (data.correct === 1) {
-        if (!isPractice(subTaskName)) {
-          store.session.set("previousItem", store.session.get("nextStimulus"));
-          store.session.set("previousAnswer", data.correct);
-          store.session.transact("totalCorrect", (oldVal) => oldVal + 1);
-        }
-      } else {
-        store.session.set("previousItem", store.session.get("nextStimulus"));
-        store.session.set("previousAnswer", 0);
-        addItemToSortedStoreList("incorrectItems", store.session("target"));
-      }
-```
-
-
----
-
-### 6. **Fetch and Parse Corpus for Clowder (`config/corpus.js`)**
+### 5. **Fetch and Parse Corpus for Clowder (`config/corpus.js`)**
 - Add the needed rows to the corpus handler
 
 ``` js
-const csvAssets = {
-    test: store.session.get('config')?.adaptive
-      ? corpusTranslations[i18next.language].testCat
-      : corpusTranslations[i18next.language].test,
-    practice: store.session.get('config')?.adaptive
-      ? corpusTranslations[i18next.language].practiceCat
-      : corpusTranslations[i18next.language].practice,
-  };
 // Add CAT corpus-specific columns if in CAT mode
 const transformCSV = (csvInput) => {
-    if (store.session.get("config").adaptive) {
-      ["total", "core", "new", "spare"].forEach((op) => {
-        ["a", "b", "c", "d"].forEach((suffix) => {
-          const key = `${op}.${suffix}`;
-          newRow[key] = row[key];
-        });
+  const accum = [];
+  csvInput.forEach((row) => {
+    const newRow = { ...row };
+    ["total", "core", "new", "spare", "practice"].forEach((op) => {
+      ["a", "b", "c", "d"].forEach((suffix) => {
+        const key = `${op}.${suffix}`;
+        newRow[key] = row[key];
       });
-    }
+    });
     accum.push(newRow);
     return accum;
   }, []);
