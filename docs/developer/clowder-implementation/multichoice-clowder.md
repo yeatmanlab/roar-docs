@@ -230,8 +230,6 @@ export const setNextStimulus = () => {
     randomlySelectUnvalidated: false,
   });
 
-  console.log("nextStimulus", nextStimulus);
-
   if (nextStimulus === undefined) {
     store.session.remove("nextStimulus");
   } else {
