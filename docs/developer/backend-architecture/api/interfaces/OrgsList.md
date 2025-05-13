@@ -1,20 +1,19 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / OrgsList
 
 # Interface: OrgsList
 
-Defined in: [packages/core/src/models/org.model.ts:27](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/org.model.ts#L27)
+Defined in: [src/models/org.model.ts:25](src/src/models/org.model.ts#25)
 
-A base interface for readOrgs and assignedOrgs.
-This interface is used to represent the organizations that can read or are assigned to an administration.
- OrgsList
+Extends educational organizations to include family and group structures.
+Used for defining read access permissions and assignments in administrations.
 
 ## See
 
-[EducationalOrgsList](EducationalOrgsList.md)
+[EducationalOrgsList](EducationalOrgsList.md) - Base educational organization structure
 
 ## Extends
 
@@ -26,62 +25,7 @@ This interface is used to represent the organizations that can read or are assig
 
 ## Properties
 
-### classes?
-
-> `optional` **classes**: `string`[]
-
-Defined in: [packages/core/src/models/org.model.ts:15](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/org.model.ts#L15)
-
-An array of class IDs.
-
-#### Inherited from
-
-[`EducationalOrgsList`](EducationalOrgsList.md).[`classes`](EducationalOrgsList.md#classes)
-
-***
-
-### districts?
-
-> `optional` **districts**: `string`[]
-
-Defined in: [packages/core/src/models/org.model.ts:13](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/org.model.ts#L13)
-
-An array of district IDs.
-
-#### Inherited from
-
-[`EducationalOrgsList`](EducationalOrgsList.md).[`districts`](EducationalOrgsList.md#districts)
-
-***
-
-### families?
-
-> `optional` **families**: `string`[]
-
-Defined in: [packages/core/src/models/org.model.ts:29](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/org.model.ts#L29)
-
-An array of family IDs.
-
-***
-
-### groups?
-
-> `optional` **groups**: `string`[]
-
-Defined in: [packages/core/src/models/org.model.ts:31](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/org.model.ts#L31)
-
-An array of group IDs.
-
-***
-
-### schools?
-
-> `optional` **schools**: `string`[]
-
-Defined in: [packages/core/src/models/org.model.ts:14](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/org.model.ts#L14)
-
-An array of school IDs.
-
-#### Inherited from
-
-[`EducationalOrgsList`](EducationalOrgsList.md).[`schools`](EducationalOrgsList.md#schools)
+| Property                          | Type       | Description                  | Defined in                                                   |
+| --------------------------------- | ---------- | ---------------------------- | ------------------------------------------------------------ |
+| <a id="families"></a> `families?` | `string`[] | Array of family identifiers. | [src/models/org.model.ts:27](src/src/models/org.model.ts#27) |
+| <a id="groups"></a> `groups?`     | `string`[] | Array of group identifiers.  | [src/models/org.model.ts:30](src/src/models/org.model.ts#30) |

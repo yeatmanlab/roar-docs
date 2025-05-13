@@ -1,32 +1,18 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / CollectionType
 
 # Enumeration: CollectionType
 
-Defined in: [packages/core/src/types/enums/CollectionType.enum.ts:7](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/types/enums/CollectionType.enum.ts#L7)
+Defined in: [src/types/enums/CollectionType.enum.ts:4](src/src/types/enums/CollectionType.enum.ts#4)
 
-Enum for Firestore collection types.
- CollectionType
+Types of Firestore collection queries available.
 
 ## Enumeration Members
 
-### Collection
-
-> **Collection**: `"COLLECTION"`
-
-Defined in: [packages/core/src/types/enums/CollectionType.enum.ts:8](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/types/enums/CollectionType.enum.ts#L8)
-
-The collection type.
-
-***
-
-### CollectionGroup
-
-> **CollectionGroup**: `"COLLECTION_GROUP"`
-
-Defined in: [packages/core/src/types/enums/CollectionType.enum.ts:9](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/types/enums/CollectionType.enum.ts#L9)
-
-The collection group type.
+| Enumeration Member                             | Value                | Description                                                   | Defined in                                                                               |
+| ---------------------------------------------- | -------------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| <a id="collection"></a> `Collection`           | `"COLLECTION"`       | Query a specific collection path.                             | [src/types/enums/CollectionType.enum.ts:6](src/src/types/enums/CollectionType.enum.ts#6) |
+| <a id="collectiongroup"></a> `CollectionGroup` | `"COLLECTION_GROUP"` | Query all collections with the same name across the database. | [src/types/enums/CollectionType.enum.ts:9](src/src/types/enums/CollectionType.enum.ts#9) |

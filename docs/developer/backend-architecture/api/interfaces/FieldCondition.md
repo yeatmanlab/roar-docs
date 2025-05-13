@@ -1,52 +1,25 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / FieldCondition
 
 # Interface: FieldCondition
 
-Defined in: [packages/core/src/models/condition.model.ts:25](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/condition.model.ts#L25)
+Defined in: [src/models/condition.model.ts:25](src/src/models/condition.model.ts#25)
 
-Interface representing a condition based on a document field, an operator,
-and a reference value.
+A condition that evaluates a field value against a reference value using an operator.
 
 ## See
 
- - [Operator](../enumerations/Operator.md)
- - [Condition](../type-aliases/Condition.md)
- - [CompositeCondition](CompositeCondition.md)
- - [SelectAllCondition](../type-aliases/SelectAllCondition.md)
- - [ParameterValue](../type-aliases/ParameterValue.md)
+- [Operator](../enumerations/Operator.md) - Available comparison operators
+- [ParameterValue](../type-aliases/ParameterValue.md) - Valid value types
 
 ## Properties
 
-### field
-
-> **field**: `string`
-
-Defined in: [packages/core/src/models/condition.model.ts:27](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/condition.model.ts#L27)
-
-***
-
-### id
-
-> **id**: `number`
-
-Defined in: [packages/core/src/models/condition.model.ts:26](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/condition.model.ts#L26)
-
-***
-
-### op
-
-> **op**: [`Operator`](../enumerations/Operator.md)
-
-Defined in: [packages/core/src/models/condition.model.ts:28](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/condition.model.ts#L28)
-
-***
-
-### value
-
-> **value**: `string` \| `number` \| `boolean` \| `Date`
-
-Defined in: [packages/core/src/models/condition.model.ts:29](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/condition.model.ts#L29)
+| Property                   | Type                                        | Description                         | Defined in                                                               |
+| -------------------------- | ------------------------------------------- | ----------------------------------- | ------------------------------------------------------------------------ |
+| <a id="id"></a> `id`       | `number`                                    | Unique identifier for the condition | [src/models/condition.model.ts:27](src/src/models/condition.model.ts#27) |
+| <a id="field"></a> `field` | `string`                                    | Document field to evaluate          | [src/models/condition.model.ts:30](src/src/models/condition.model.ts#30) |
+| <a id="op"></a> `op`       | [`Operator`](../enumerations/Operator.md)   | Comparison operator to apply        | [src/models/condition.model.ts:33](src/src/models/condition.model.ts#33) |
+| <a id="value"></a> `value` | `string` \| `number` \| `boolean` \| `Date` | Reference value to compare against  | [src/models/condition.model.ts:36](src/src/models/condition.model.ts#36) |

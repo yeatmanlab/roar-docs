@@ -1,80 +1,29 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / Assessment
 
 # Interface: Assessment
 
-Defined in: [packages/core/src/models/assignment.model.ts:15](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/assignment.model.ts#L15)
+Defined in: [src/models/assignment.model.ts:16](src/src/models/assignment.model.ts#16)
 
 An interface representing an assessment.
-This interface is used to define the structure of an assessment object.
- Assessment
+Defines the structure of an assessment object within an administration.
 
 ## See
 
- - [Condition](../type-aliases/Condition.md)
- - [ParameterValue](../type-aliases/ParameterValue.md)
+- [Condition](../type-aliases/Condition.md) - For condition types.
+- [ParameterValue](../type-aliases/ParameterValue.md) - For parameter value types.
 
 ## Properties
 
-### conditions?
-
-> `optional` **conditions**: `object`
-
-Defined in: [packages/core/src/models/assignment.model.ts:20](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/assignment.model.ts#L20)
-
-The conditions for the assessment.
-
-#### assigned?
-
-> `optional` **assigned**: [`Condition`](../type-aliases/Condition.md)
-
-#### optional?
-
-> `optional` **optional**: [`Condition`](../type-aliases/Condition.md)
-
-***
-
-### params
-
-> **params**: `object`
-
-Defined in: [packages/core/src/models/assignment.model.ts:19](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/assignment.model.ts#L19)
-
-The parameters for the assessment.
-
-#### Index Signature
-
-\[`x`: `string`\]: [`ParameterValue`](../type-aliases/ParameterValue.md)
-
-***
-
-### taskId
-
-> **taskId**: `string`
-
-Defined in: [packages/core/src/models/assignment.model.ts:16](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/assignment.model.ts#L16)
-
-The task ID of the assessment.
-
-***
-
-### variantId
-
-> **variantId**: `string`
-
-Defined in: [packages/core/src/models/assignment.model.ts:17](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/assignment.model.ts#L17)
-
-The variant ID of the assessment.
-
-***
-
-### variantName?
-
-> `optional` **variantName**: `string`
-
-Defined in: [packages/core/src/models/assignment.model.ts:18](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/assignment.model.ts#L18)
-
-The variant name of the assessment.
+| Property                                | Type                                                                                                                    | Description                                                         | Defined in                                                                 |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| <a id="taskid"></a> `taskId`            | `string`                                                                                                                | Unique identifier for the task.                                     | [src/models/assignment.model.ts:18](src/src/models/assignment.model.ts#18) |
+| <a id="variantid"></a> `variantId`      | `string`                                                                                                                | Identifier for the specific variant of the task.                    | [src/models/assignment.model.ts:21](src/src/models/assignment.model.ts#21) |
+| <a id="variantname"></a> `variantName?` | `string`                                                                                                                | Display name for the task variant.                                  | [src/models/assignment.model.ts:24](src/src/models/assignment.model.ts#24) |
+| <a id="params"></a> `params`            | \{ [`x`: `string`]: [`ParameterValue`](../type-aliases/ParameterValue.md); \}                                           | Configuration parameters for the task, mapped by parameter name.    | [src/models/assignment.model.ts:27](src/src/models/assignment.model.ts#27) |
+| <a id="conditions"></a> `conditions?`   | \{ `assigned`: [`Condition`](../type-aliases/Condition.md); `optional`: [`Condition`](../type-aliases/Condition.md); \} | Optional conditions controlling task availability and requirements. | [src/models/assignment.model.ts:30](src/src/models/assignment.model.ts#30) |
+| `conditions.assigned?`                  | [`Condition`](../type-aliases/Condition.md)                                                                             | Condition determining if task is assigned.                          | [src/models/assignment.model.ts:32](src/src/models/assignment.model.ts#32) |
+| `conditions.optional?`                  | [`Condition`](../type-aliases/Condition.md)                                                                             | Condition determining if task is optional.                          | [src/models/assignment.model.ts:34](src/src/models/assignment.model.ts#34) |

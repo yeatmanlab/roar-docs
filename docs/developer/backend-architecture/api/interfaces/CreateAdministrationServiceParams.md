@@ -1,61 +1,33 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / CreateAdministrationServiceParams
 
 # Interface: CreateAdministrationServiceParams\<AdminRepo, OrgRepo, UserClaimRepo\>
 
-Defined in: [packages/core/src/services/administration.service.interface.ts:45](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/services/administration.service.interface.ts#L45)
+Defined in: [src/services/administration.service.interface.ts:36](src/src/services/administration.service.interface.ts#36)
 
-The parameters for the createAdministrationService method.
+Parameters for creating an Administration service instance.
 
-## Param
+## See
 
-The administration repository.
-
-## Param
-
-The org repository.
-
-## Param
-
-The user claim repository.
+- [AdministrationBaseRepository](AdministrationBaseRepository.md)
+- [OrgBaseRepository](OrgBaseRepository.md)
+- [UserClaimBaseRepository](UserClaimBaseRepository.md)
 
 ## Type Parameters
 
-### AdminRepo
-
-`AdminRepo` *extends* [`AdministrationBaseRepository`](AdministrationBaseRepository.md)
-
-### OrgRepo
-
-`OrgRepo` *extends* [`OrgBaseRepository`](OrgBaseRepository.md)
-
-### UserClaimRepo
-
-`UserClaimRepo` *extends* [`UserClaimBaseRepository`](UserClaimBaseRepository.md)
+| Type Parameter                                                                          | Description                                  |
+| --------------------------------------------------------------------------------------- | -------------------------------------------- |
+| `AdminRepo` _extends_ [`AdministrationBaseRepository`](AdministrationBaseRepository.md) | Type extending AdministrationBaseRepository. |
+| `OrgRepo` _extends_ [`OrgBaseRepository`](OrgBaseRepository.md)                         | Type extending OrgBaseRepository.            |
+| `UserClaimRepo` _extends_ [`UserClaimBaseRepository`](UserClaimBaseRepository.md)       | Type extending UserClaimBaseRepository.      |
 
 ## Properties
 
-### administrationRepository
-
-> **administrationRepository**: `AdminRepo`
-
-Defined in: [packages/core/src/services/administration.service.interface.ts:50](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/services/administration.service.interface.ts#L50)
-
-***
-
-### orgRepository
-
-> **orgRepository**: `OrgRepo`
-
-Defined in: [packages/core/src/services/administration.service.interface.ts:51](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/services/administration.service.interface.ts#L51)
-
-***
-
-### userClaimRepository
-
-> **userClaimRepository**: `UserClaimRepo`
-
-Defined in: [packages/core/src/services/administration.service.interface.ts:52](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/services/administration.service.interface.ts#L52)
+| Property                                                         | Type            | Description                                      | Defined in                                                                                                     |
+| ---------------------------------------------------------------- | --------------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| <a id="administrationrepository"></a> `administrationRepository` | `AdminRepo`     | Repository for managing administration entities. | [src/services/administration.service.interface.ts:42](src/src/services/administration.service.interface.ts#42) |
+| <a id="orgrepository"></a> `orgRepository`                       | `OrgRepo`       | Repository for managing organization entities.   | [src/services/administration.service.interface.ts:45](src/src/services/administration.service.interface.ts#45) |
+| <a id="userclaimrepository"></a> `userClaimRepository`           | `UserClaimRepo` | Repository for managing user claim entities.     | [src/services/administration.service.interface.ts:48](src/src/services/administration.service.interface.ts#48) |

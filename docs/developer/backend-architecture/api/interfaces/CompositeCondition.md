@@ -1,34 +1,24 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / CompositeCondition
 
 # Interface: CompositeCondition
 
-Defined in: [packages/core/src/models/condition.model.ts:11](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/condition.model.ts#L11)
+Defined in: [src/models/condition.model.ts:11](src/src/models/condition.model.ts#11)
 
-Interface representing a condition based on a composite of other conditions.
-The conditions are combined using a logical operator.
-The conditions can be FieldConditions, CompositeConditions, or SelectAllConditions.
+A condition that combines multiple conditions using a logical operator.
+Can combine FieldConditions, CompositeConditions, or SelectAllConditions.
 
 ## See
 
- - [FieldCondition](FieldCondition.md)
- - [SelectAllCondition](../type-aliases/SelectAllCondition.md)
+- [FieldCondition](FieldCondition.md) - For field-based conditions
+- [SelectAllCondition](../type-aliases/SelectAllCondition.md) - For select-all conditions
 
 ## Properties
 
-### conditions
-
-> **conditions**: [`Condition`](../type-aliases/Condition.md)[]
-
-Defined in: [packages/core/src/models/condition.model.ts:13](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/condition.model.ts#L13)
-
-***
-
-### op
-
-> **op**: `"AND"` \| `"OR"`
-
-Defined in: [packages/core/src/models/condition.model.ts:12](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/condition.model.ts#L12)
+| Property                             | Type                                          | Description                                            | Defined in                                                               |
+| ------------------------------------ | --------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------ |
+| <a id="op"></a> `op`                 | `"AND"` \| `"OR"`                             | Logical operator to combine conditions ('AND' or 'OR') | [src/models/condition.model.ts:13](src/src/models/condition.model.ts#13) |
+| <a id="conditions"></a> `conditions` | [`Condition`](../type-aliases/Condition.md)[] | Array of conditions to be combined                     | [src/models/condition.model.ts:16](src/src/models/condition.model.ts#16) |

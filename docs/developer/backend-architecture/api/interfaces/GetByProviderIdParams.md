@@ -1,42 +1,20 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / GetByProviderIdParams
 
 # Interface: GetByProviderIdParams
 
-Defined in: [packages/core/src/repositories/base/identityProvider.base.repository.interface.ts:13](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/identityProvider.base.repository.interface.ts#L13)
+Defined in: [src/repositories/base/identityProvider.base.repository.interface.ts:10](src/src/repositories/base/identityProvider.base.repository.interface.ts#10)
 
-Parameters for retrieving an identity provider by provider ID.
- GetByProviderIdParams
+Parameters for retrieving identity providers by their provider-specific details.
+At least one parameter must be provided for the search.
 
 ## Properties
 
-### identityProviderEmail?
-
-> `optional` **identityProviderEmail**: `string`
-
-Defined in: [packages/core/src/repositories/base/identityProvider.base.repository.interface.ts:15](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/identityProvider.base.repository.interface.ts#L15)
-
-The email associated with the identity provider.
-
-***
-
-### identityProviderId?
-
-> `optional` **identityProviderId**: `string`
-
-Defined in: [packages/core/src/repositories/base/identityProvider.base.repository.interface.ts:14](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/identityProvider.base.repository.interface.ts#L14)
-
-The unique identifier of the identity provider.
-
-***
-
-### identityProviderType?
-
-> `optional` **identityProviderType**: [`IdentityProviderType`](../enumerations/IdentityProviderType.md)
-
-Defined in: [packages/core/src/repositories/base/identityProvider.base.repository.interface.ts:16](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/identityProvider.base.repository.interface.ts#L16)
-
-The type of identity provider.
+| Property                                                    | Type                                                              | Description                                          | Defined in                                                                                                                                           |
+| ----------------------------------------------------------- | ----------------------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a id="identityproviderid"></a> `identityProviderId?`       | `string`                                                          | Provider-assigned unique identifier.                 | [src/repositories/base/identityProvider.base.repository.interface.ts:12](src/src/repositories/base/identityProvider.base.repository.interface.ts#12) |
+| <a id="identityprovideremail"></a> `identityProviderEmail?` | `string`                                                          | Email address registered with the provider.          | [src/repositories/base/identityProvider.base.repository.interface.ts:15](src/src/repositories/base/identityProvider.base.repository.interface.ts#15) |
+| <a id="identityprovidertype"></a> `identityProviderType?`   | [`IdentityProviderType`](../enumerations/IdentityProviderType.md) | Type of identity provider (e.g., Google, Microsoft). | [src/repositories/base/identityProvider.base.repository.interface.ts:18](src/src/repositories/base/identityProvider.base.repository.interface.ts#18) |

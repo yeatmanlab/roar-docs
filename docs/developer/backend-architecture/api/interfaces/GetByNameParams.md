@@ -1,14 +1,14 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / GetByNameParams
 
 # Interface: GetByNameParams
 
-Defined in: [packages/core/src/repositories/base/administration.base.repository.interface.ts:11](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/administration.base.repository.interface.ts#L11)
+Defined in: [src/repositories/base/administration.base.repository.interface.ts:8](src/src/repositories/base/administration.base.repository.interface.ts#8)
 
-Parameters for retrieving administrations by name
+Parameters for retrieving administrations by their name.
 
 ## Extended by
 
@@ -16,30 +16,8 @@ Parameters for retrieving administrations by name
 
 ## Properties
 
-### limit?
-
-> `optional` **limit**: `number`
-
-Defined in: [packages/core/src/repositories/base/administration.base.repository.interface.ts:13](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/administration.base.repository.interface.ts#L13)
-
-Optional limit for the number of results
-
-***
-
-### name
-
-> **name**: `string`
-
-Defined in: [packages/core/src/repositories/base/administration.base.repository.interface.ts:12](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/administration.base.repository.interface.ts#L12)
-
-The name to search for
-
-***
-
-### select?
-
-> `optional` **select**: `unknown`
-
-Defined in: [packages/core/src/repositories/base/administration.base.repository.interface.ts:14](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/administration.base.repository.interface.ts#L14)
-
-Optional fields to select
+| Property                      | Type      | Description                                | Defined in                                                                                                                                       |
+| ----------------------------- | --------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| <a id="name"></a> `name`      | `string`  | Name of the administration to search for.  | [src/repositories/base/administration.base.repository.interface.ts:10](src/src/repositories/base/administration.base.repository.interface.ts#10) |
+| <a id="limit"></a> `limit?`   | `number`  | Maximum number of results to return.       | [src/repositories/base/administration.base.repository.interface.ts:13](src/src/repositories/base/administration.base.repository.interface.ts#13) |
+| <a id="select"></a> `select?` | `unknown` | Specific fields to include in the results. | [src/repositories/base/administration.base.repository.interface.ts:16](src/src/repositories/base/administration.base.repository.interface.ts#16) |

@@ -1,12 +1,12 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / FilterAdapter
 
 # Interface: FilterAdapter\<T\>
 
-Defined in: [packages/core/src/filters/base.filter.ts:72](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/filters/base.filter.ts#L72)
+Defined in: [src/filters/base.filter.ts:71](src/src/filters/base.filter.ts#71)
 
 Interface that defines a function to create filters from a BaseFilter object.
 
@@ -17,25 +17,27 @@ structures into the target filter format.
 
 ## Type Parameters
 
-### T
-
-`T`
-
-The target filter type that BaseFilter objects will be converted to
+| Type Parameter | Description                                                         |
+| -------------- | ------------------------------------------------------------------- |
+| `T`            | The target filter type that BaseFilter objects will be converted to |
 
 ## Methods
 
 ### adapt()
 
-> **adapt**(`filter`): `T`
+```ts
+adapt(filter: BaseFilter): T;
+```
 
-Defined in: [packages/core/src/filters/base.filter.ts:73](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/filters/base.filter.ts#L73)
+Defined in: [src/filters/base.filter.ts:73](src/src/filters/base.filter.ts#73)
+
+The function to adapt a BaseFilter object into the target filter format
 
 #### Parameters
 
-##### filter
-
-[`BaseFilter`](../type-aliases/BaseFilter.md)
+| Parameter | Type                                          |
+| --------- | --------------------------------------------- |
+| `filter`  | [`BaseFilter`](../type-aliases/BaseFilter.md) |
 
 #### Returns
 

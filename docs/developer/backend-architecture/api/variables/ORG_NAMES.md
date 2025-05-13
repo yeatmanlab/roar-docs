@@ -1,14 +1,33 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
-[@roar-firebase-functions/core](../README.md) / ORG\_NAMES
+[@roar-firebase-functions/core](../README.md) / ORG_NAMES
 
-# Variable: ORG\_NAMES
+# Variable: ORG_NAMES
 
-> `const` **ORG\_NAMES**: `string`[]
+```ts
+const ORG_NAMES: readonly [
+  "districts",
+  "schools",
+  "classes",
+  "groups",
+  "families",
+];
+```
 
-Defined in: [packages/core/src/types/constants/Orgs.constants.ts:10](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/types/constants/Orgs.constants.ts#L10)
+Defined in: [src/types/constants/Orgs.constants.ts:13](src/src/types/constants/Orgs.constants.ts#13)
 
-The types of organizations used by ROAR.
- OrgType
+Valid organization types in the ROAR system hierarchy.
+Listed in order from highest to lowest level:
+
+1. districts
+2. schools
+3. classes
+4. groups
+5. families
+
+## See
+
+- [EducationalOrgsList](../interfaces/EducationalOrgsList.md) - Educational organization structure.
+- [OrgsList](../interfaces/OrgsList.md) - Complete organization structure.

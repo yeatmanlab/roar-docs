@@ -1,56 +1,24 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / Legal
 
 # Interface: Legal
 
-Defined in: [packages/core/src/models/legal.model.ts:36](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/legal.model.ts#L36)
+Defined in: [src/models/legal.model.ts:33](src/src/models/legal.model.ts#33)
 
-The Legal model is used to define the legal information of a project.
- Legal
+Represents the legal configuration for a project.
 
 ## See
 
-[AssentConsent](AssentConsent.md)
+[AssentConsent](AssentConsent.md) - Structure of assent and consent documents
 
 ## Properties
 
-### amount?
-
-> `optional` **amount**: `string`
-
-Defined in: [packages/core/src/models/legal.model.ts:37](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/legal.model.ts#L37)
-
-The amount of the legal information.
-
-***
-
-### assent?
-
-> `optional` **assent**: [`AssentConsent`](AssentConsent.md)
-
-Defined in: [packages/core/src/models/legal.model.ts:38](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/legal.model.ts#L38)
-
-The assent information of the legal information.
-
-***
-
-### consent?
-
-> `optional` **consent**: [`AssentConsent`](AssentConsent.md)
-
-Defined in: [packages/core/src/models/legal.model.ts:39](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/legal.model.ts#L39)
-
-The consent information of the legal information.
-
-***
-
-### expectedTime?
-
-> `optional` **expectedTime**: `string`
-
-Defined in: [packages/core/src/models/legal.model.ts:40](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/legal.model.ts#L40)
-
-The expected time of the legal information.
+| Property                                  | Type                                | Description                                          | Defined in                                                       |
+| ----------------------------------------- | ----------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------- |
+| <a id="amount"></a> `amount?`             | `string`                            | Compensation amount for participation.               | [src/models/legal.model.ts:35](src/src/models/legal.model.ts#35) |
+| <a id="assent"></a> `assent?`             | [`AssentConsent`](AssentConsent.md) | Assent document configuration for minors.            | [src/models/legal.model.ts:38](src/src/models/legal.model.ts#38) |
+| <a id="consent"></a> `consent?`           | [`AssentConsent`](AssentConsent.md) | Consent document configuration for adults/guardians. | [src/models/legal.model.ts:41](src/src/models/legal.model.ts#41) |
+| <a id="expectedtime"></a> `expectedTime?` | `string`                            | Expected time commitment for participation.          | [src/models/legal.model.ts:44](src/src/models/legal.model.ts#44) |

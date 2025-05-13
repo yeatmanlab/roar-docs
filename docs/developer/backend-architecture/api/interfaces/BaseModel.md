@@ -1,42 +1,19 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / BaseModel
 
 # Interface: BaseModel
 
-Defined in: [packages/core/src/models/base.model.ts:8](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/base.model.ts#L8)
+Defined in: [src/models/base.model.ts:4](src/src/models/base.model.ts#4)
 
-Base model for all models
- BaseModel
+Base model for all models.
 
 ## Properties
 
-### createdAt?
-
-> `optional` **createdAt**: `Date`
-
-Defined in: [packages/core/src/models/base.model.ts:10](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/base.model.ts#L10)
-
-The date the model was created.
-
-***
-
-### id?
-
-> `optional` **id**: `string`
-
-Defined in: [packages/core/src/models/base.model.ts:9](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/base.model.ts#L9)
-
-The ID of the model.
-
-***
-
-### lastUpdated?
-
-> `optional` **lastUpdated**: `Date`
-
-Defined in: [packages/core/src/models/base.model.ts:11](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/base.model.ts#L11)
-
-The date the model was last updated.
+| Property                                | Type     | Description                          | Defined in                                                     |
+| --------------------------------------- | -------- | ------------------------------------ | -------------------------------------------------------------- |
+| <a id="id"></a> `id?`                   | `string` | The ID of the model.                 | [src/models/base.model.ts:6](src/src/models/base.model.ts#6)   |
+| <a id="createdat"></a> `createdAt?`     | `Date`   | The date the model was created.      | [src/models/base.model.ts:8](src/src/models/base.model.ts#8)   |
+| <a id="lastupdated"></a> `lastUpdated?` | `Date`   | The date the model was last updated. | [src/models/base.model.ts:10](src/src/models/base.model.ts#10) |

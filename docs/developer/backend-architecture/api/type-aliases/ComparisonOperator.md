@@ -1,14 +1,26 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / ComparisonOperator
 
 # Type Alias: ComparisonOperator
 
-> **ComparisonOperator** = `"equals"` \| `"notEquals"` \| `"lessThan"` \| `"lessThanOrEqual"` \| `"greaterThan"` \| `"greaterThanOrEqual"` \| `"contains"` \| `"in"` \| `"notIn"` \| `"containsAny"`
+```ts
+type ComparisonOperator =
+  | "equals"
+  | "notEquals"
+  | "lessThan"
+  | "lessThanOrEqual"
+  | "greaterThan"
+  | "greaterThanOrEqual"
+  | "contains"
+  | "in"
+  | "notIn"
+  | "containsAny";
+```
 
-Defined in: [packages/core/src/filters/base.filter.ts:15](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/filters/base.filter.ts#L15)
+Defined in: [src/filters/base.filter.ts:15](src/src/filters/base.filter.ts#15)
 
 Represents comparison operators used in filtering operations.
 
