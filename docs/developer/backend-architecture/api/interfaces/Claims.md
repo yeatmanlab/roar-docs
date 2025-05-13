@@ -1,21 +1,18 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / Claims
 
 # Interface: Claims
 
-Defined in: [packages/core/src/models/userClaim.model.ts:17](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/userClaim.model.ts#L17)
+Defined in: [src/models/userClaim.model.ts:8](src/src/models/userClaim.model.ts#8)
 
-An interface representing a user's claims.
-This interface is used to define the structure of a user's claims object.
- Claims
+Represents a user's authorization claims and access permissions within the system.
 
 ## See
 
- - [OrgsList](OrgsList.md)
- - [UserClaim](UserClaim.md)
+[OrgsList](OrgsList.md) - Organization structure for access permissions
 
 ## Extended by
 
@@ -23,68 +20,12 @@ This interface is used to define the structure of a user's claims object.
 
 ## Properties
 
-### adminOrgs?
-
-> `optional` **adminOrgs**: [`OrgsList`](OrgsList.md)
-
-Defined in: [packages/core/src/models/userClaim.model.ts:18](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/userClaim.model.ts#L18)
-
-The organizations the user is an admin of.
-
-***
-
-### adminUid
-
-> **adminUid**: `string`
-
-Defined in: [packages/core/src/models/userClaim.model.ts:20](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/userClaim.model.ts#L20)
-
-The user ID of the admin.
-
-***
-
-### assessmentUid
-
-> **assessmentUid**: `string`
-
-Defined in: [packages/core/src/models/userClaim.model.ts:21](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/userClaim.model.ts#L21)
-
-The user ID of the assessment.
-
-***
-
-### minimalAdminOrgs?
-
-> `optional` **minimalAdminOrgs**: [`OrgsList`](OrgsList.md)
-
-Defined in: [packages/core/src/models/userClaim.model.ts:19](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/userClaim.model.ts#L19)
-
-***
-
-### roarUid
-
-> **roarUid**: `string`
-
-Defined in: [packages/core/src/models/userClaim.model.ts:22](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/userClaim.model.ts#L22)
-
-The user ID of the ROAR.
-
-***
-
-### role
-
-> **role**: `string`
-
-Defined in: [packages/core/src/models/userClaim.model.ts:24](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/userClaim.model.ts#L24)
-
-The role of the user.
-
-***
-
-### super\_admin?
-
-> `optional` **super\_admin**: `boolean`
-
-Defined in: [packages/core/src/models/userClaim.model.ts:23](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/userClaim.model.ts#L23)
-
-A boolean indicating whether the user is a super admin.
+| Property                                          | Type                      | Description                                                 | Defined in                                                               |
+| ------------------------------------------------- | ------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------ |
+| <a id="adminorgs"></a> `adminOrgs?`               | [`OrgsList`](OrgsList.md) | Organizations where user has administrative privileges.     | [src/models/userClaim.model.ts:10](src/src/models/userClaim.model.ts#10) |
+| <a id="minimaladminorgs"></a> `minimalAdminOrgs?` | [`OrgsList`](OrgsList.md) | Organizations where user has limited administrative access. | [src/models/userClaim.model.ts:13](src/src/models/userClaim.model.ts#13) |
+| <a id="adminuid"></a> `adminUid`                  | `string`                  | Administrator user identifier.                              | [src/models/userClaim.model.ts:16](src/src/models/userClaim.model.ts#16) |
+| <a id="assessmentuid"></a> `assessmentUid`        | `string`                  | Assessment-specific user identifier.                        | [src/models/userClaim.model.ts:19](src/src/models/userClaim.model.ts#19) |
+| <a id="roaruid"></a> `roarUid`                    | `string`                  | Internal ROAR system user identifier.                       | [src/models/userClaim.model.ts:22](src/src/models/userClaim.model.ts#22) |
+| <a id="super_admin"></a> `super_admin?`           | `boolean`                 | Whether user has system-wide administrative privileges.     | [src/models/userClaim.model.ts:25](src/src/models/userClaim.model.ts#25) |
+| <a id="role"></a> `role`                          | `string`                  | User's role within the system.                              | [src/models/userClaim.model.ts:28](src/src/models/userClaim.model.ts#28) |

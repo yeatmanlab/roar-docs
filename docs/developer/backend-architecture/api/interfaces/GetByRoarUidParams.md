@@ -1,22 +1,14 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / GetByRoarUidParams
 
 # Interface: GetByRoarUidParams
 
-Defined in: [packages/core/src/repositories/base/userClaim.base.repository.interface.ts:10](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/userClaim.base.repository.interface.ts#L10)
+Defined in: [src/repositories/base/userClaim.base.repository.interface.ts:8](src/src/repositories/base/userClaim.base.repository.interface.ts#8)
 
-The parameters for the getUserClaimsByRoarUid method.
-
-## Param
-
-The administrator's Roar UID.
-
-## Param
-
-The transaction to use for the operation.
+Parameters for retrieving user claims by ROAR user identifier.
 
 ## Extended by
 
@@ -24,16 +16,7 @@ The transaction to use for the operation.
 
 ## Properties
 
-### administratorRoarUid
-
-> **administratorRoarUid**: `string`
-
-Defined in: [packages/core/src/repositories/base/userClaim.base.repository.interface.ts:11](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/userClaim.base.repository.interface.ts#L11)
-
-***
-
-### transaction?
-
-> `optional` **transaction**: `unknown`
-
-Defined in: [packages/core/src/repositories/base/userClaim.base.repository.interface.ts:12](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/userClaim.base.repository.interface.ts#L12)
+| Property                                                 | Type      | Description                                   | Defined in                                                                                                                             |
+| -------------------------------------------------------- | --------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| <a id="administratorroaruid"></a> `administratorRoarUid` | `string`  | ROAR system identifier for the administrator. | [src/repositories/base/userClaim.base.repository.interface.ts:10](src/src/repositories/base/userClaim.base.repository.interface.ts#10) |
+| <a id="transaction"></a> `transaction?`                  | `unknown` | Optional transaction for atomic operations.   | [src/repositories/base/userClaim.base.repository.interface.ts:13](src/src/repositories/base/userClaim.base.repository.interface.ts#13) |

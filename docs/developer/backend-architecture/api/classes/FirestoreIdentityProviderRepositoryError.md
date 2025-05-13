@@ -1,20 +1,20 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / FirestoreIdentityProviderRepositoryError
 
 # Class: FirestoreIdentityProviderRepositoryError
 
-Defined in: [packages/core/src/errors/firestore/FirestoreIdentityProviderRepositoryError.error.ts:12](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/errors/firestore/FirestoreIdentityProviderRepositoryError.error.ts#L12)
+Defined in: [src/errors/firestore/FirestoreIdentityProviderRepositoryError.error.ts:10](src/src/errors/firestore/FirestoreIdentityProviderRepositoryError.error.ts#10)
 
-FirestoreIdentityProviderRepositoryError
+Error handler for Firestore identity provider repository operations.
+Provides standardized error messages and handling for common failure scenarios
+in identity provider management.
 
-This class extends FirestoreRepositoryError to provide specific error handling
-for identity provider repository operations in Firestore.
+## See
 
-It contains methods to generate standardized errors for common
-identity provider repository failure scenarios.
+[FirestoreRepositoryError](FirestoreRepositoryError.md) - Base repository error class
 
 ## Extends
 
@@ -24,19 +24,20 @@ identity provider repository failure scenarios.
 
 ### Constructor
 
-> **new FirestoreIdentityProviderRepositoryError**(`message`, `error?`): `FirestoreIdentityProviderRepositoryError`
+```ts
+new FirestoreIdentityProviderRepositoryError(message: string, error?: unknown): FirestoreIdentityProviderRepositoryError;
+```
 
-Defined in: [packages/core/src/errors/firestore/FirestoreIdentityProviderRepositoryError.error.ts:13](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/errors/firestore/FirestoreIdentityProviderRepositoryError.error.ts#L13)
+Defined in: [src/errors/firestore/FirestoreIdentityProviderRepositoryError.error.ts:17](src/src/errors/firestore/FirestoreIdentityProviderRepositoryError.error.ts#17)
+
+Creates a new FirestoreIdentityProviderRepositoryError instance.
 
 #### Parameters
 
-##### message
-
-`string`
-
-##### error?
-
-`any`
+| Parameter | Type      | Description                      |
+| --------- | --------- | -------------------------------- |
+| `message` | `string`  | Error description message        |
+| `error?`  | `unknown` | Optional underlying error object |
 
 #### Returns
 
@@ -46,146 +47,58 @@ Defined in: [packages/core/src/errors/firestore/FirestoreIdentityProviderReposit
 
 [`FirestoreRepositoryError`](FirestoreRepositoryError.md).[`constructor`](FirestoreRepositoryError.md#constructor)
 
-## Properties
-
-### error
-
-> `protected` **error**: `any`
-
-Defined in: [packages/core/src/errors/firestore/FirestoreRepositoryError.error.ts:7](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/errors/firestore/FirestoreRepositoryError.error.ts#L7)
-
-#### Inherited from
-
-[`FirestoreRepositoryError`](FirestoreRepositoryError.md).[`error`](FirestoreRepositoryError.md#error)
-
-***
-
-### message
-
-> **message**: `string`
-
-Defined in: packages/core/node\_modules/typescript/lib/lib.es5.d.ts:1077
-
-#### Inherited from
-
-[`FirestoreRepositoryError`](FirestoreRepositoryError.md).[`message`](FirestoreRepositoryError.md#message)
-
-***
-
-### name
-
-> **name**: `string`
-
-Defined in: packages/core/node\_modules/typescript/lib/lib.es5.d.ts:1076
-
-#### Inherited from
-
-[`FirestoreRepositoryError`](FirestoreRepositoryError.md).[`name`](FirestoreRepositoryError.md#name)
-
-***
-
-### stack?
-
-> `optional` **stack**: `string`
-
-Defined in: packages/core/node\_modules/typescript/lib/lib.es5.d.ts:1078
-
-#### Inherited from
-
-[`FirestoreRepositoryError`](FirestoreRepositoryError.md).[`stack`](FirestoreRepositoryError.md#stack)
-
-***
-
-### prepareStackTrace()?
-
-> `static` `optional` **prepareStackTrace**: (`err`, `stackTraces`) => `any`
-
-Defined in: node\_modules/@types/node/globals.d.ts:98
-
-Optional override for formatting stack traces
-
-#### Parameters
-
-##### err
-
-`Error`
-
-##### stackTraces
-
-`CallSite`[]
-
-#### Returns
-
-`any`
-
-#### See
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
-
-#### Inherited from
-
-[`FirestoreRepositoryError`](FirestoreRepositoryError.md).[`prepareStackTrace`](FirestoreRepositoryError.md#preparestacktrace)
-
-***
-
-### stackTraceLimit
-
-> `static` **stackTraceLimit**: `number`
-
-Defined in: node\_modules/@types/node/globals.d.ts:100
-
-#### Inherited from
-
-[`FirestoreRepositoryError`](FirestoreRepositoryError.md).[`stackTraceLimit`](FirestoreRepositoryError.md#stacktracelimit)
-
 ## Methods
-
-### getByProviderIdError()
-
-> **getByProviderIdError**(): `FirestoreIdentityProviderRepositoryError`
-
-Defined in: [packages/core/src/errors/firestore/FirestoreIdentityProviderRepositoryError.error.ts:25](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/errors/firestore/FirestoreIdentityProviderRepositoryError.error.ts#L25)
-
-#### Returns
-
-`FirestoreIdentityProviderRepositoryError`
-
-***
 
 ### noProviderDataError()
 
-> **noProviderDataError**(): `FirestoreIdentityProviderRepositoryError`
+```ts
+noProviderDataError(error?: unknown): FirestoreIdentityProviderRepositoryError;
+```
 
-Defined in: [packages/core/src/errors/firestore/FirestoreIdentityProviderRepositoryError.error.ts:18](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/errors/firestore/FirestoreIdentityProviderRepositoryError.error.ts#L18)
+Defined in: [src/errors/firestore/FirestoreIdentityProviderRepositoryError.error.ts:29](src/src/errors/firestore/FirestoreIdentityProviderRepositoryError.error.ts#29)
+
+Creates an error instance for provider data retrieval failures.
+
+#### Parameters
+
+| Parameter | Type      | Description                      |
+| --------- | --------- | -------------------------------- |
+| `error?`  | `unknown` | Optional underlying error object |
 
 #### Returns
 
 `FirestoreIdentityProviderRepositoryError`
 
-***
+New error instance with appropriate message
 
-### captureStackTrace()
+#### Throws
 
-> `static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+When provider data cannot be retrieved
 
-Defined in: node\_modules/@types/node/globals.d.ts:91
+---
 
-Create .stack property on a target object
+### getByProviderIdError()
+
+```ts
+getByProviderIdError(error?: unknown): FirestoreIdentityProviderRepositoryError;
+```
+
+Defined in: [src/errors/firestore/FirestoreIdentityProviderRepositoryError.error.ts:45](src/src/errors/firestore/FirestoreIdentityProviderRepositoryError.error.ts#45)
+
+Creates an error instance for provider ID lookup failures.
 
 #### Parameters
 
-##### targetObject
-
-`object`
-
-##### constructorOpt?
-
-`Function`
+| Parameter | Type      | Description                      |
+| --------- | --------- | -------------------------------- |
+| `error?`  | `unknown` | Optional underlying error object |
 
 #### Returns
 
-`void`
+`FirestoreIdentityProviderRepositoryError`
 
-#### Inherited from
+New error instance with appropriate message
 
-[`FirestoreRepositoryError`](FirestoreRepositoryError.md).[`captureStackTrace`](FirestoreRepositoryError.md#capturestacktrace)
+#### Throws
+
+When provider ID lookup fails

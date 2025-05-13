@@ -1,14 +1,18 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / createIdentityProviderService
 
 # Function: createIdentityProviderService()
 
-> **createIdentityProviderService**\<`IDPRepo`, `UserClaimRepo`, `UserRepo`\>(`params`): [`IdentityProviderService`](../interfaces/IdentityProviderService.md)
+```ts
+function createIdentityProviderService<IDPRepo, UserClaimRepo, UserRepo>(
+  params: CreateIdentityProviderServiceParams<IDPRepo, UserClaimRepo, UserRepo>,
+): IdentityProviderService;
+```
 
-Defined in: [packages/core/src/services/createIdentityProviderService.service.ts:23](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/services/createIdentityProviderService.service.ts#L23)
+Defined in: [src/services/createIdentityProviderService.service.ts:32](src/src/services/createIdentityProviderService.service.ts#32)
 
 Creates and returns an Identity Provider Service
 
@@ -18,34 +22,28 @@ various identity providers.
 
 ## Type Parameters
 
-### IDPRepo
-
-`IDPRepo` *extends* [`IdentityProviderBaseRepository`](../interfaces/IdentityProviderBaseRepository.md)
-
-Type extending IdentityProviderBaseRepository
-
-### UserClaimRepo
-
-`UserClaimRepo` *extends* [`UserClaimBaseRepository`](../interfaces/UserClaimBaseRepository.md)
-
-Type extending UserClaimBaseRepository
-
-### UserRepo
-
-`UserRepo` *extends* [`UserBaseRepository`](../interfaces/UserBaseRepository.md)
-
-Type extending UserBaseRepository
+| Type Parameter                                                                                          | Description                                   |
+| ------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| `IDPRepo` _extends_ [`IdentityProviderBaseRepository`](../interfaces/IdentityProviderBaseRepository.md) | Type extending IdentityProviderBaseRepository |
+| `UserClaimRepo` _extends_ [`UserClaimBaseRepository`](../interfaces/UserClaimBaseRepository.md)         | Type extending UserClaimBaseRepository        |
+| `UserRepo` _extends_ [`UserBaseRepository`](../interfaces/UserBaseRepository.md)                        | Type extending UserBaseRepository             |
 
 ## Parameters
 
-### params
-
-[`createIdentityProviderServiceParams`](../interfaces/createIdentityProviderServiceParams.md)\<`IDPRepo`, `UserClaimRepo`, `UserRepo`\>
-
-Parameters for creating the service
+| Parameter | Type                                                                                                                                    | Description                                                                          |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `params`  | [`CreateIdentityProviderServiceParams`](../interfaces/CreateIdentityProviderServiceParams.md)\<`IDPRepo`, `UserClaimRepo`, `UserRepo`\> | The CreateIdentityProviderServiceParams object containing the required repositories. |
 
 ## Returns
 
 [`IdentityProviderService`](../interfaces/IdentityProviderService.md)
 
-The Identity Provider Service instance
+The Identity Provider Service instance.
+
+## See
+
+- [IdentityProviderService](../interfaces/IdentityProviderService.md) - The service interface.
+- [IdentityProviderBaseRepository](../interfaces/IdentityProviderBaseRepository.md) - The base repository interface for identity provider data entities.
+- [IdentityProviderType](../enumerations/IdentityProviderType.md) - The type for identity provider data entities.
+- [UserBaseRepository](../interfaces/UserBaseRepository.md) - The base repository interface for user data entities.
+- [UserClaimBaseRepository](../interfaces/UserClaimBaseRepository.md) - The base repository interface for user claim data entities.

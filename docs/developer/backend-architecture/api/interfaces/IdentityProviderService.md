@@ -1,27 +1,39 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / IdentityProviderService
 
 # Interface: IdentityProviderService
 
-Defined in: [packages/core/src/services/identityProvider.service.interface.ts:42](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/services/identityProvider.service.interface.ts#L42)
+Defined in: [src/services/identityProvider.service.interface.ts:58](src/src/services/identityProvider.service.interface.ts#58)
+
+Service interface for managing identity provider operations.
 
 ## Methods
 
 ### getRoarUid()
 
-> **getRoarUid**(`params`): `Promise`\<`string`\>
+```ts
+getRoarUid(params: GetRoarUidParams): Promise<string>;
+```
 
-Defined in: [packages/core/src/services/identityProvider.service.interface.ts:43](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/services/identityProvider.service.interface.ts#L43)
+Defined in: [src/services/identityProvider.service.interface.ts:66](src/src/services/identityProvider.service.interface.ts#66)
+
+Retrieves or generates a ROAR user identifier based on provided criteria.
 
 #### Parameters
 
-##### params
-
-[`GetRoarUidParams`](GetRoarUidParams.md)
+| Parameter | Type                                      | Description                    |
+| --------- | ----------------------------------------- | ------------------------------ |
+| `params`  | [`GetRoarUidParams`](GetRoarUidParams.md) | Search or creation parameters. |
 
 #### Returns
 
 `Promise`\<`string`\>
+
+Promise resolving to ROAR user identifier.
+
+#### See
+
+[GetRoarUidParams](GetRoarUidParams.md) - Parameters for retrieving or generating a ROAR user identifier.

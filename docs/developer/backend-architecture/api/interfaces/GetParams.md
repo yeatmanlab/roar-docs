@@ -1,15 +1,19 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / GetParams
 
 # Interface: GetParams
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:13](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L13)
+Defined in: [src/repositories/base/base.repository.interface.ts:12](src/src/repositories/base/base.repository.interface.ts#12)
 
 Parameters for retrieving data from a repository.
- GetParams
+If id is provided, retrieve a specific entity.
+If filters are provided, retrieve entities that match the filters.
+If transaction is provided, execute the operation within the transaction.
+If limit is provided, limit the number of results.
+If select is provided, select specific fields from the entities.
 
 ## Extended by
 
@@ -17,50 +21,10 @@ Parameters for retrieving data from a repository.
 
 ## Properties
 
-### filters?
-
-> `optional` **filters**: [`BaseFilter`](../type-aliases/BaseFilter.md)[]
-
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:15](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L15)
-
-Optional array of filters to apply to the query.
-
-***
-
-### id?
-
-> `optional` **id**: `string`
-
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:14](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L14)
-
-Optional ID for specific entity retrieval.
-
-***
-
-### limit?
-
-> `optional` **limit**: `number`
-
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:17](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L17)
-
-Optional limit on the number of results.
-
-***
-
-### select?
-
-> `optional` **select**: `unknown`
-
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:18](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L18)
-
-Optional fields selection specification.
-
-***
-
-### transaction?
-
-> `optional` **transaction**: `unknown`
-
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:16](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L16)
-
-Optional transaction context.
+| Property                                | Type                                            | Description                                     | Defined in                                                                                                         |
+| --------------------------------------- | ----------------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| <a id="id"></a> `id?`                   | `string`                                        | ID for specific entity retrieval.               | [src/repositories/base/base.repository.interface.ts:14](src/src/repositories/base/base.repository.interface.ts#14) |
+| <a id="filters"></a> `filters?`         | [`BaseFilter`](../type-aliases/BaseFilter.md)[] | Filters for entity retrieval.                   | [src/repositories/base/base.repository.interface.ts:17](src/src/repositories/base/base.repository.interface.ts#17) |
+| <a id="transaction"></a> `transaction?` | `unknown`                                       | Optional transaction context for the operation. | [src/repositories/base/base.repository.interface.ts:20](src/src/repositories/base/base.repository.interface.ts#20) |
+| <a id="limit"></a> `limit?`             | `number`                                        | Optional limit for the number of results.       | [src/repositories/base/base.repository.interface.ts:23](src/src/repositories/base/base.repository.interface.ts#23) |
+| <a id="select"></a> `select?`           | `unknown`                                       | Optional fields to select from the entities.    | [src/repositories/base/base.repository.interface.ts:26](src/src/repositories/base/base.repository.interface.ts#26) |

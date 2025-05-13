@@ -1,103 +1,26 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / IdentityProvider
 
 # Interface: IdentityProvider
 
-Defined in: [packages/core/src/models/identityProvider.model.ts:18](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/identityProvider.model.ts#L18)
+Defined in: [src/models/identityProvider.model.ts:8](src/src/models/identityProvider.model.ts#8)
 
-An interface which defines the structure of an identity provider data object.
-This interface is used to represent the data associated with an identity provider.
- IdentityProvider
+Defines the structure of an identity provider data object.
+Contains authentication and authorization information for a provider.
 
 ## Properties
 
-### activated
-
-> **activated**: `boolean`
-
-Defined in: [packages/core/src/models/identityProvider.model.ts:22](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/identityProvider.model.ts#L22)
-
-Whether the provider is activated
-
-***
-
-### adminOrgs?
-
-> `optional` **adminOrgs**: [`Claims`](Claims.md)
-
-Defined in: [packages/core/src/models/identityProvider.model.ts:27](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/identityProvider.model.ts#L27)
-
-Optional admin organizations claims f
-
-***
-
-### adminUid?
-
-> `optional` **adminUid**: `string`
-
-Defined in: [packages/core/src/models/identityProvider.model.ts:26](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/identityProvider.model.ts#L26)
-
-Optional admin user identifier
-
-***
-
-### email?
-
-> `optional` **email**: `string`
-
-Defined in: [packages/core/src/models/identityProvider.model.ts:25](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/identityProvider.model.ts#L25)
-
-Optional email address
-
-***
-
-### lastSync
-
-> **lastSync**: `Date`
-
-Defined in: [packages/core/src/models/identityProvider.model.ts:21](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/identityProvider.model.ts#L21)
-
-Timestamp of the last synchronization
-
-***
-
-### providerId
-
-> **providerId**: `string`
-
-Defined in: [packages/core/src/models/identityProvider.model.ts:20](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/identityProvider.model.ts#L20)
-
-Unique identifier for the provider
-
-***
-
-### providerType
-
-> **providerType**: [`IdentityProviderType`](../enumerations/IdentityProviderType.md)
-
-Defined in: [packages/core/src/models/identityProvider.model.ts:19](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/identityProvider.model.ts#L19)
-
-The type of identity provider
-
-***
-
-### roarUid
-
-> **roarUid**: `string`
-
-Defined in: [packages/core/src/models/identityProvider.model.ts:24](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/identityProvider.model.ts#L24)
-
-ROAR system unique identifier
-
-***
-
-### role
-
-> **role**: `string`
-
-Defined in: [packages/core/src/models/identityProvider.model.ts:23](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/identityProvider.model.ts#L23)
-
-Role associated with the identity
+| Property                                 | Type                                                              | Description                                              | Defined in                                                                             |
+| ---------------------------------------- | ----------------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| <a id="providertype"></a> `providerType` | [`IdentityProviderType`](../enumerations/IdentityProviderType.md) | Type of identity provider (e.g., Google, Microsoft).     | [src/models/identityProvider.model.ts:10](src/src/models/identityProvider.model.ts#10) |
+| <a id="providerid"></a> `providerId`     | `string`                                                          | Unique identifier assigned by the provider.              | [src/models/identityProvider.model.ts:13](src/src/models/identityProvider.model.ts#13) |
+| <a id="lastsync"></a> `lastSync`         | `Date`                                                            | Timestamp of the last synchronization with the provider. | [src/models/identityProvider.model.ts:16](src/src/models/identityProvider.model.ts#16) |
+| <a id="activated"></a> `activated`       | `boolean`                                                         | Whether this provider is currently active.               | [src/models/identityProvider.model.ts:19](src/src/models/identityProvider.model.ts#19) |
+| <a id="role"></a> `role`                 | `string`                                                          | Role assigned to this provider.                          | [src/models/identityProvider.model.ts:22](src/src/models/identityProvider.model.ts#22) |
+| <a id="roaruid"></a> `roarUid`           | `string`                                                          | Internal ROAR system unique identifier.                  | [src/models/identityProvider.model.ts:25](src/src/models/identityProvider.model.ts#25) |
+| <a id="email"></a> `email?`              | `string`                                                          | Email address associated with the provider.              | [src/models/identityProvider.model.ts:28](src/src/models/identityProvider.model.ts#28) |
+| <a id="adminuid"></a> `adminUid?`        | `string`                                                          | Administrator user identifier, if applicable.            | [src/models/identityProvider.model.ts:31](src/src/models/identityProvider.model.ts#31) |
+| <a id="adminorgs"></a> `adminOrgs?`      | [`Claims`](Claims.md)                                             | Organization claims for administrator access.            | [src/models/identityProvider.model.ts:34](src/src/models/identityProvider.model.ts#34) |

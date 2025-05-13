@@ -1,84 +1,30 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / FirestoreImplementation
 
 # Interface: FirestoreImplementation
 
-Defined in: [packages/core/src/factories/createFirestoreImplementation.factory.ts:31](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/factories/createFirestoreImplementation.factory.ts#L31)
+Defined in: [src/factories/createFirestoreImplementation.factory.ts:19](src/src/factories/createFirestoreImplementation.factory.ts#19)
 
-Interface defining the structure of Firestore implementation objects
-This interface represents the complete set of repositories and services for Firestore backend
-
- FirestoreImplementation
+Interface defining the structure of Firestore implementation objects.
+This interface represents the complete set of repositories and services for Firestore backend.
 
 ## Properties
 
-### client
-
-> **client**: `object`
-
-Defined in: [packages/core/src/factories/createFirestoreImplementation.factory.ts:32](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/factories/createFirestoreImplementation.factory.ts#L32)
-
-Firestore client instance
-
-#### app
-
-> **app**: `App`
-
-#### auth
-
-> **auth**: `Auth`
-
-#### db
-
-> **db**: `Firestore`
-
-***
-
-### repositories
-
-> **repositories**: `object`
-
-Defined in: [packages/core/src/factories/createFirestoreImplementation.factory.ts:37](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/factories/createFirestoreImplementation.factory.ts#L37)
-
-Collection of all repository instances
-
-#### administration
-
-> **administration**: [`FirestoreAdministrationRepository`](../classes/FirestoreAdministrationRepository.md)
-
-#### identityProvider
-
-> **identityProvider**: [`FirestoreIdentityProviderRepository`](../classes/FirestoreIdentityProviderRepository.md)
-
-#### organization
-
-> **organization**: [`FirestoreOrgRepository`](../classes/FirestoreOrgRepository.md)
-
-#### user
-
-> **user**: [`FirestoreUserRepository`](../classes/FirestoreUserRepository.md)
-
-#### userClaim
-
-> **userClaim**: [`FirestoreUserClaimRepository`](../classes/FirestoreUserClaimRepository.md)
-
-***
-
-### services
-
-> **services**: `object`
-
-Defined in: [packages/core/src/factories/createFirestoreImplementation.factory.ts:44](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/factories/createFirestoreImplementation.factory.ts#L44)
-
-Collection of all service instances
-
-#### administration
-
-> **administration**: [`AdministrationService`](AdministrationService.md)
-
-#### identityProvider
-
-> **identityProvider**: [`IdentityProviderService`](IdentityProviderService.md)
+| Property                                 | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | Description                            | Defined in                                                                                                                 |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| <a id="client"></a> `client`             | \{ `app`: `App`; `auth`: `Auth`; `db`: `Firestore`; \}                                                                                                                                                                                                                                                                                                                                                                                                                                   | Firestore client instance              | [src/factories/createFirestoreImplementation.factory.ts:21](src/src/factories/createFirestoreImplementation.factory.ts#21) |
+| `client.app`                             | `App`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | Firebase app instance                  | [src/factories/createFirestoreImplementation.factory.ts:23](src/src/factories/createFirestoreImplementation.factory.ts#23) |
+| `client.auth`                            | `Auth`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Firebase authentication instance       | [src/factories/createFirestoreImplementation.factory.ts:25](src/src/factories/createFirestoreImplementation.factory.ts#25) |
+| `client.db`                              | `Firestore`                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Firebase Firestore instance            | [src/factories/createFirestoreImplementation.factory.ts:27](src/src/factories/createFirestoreImplementation.factory.ts#27) |
+| <a id="repositories"></a> `repositories` | \{ `administration`: [`FirestoreAdministrationRepository`](../classes/FirestoreAdministrationRepository.md); `organization`: [`FirestoreOrgRepository`](../classes/FirestoreOrgRepository.md); `userClaim`: [`FirestoreUserClaimRepository`](../classes/FirestoreUserClaimRepository.md); `user`: [`FirestoreUserRepository`](../classes/FirestoreUserRepository.md); `identityProvider`: [`FirestoreIdentityProviderRepository`](../classes/FirestoreIdentityProviderRepository.md); \} | Firestore repositories                 | [src/factories/createFirestoreImplementation.factory.ts:30](src/src/factories/createFirestoreImplementation.factory.ts#30) |
+| `repositories.administration`            | [`FirestoreAdministrationRepository`](../classes/FirestoreAdministrationRepository.md)                                                                                                                                                                                                                                                                                                                                                                                                   | Firestore administration repository    | [src/factories/createFirestoreImplementation.factory.ts:32](src/src/factories/createFirestoreImplementation.factory.ts#32) |
+| `repositories.organization`              | [`FirestoreOrgRepository`](../classes/FirestoreOrgRepository.md)                                                                                                                                                                                                                                                                                                                                                                                                                         | Firestore organization repository      | [src/factories/createFirestoreImplementation.factory.ts:34](src/src/factories/createFirestoreImplementation.factory.ts#34) |
+| `repositories.userClaim`                 | [`FirestoreUserClaimRepository`](../classes/FirestoreUserClaimRepository.md)                                                                                                                                                                                                                                                                                                                                                                                                             | Firestore user claim repository        | [src/factories/createFirestoreImplementation.factory.ts:36](src/src/factories/createFirestoreImplementation.factory.ts#36) |
+| `repositories.user`                      | [`FirestoreUserRepository`](../classes/FirestoreUserRepository.md)                                                                                                                                                                                                                                                                                                                                                                                                                       | Firestore user repository              | [src/factories/createFirestoreImplementation.factory.ts:38](src/src/factories/createFirestoreImplementation.factory.ts#38) |
+| `repositories.identityProvider`          | [`FirestoreIdentityProviderRepository`](../classes/FirestoreIdentityProviderRepository.md)                                                                                                                                                                                                                                                                                                                                                                                               | Firestore identity provider repository | [src/factories/createFirestoreImplementation.factory.ts:40](src/src/factories/createFirestoreImplementation.factory.ts#40) |
+| <a id="services"></a> `services`         | \{ `administration`: [`AdministrationService`](AdministrationService.md); `identityProvider`: [`IdentityProviderService`](IdentityProviderService.md); \}                                                                                                                                                                                                                                                                                                                                | Firestore services                     | [src/factories/createFirestoreImplementation.factory.ts:43](src/src/factories/createFirestoreImplementation.factory.ts#43) |
+| `services.administration`                | [`AdministrationService`](AdministrationService.md)                                                                                                                                                                                                                                                                                                                                                                                                                                      | Firestore administration service       | [src/factories/createFirestoreImplementation.factory.ts:45](src/src/factories/createFirestoreImplementation.factory.ts#45) |
+| `services.identityProvider`              | [`IdentityProviderService`](IdentityProviderService.md)                                                                                                                                                                                                                                                                                                                                                                                                                                  | Firestore identity provider service    | [src/factories/createFirestoreImplementation.factory.ts:47](src/src/factories/createFirestoreImplementation.factory.ts#47) |

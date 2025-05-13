@@ -1,20 +1,16 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / EducationalOrgsList
 
 # Interface: EducationalOrgsList
 
-Defined in: [packages/core/src/models/org.model.ts:12](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/org.model.ts#L12)
+Defined in: [src/models/org.model.ts:8](src/src/models/org.model.ts#8)
 
-An interface representing the different types of educational organizations.
-This interface is used to represent the educational organizations that can read or are assigned to an administration.
- EducationalOrgsList
-
-## See
-
-[OrgsList](OrgsList.md)
+Represents the hierarchical structure of educational organizations within ROAR.
+Used for defining access control and organization assignments at district,
+school, and class levels.
 
 ## Extended by
 
@@ -22,30 +18,8 @@ This interface is used to represent the educational organizations that can read 
 
 ## Properties
 
-### classes?
-
-> `optional` **classes**: `string`[]
-
-Defined in: [packages/core/src/models/org.model.ts:15](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/org.model.ts#L15)
-
-An array of class IDs.
-
-***
-
-### districts?
-
-> `optional` **districts**: `string`[]
-
-Defined in: [packages/core/src/models/org.model.ts:13](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/org.model.ts#L13)
-
-An array of district IDs.
-
-***
-
-### schools?
-
-> `optional` **schools**: `string`[]
-
-Defined in: [packages/core/src/models/org.model.ts:14](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/models/org.model.ts#L14)
-
-An array of school IDs.
+| Property                            | Type       | Description                    | Defined in                                                   |
+| ----------------------------------- | ---------- | ------------------------------ | ------------------------------------------------------------ |
+| <a id="districts"></a> `districts?` | `string`[] | Array of district identifiers. | [src/models/org.model.ts:10](src/src/models/org.model.ts#10) |
+| <a id="schools"></a> `schools?`     | `string`[] | Array of school identifiers.   | [src/models/org.model.ts:13](src/src/models/org.model.ts#13) |
+| <a id="classes"></a> `classes?`     | `string`[] | Array of class identifiers.    | [src/models/org.model.ts:16](src/src/models/org.model.ts#16) |

@@ -1,15 +1,23 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / BaseRepository
 
 # Interface: BaseRepository\<T\>
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:79](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L79)
+Defined in: [src/repositories/base/base.repository.interface.ts:88](src/src/repositories/base/base.repository.interface.ts#88)
 
 Base repository interface that defines standard operations for data access.
- BaseRepository
+
+## See
+
+- [GetParams](GetParams.md) - Base params for retrieving data entities.
+- [GetAllParams](GetAllParams.md) - Base params for retrieving all data entities.
+- [CreateParams](CreateParams.md) - Base params for creating an entity.
+- [UpdateParams](UpdateParams.md) - Base params for updating an entity.
+- [DeleteParams](DeleteParams.md) - Base params for deleting an entity.
+- [RunTransactionParams](RunTransactionParams.md) - Parameters for running a transaction in a repository.
 
 ## Extended by
 
@@ -21,71 +29,31 @@ Base repository interface that defines standard operations for data access.
 
 ## Type Parameters
 
-### T
-
-`T`
-
-The type of entity managed by the repository.
+| Type Parameter | Description                                   |
+| -------------- | --------------------------------------------- |
+| `T`            | The type of entity managed by the repository. |
 
 ## Methods
 
-### create()
-
-> **create**(`params`): `Promise`\<[`Result`](Result.md)\<`T`\>\>
-
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:84](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L84)
-
-Creates a new entity in the repository.
-
-#### Parameters
-
-##### params
-
-`unknown`
-
-#### Returns
-
-`Promise`\<[`Result`](Result.md)\<`T`\>\>
-
-***
-
-### delete()
-
-> **delete**(`params`): `Promise`\<`void`\>
-
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:86](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L86)
-
-Deletes an entity from the repository.
-
-#### Parameters
-
-##### params
-
-`unknown`
-
-#### Returns
-
-`Promise`\<`void`\>
-
-***
-
 ### get()
-
-Retrieves one or more entities based on provided parameters.
 
 #### Call Signature
 
-> **get**(`params`): `Promise`\<[`Result`](Result.md)\<`T`\>\>
+```ts
+get(params: GetParams & {
+  id: string;
+}): Promise<Result<T>>;
+```
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:80](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L80)
+Defined in: [src/repositories/base/base.repository.interface.ts:90](src/src/repositories/base/base.repository.interface.ts#90)
 
-Retrieves one or more entities based on provided parameters.
+Retrieves an entity by its ID.
 
 ##### Parameters
 
-###### params
-
-[`GetParams`](GetParams.md) & `object`
+| Parameter | Type                                                |
+| --------- | --------------------------------------------------- |
+| `params`  | [`GetParams`](GetParams.md) & \{ `id`: `string`; \} |
 
 ##### Returns
 
@@ -93,17 +61,21 @@ Retrieves one or more entities based on provided parameters.
 
 #### Call Signature
 
-> **get**(`params`): `Promise`\<[`Result`](Result.md)\<`T`\>[]\>
+```ts
+get(params: GetParams & {
+  filters: BaseFilter[];
+}): Promise<Result<T>[]>;
+```
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:81](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L81)
+Defined in: [src/repositories/base/base.repository.interface.ts:93](src/src/repositories/base/base.repository.interface.ts#93)
 
-Retrieves one or more entities based on provided parameters.
+Retrieves entities based on provided filters.
 
 ##### Parameters
 
-###### params
-
-[`GetParams`](GetParams.md) & `object`
+| Parameter | Type                                                                                            |
+| --------- | ----------------------------------------------------------------------------------------------- |
+| `params`  | [`GetParams`](GetParams.md) & \{ `filters`: [`BaseFilter`](../type-aliases/BaseFilter.md)[]; \} |
 
 ##### Returns
 
@@ -111,78 +83,130 @@ Retrieves one or more entities based on provided parameters.
 
 #### Call Signature
 
-> **get**(`params`): `Promise`\<[`Result`](Result.md)\<`T`\> \| [`Result`](Result.md)\<`T`\>[]\>
+```ts
+get(params: GetParams): Promise<Result<T> | Result<T>[]>;
+```
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:82](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L82)
+Defined in: [src/repositories/base/base.repository.interface.ts:96](src/src/repositories/base/base.repository.interface.ts#96)
 
-Retrieves one or more entities based on provided parameters.
+Retrieves entities based on provided parameters.
 
 ##### Parameters
 
-###### params
-
-[`GetParams`](GetParams.md)
+| Parameter | Type                        |
+| --------- | --------------------------- |
+| `params`  | [`GetParams`](GetParams.md) |
 
 ##### Returns
 
 `Promise`\<[`Result`](Result.md)\<`T`\> \| [`Result`](Result.md)\<`T`\>[]\>
 
-***
+---
 
 ### getAll()
 
-> **getAll**(`params`): `Promise`\<[`Result`](Result.md)\<`T`\>[]\>
+```ts
+getAll(params: GetAllParams): Promise<Result<T>[]>;
+```
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:83](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L83)
+Defined in: [src/repositories/base/base.repository.interface.ts:99](src/src/repositories/base/base.repository.interface.ts#99)
 
 Retrieves all entities with optional filtering.
 
 #### Parameters
 
-##### params
-
-`unknown`
+| Parameter | Type                              |
+| --------- | --------------------------------- |
+| `params`  | [`GetAllParams`](GetAllParams.md) |
 
 #### Returns
 
 `Promise`\<[`Result`](Result.md)\<`T`\>[]\>
 
-***
+---
 
-### runTransaction()
+### create()
 
-> **runTransaction**(`params`): `Promise`\<`any`\>
+```ts
+create(params: CreateParams): Promise<Result<T>>;
+```
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:87](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L87)
+Defined in: [src/repositories/base/base.repository.interface.ts:102](src/src/repositories/base/base.repository.interface.ts#102)
 
-Executes operations within a transaction context.
+Creates a new entity in the repository.
 
 #### Parameters
 
-##### params
-
-`unknown`
+| Parameter | Type                              |
+| --------- | --------------------------------- |
+| `params`  | [`CreateParams`](CreateParams.md) |
 
 #### Returns
 
-`Promise`\<`any`\>
+`Promise`\<[`Result`](Result.md)\<`T`\>\>
 
-***
+---
 
 ### update()
 
-> **update**(`params`): `Promise`\<[`Result`](Result.md)\<`T`\>\>
+```ts
+update(params: UpdateParams): Promise<Result<T>>;
+```
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:85](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L85)
+Defined in: [src/repositories/base/base.repository.interface.ts:105](src/src/repositories/base/base.repository.interface.ts#105)
 
 Updates an existing entity in the repository.
 
 #### Parameters
 
-##### params
-
-`unknown`
+| Parameter | Type                              |
+| --------- | --------------------------------- |
+| `params`  | [`UpdateParams`](UpdateParams.md) |
 
 #### Returns
 
 `Promise`\<[`Result`](Result.md)\<`T`\>\>
+
+---
+
+### delete()
+
+```ts
+delete(params: DeleteParams): Promise<void>;
+```
+
+Defined in: [src/repositories/base/base.repository.interface.ts:108](src/src/repositories/base/base.repository.interface.ts#108)
+
+Deletes an entity from the repository.
+
+#### Parameters
+
+| Parameter | Type                              |
+| --------- | --------------------------------- |
+| `params`  | [`DeleteParams`](DeleteParams.md) |
+
+#### Returns
+
+`Promise`\<`void`\>
+
+---
+
+### runTransaction()
+
+```ts
+runTransaction(params: RunTransactionParams<T>): Promise<any>;
+```
+
+Defined in: [src/repositories/base/base.repository.interface.ts:111](src/src/repositories/base/base.repository.interface.ts#111)
+
+Runs a transaction within the repository.
+
+#### Parameters
+
+| Parameter | Type                                                     |
+| --------- | -------------------------------------------------------- |
+| `params`  | [`RunTransactionParams`](RunTransactionParams.md)\<`T`\> |
+
+#### Returns
+
+`Promise`\<`any`\>

@@ -1,92 +1,29 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / Result
 
 # Interface: Result\<T\>
 
-Defined in: [packages/core/src/types/base.types.ts:11](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/types/base.types.ts#L11)
+Defined in: [src/types/base.types.ts:7](src/src/types/base.types.ts#7)
 
-Represents a Result type that combines an identifier with a generic data payload.
-This type is commonly used in CRUD operations to wrap responses.
-
-## Param
-
-{string} - The id of the Result
-
-## Param
-
-{T} - The base model of the result
-
-## Param
-
-{Date | string | number} - The creation date of the Result
-
-## Param
-
-{Date | string | number} - The last update date of the Result
-
-## Param
-
-{string} - The id of the user who created the Result
-
-## Param
-
-{string} - The id of the user who last modified the Result
+Wraps entity data with metadata for CRUD operations.
+Combines an identifier with a generic data payload and tracking information.
 
 ## Type Parameters
 
-### T
-
-`T`
-
-The type of the data payload*
+| Type Parameter | Description              |
+| -------------- | ------------------------ |
+| `T`            | Type of the entity data. |
 
 ## Properties
 
-### createdAt?
-
-> `optional` **createdAt**: `string` \| `number` \| `Date`
-
-Defined in: [packages/core/src/types/base.types.ts:14](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/types/base.types.ts#L14)
-
-***
-
-### createdBy?
-
-> `optional` **createdBy**: `string`
-
-Defined in: [packages/core/src/types/base.types.ts:16](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/types/base.types.ts#L16)
-
-***
-
-### data
-
-> **data**: `T`
-
-Defined in: [packages/core/src/types/base.types.ts:13](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/types/base.types.ts#L13)
-
-***
-
-### id
-
-> **id**: `string`
-
-Defined in: [packages/core/src/types/base.types.ts:12](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/types/base.types.ts#L12)
-
-***
-
-### lastModifiedBy?
-
-> `optional` **lastModifiedBy**: `string`
-
-Defined in: [packages/core/src/types/base.types.ts:17](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/types/base.types.ts#L17)
-
-***
-
-### updatedAt?
-
-> `optional` **updatedAt**: `string` \| `number` \| `Date`
-
-Defined in: [packages/core/src/types/base.types.ts:15](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/types/base.types.ts#L15)
+| Property                                      | Type                           | Description                                                                      | Defined in                                                   |
+| --------------------------------------------- | ------------------------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| <a id="id"></a> `id`                          | `string`                       | Unique identifier for the entity.                                                | [src/types/base.types.ts:9](src/src/types/base.types.ts#9)   |
+| <a id="data"></a> `data`                      | `T`                            | Entity data of type T.                                                           | [src/types/base.types.ts:12](src/src/types/base.types.ts#12) |
+| <a id="createdat"></a> `createdAt?`           | `string` \| `number` \| `Date` | When the entity was created. Can be Date object, ISO string, or timestamp.       | [src/types/base.types.ts:16](src/src/types/base.types.ts#16) |
+| <a id="updatedat"></a> `updatedAt?`           | `string` \| `number` \| `Date` | When the entity was last modified. Can be Date object, ISO string, or timestamp. | [src/types/base.types.ts:20](src/src/types/base.types.ts#20) |
+| <a id="createdby"></a> `createdBy?`           | `string`                       | Identifier of the user who created the entity.                                   | [src/types/base.types.ts:23](src/src/types/base.types.ts#23) |
+| <a id="lastmodifiedby"></a> `lastModifiedBy?` | `string`                       | Identifier of the user who last modified the entity.                             | [src/types/base.types.ts:26](src/src/types/base.types.ts#26) |

@@ -1,15 +1,14 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / RunTransactionParams
 
 # Interface: RunTransactionParams\<T\>
 
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:64](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L64)
+Defined in: [src/repositories/base/base.repository.interface.ts:73](src/src/repositories/base/base.repository.interface.ts#73)
 
 Parameters for running a transaction in a repository.
- RunTransactionParams
 
 ## Extended by
 
@@ -17,26 +16,12 @@ Parameters for running a transaction in a repository.
 
 ## Type Parameters
 
-### T
-
-`T`
+| Type Parameter | Description                                  |
+| -------------- | -------------------------------------------- |
+| `T`            | The type of entity managed by the repository |
 
 ## Properties
 
-### fn()
-
-> **fn**: (`transaction`) => `Promise`\<`T`\>
-
-Defined in: [packages/core/src/repositories/base/base.repository.interface.ts:65](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/repositories/base/base.repository.interface.ts#L65)
-
-Function to be executed within the transaction.
-
-#### Parameters
-
-##### transaction
-
-`any`
-
-#### Returns
-
-`Promise`\<`T`\>
+| Property             | Type                                         | Description                                     | Defined in                                                                                                         |
+| -------------------- | -------------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| <a id="fn"></a> `fn` | (`transaction`: `any`) => `Promise`\<`any`\> | Function to be executed within the transaction. | [src/repositories/base/base.repository.interface.ts:75](src/src/repositories/base/base.repository.interface.ts#75) |

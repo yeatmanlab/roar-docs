@@ -1,14 +1,16 @@
 [**@roar-firebase-functions/core**](../README.md)
 
-***
+---
 
 [@roar-firebase-functions/core](../README.md) / chunkOrgs
 
 # Function: chunkOrgs()
 
-> **chunkOrgs**(`orgs`, `chunkSize`): [`OrgsList`](../interfaces/OrgsList.md)[]
+```ts
+function chunkOrgs(orgs: OrgsList, chunkSize: number): OrgsList[];
+```
 
-Defined in: [packages/core/src/utils/chunkOrgs.utils.ts:14](https://github.com/yeatmanlab/roar-firebase-functions/blob/24ea7b8e0f05ba2fca7d62901c43f15726f15a89/packages/core/src/utils/chunkOrgs.utils.ts#L14)
+Defined in: [src/utils/chunkOrgs.utils.ts:13](src/src/utils/chunkOrgs.utils.ts#13)
 
 Chunks an OrgsList into smaller IOrgsLists of a specified size.
 
@@ -17,17 +19,10 @@ It iterates over the properties of the input OrgsList and divides each property'
 
 ## Parameters
 
-### orgs
-
-[`OrgsList`](../interfaces/OrgsList.md)
-
-The input organization lists.
-
-### chunkSize
-
-`number`
-
-The size of each chunk.
+| Parameter   | Type                                    | Description                   |
+| ----------- | --------------------------------------- | ----------------------------- |
+| `orgs`      | [`OrgsList`](../interfaces/OrgsList.md) | The input organization lists. |
+| `chunkSize` | `number`                                | The size of each chunk.       |
 
 ## Returns
 
