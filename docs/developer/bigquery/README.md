@@ -151,6 +151,11 @@ LIMIT
 
 Researchers often want to export data to a CSV file. Let's see what happens when we change the format in that last query to `csv`:
 
+::: warning Failure is essential to learning.
+
+This next query will fail. You're not doing anything wrong. It is supposed to fail for pedagogical purposes. Just run the command and keep reading.
+:::
+
 ```bash
 bq query --nouse_legacy_sql --format=csv \
 'SELECT
