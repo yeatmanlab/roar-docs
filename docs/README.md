@@ -3,6 +3,9 @@ home: true
 title: Home
 heroImage: /assets/roar-logo.svg
 actions:
+  - text: Tasks and Variants
+    link: /developer/tasks-variants/
+    type: secondary
   - text: Databases
     link: /developer/databases/
     type: secondary
