@@ -29,6 +29,10 @@ The ROAR task system consists of the following components:
 
   A variant is a unique, immutable configuration of a task's parameters. It is identified by a variant ID, which acts like a DOI. Once created, it will always refer to the same parameter set.
 
+* **Variant Status**: `dev`, `published`, or `deprecated`
+
+  A variant can be in one of three states: `dev`, `published`, or `deprecated`. The `dev` state indicates that the variant is in development and is not yet ready for production use. The `published` state indicates that the variant is ready for production use and is available for use in assessments. The `deprecated` state indicates that the variant is no longer recommended for use in assessments but is preserved for historical reproducibility or auditability.
+
 * **Task Spec**: `{ variant_id, task_version }` — uniquely defines runtime behavior
 
   A Task Spec is the pair `{ variant_id, task_version }`. This combination fully determines the behavior of a task run, including default parameters, logic, and scoring. It is important to realize that the variant_id is not tied to any specific task version. The same variant_id may be used with different task versions, and it is the combination of variant_id and task_version — the Task Spec — that determines the full behavior of a task run.
@@ -62,29 +66,20 @@ graph TD
 
 ### Dev Mode
 
-* Researcher provides a custom parameter set
-* Because dev mode may include unversioned or unpublished code changes, the `task_version_id` logged for dev runs may be set to `NULL`, or a special placeholder (e.g., `"unversioned-dev"`) to indicate non-reproducibility. These runs are not guaranteed to be reproducible even though their variant parameters are stored.
-* System auto-mints a new variant with `is_published = false`
-* A `variant_id` is generated and stored in `variants`
-* Task is run with that variant and task version
-* Run is logged with the new `variant_id`
-
----
-
-## 4. Dev Mode Behavior
-
 ::: info Reproducibility in Dev Mode
 
 Dev-mode runs may use unpublished or unversioned code. While the parameter configuration is stored, exact task behavior may not be fully reproducible unless the development environment is version-controlled and pinned. The task_version_id for dev runs may be null or reference a placeholder.
 :::
 
-Dev mode is intended for experimentation without polluting the public registry.
-
-* Dev-mode variants are flagged as `is_published = false` and are not shown in public researcher dashboards or included in standard reporting or analytics views. This ensures that only validated, production-ready variants are visible for data analysis or deployment purposes.
-* They may contain parameters not yet in production use
-* These variants are excluded from public dashboards and analytics by default
-* A dev variant can be promoted to a published variant by toggling `is_published = true` and adding a name/description
-* Since runs completed in the dev environment do not have a specified task version,
+* Researcher provides a custom parameter set
+* Because dev mode may include unversioned or unpublished code changes, the `task_version_id` logged for dev runs may be set to `NULL`, or a special placeholder (e.g., `"unversioned-dev"`) to indicate non-reproducibility. These runs are not guaranteed to be reproducible even though their variant parameters are stored.
+* System auto-mints a new variant with `status = "dev"`.
+* System logs a variant status change to `variant_status_log`.
+* Variants with `status = "dev"` are not shown in public researcher dashboards or included in standard reporting or analytics views. This ensures that only validated, production-ready variants are visible for data analysis or deployment purposes.
+* A `variant_id` is generated and stored in `variants`
+* Task is run with that variant and task version
+* Run is logged with the new `variant_id`
+* A dev variant can be promoted to a published variant by toggling `status = "published"` and adding a name/description. In this case, the system also logs a variant status change to `variant_status_log`.
 
 ---
 
@@ -98,7 +93,7 @@ Dev mode is intended for experimentation without polluting the public registry.
 | Dev-mode variant identical to existing published one | Deduplicate by comparing canonical param hash    |
 | Attempt to promote already published variant         | No-op; return existing variant info              |
 | Unknown parameter in dev mode                        | Allow execution, but log a warning that the parameter is not recognized by the current task version. This supports flexibility while helping researchers catch typos or misconfigurations.  |
-| Running a dev variant in production                  | Reject request with 400 or 403 error. Dev variants are not permitted in production. |
+| Running a dev or deprecated variant in production    | Reject request with 400 or 403 error. Dev variants are not permitted in production. |
 
 ---
 
@@ -108,6 +103,7 @@ Dev mode is intended for experimentation without polluting the public registry.
 * **Variant ID as immutable key** ensures reproducibility and clean version control
 * **Dev variants stored as real variants** avoids custom logic for freeform runs, simplifying the schema
 * **Task Spec abstraction** clearly captures full execution context for a run
+* **Use of a status field** to differentiate between published and dev variants allows for future lifecycle states.
 
 ---
 
@@ -157,7 +153,7 @@ POST /api/runs
     "num_items": 8,
     "shuffle": true
   },
-  "is_published": false,
+  "status": "dev",
 }
 ```
 
@@ -176,7 +172,7 @@ Returns metadata for a specific run.
     "num_items": 8,
     "shuffle": true
   },
-  "is_published": false,
+  "status": "dev",
 }
 ```
 
@@ -191,6 +187,26 @@ Returns metadata for a specific task.
 ### `GET /api/tasks/{task_slug}/versions`
 
 Returns metadata for all available versions of a specific task. Dev variants are excluded by default.
+
+### `POST /api/variants/{variant_id}/change_status`
+
+Changes the status of a variant. Valid statuses are `"dev"`, `"published"`, and `"deprecated"`.
+
+```json
+POST /api/variants/{variant_id}/change_status
+{
+  "status": "published"
+}
+```
+
+Response:
+
+```json
+{
+  "variant_id": 123,
+  "status": "published"
+}
+```
 
 ---
 
@@ -230,7 +246,7 @@ CREATE TABLE variants (
   variant_id TEXT UNIQUE NOT NULL,
   name TEXT,
   description TEXT,
-  is_published BOOLEAN DEFAULT false,
+  status TEXT CHECK (status IN ('dev', 'published', 'deprecated')) NOT NULL DEFAULT 'dev',
   created_at TIMESTAMP DEFAULT now()
 );
 ```
@@ -245,6 +261,18 @@ CREATE TABLE variant_parameters (
   value JSONB NOT NULL,
   type TEXT,
   UNIQUE(variant_id, name)
+);
+```
+
+### `variant_status_log`
+
+```sql
+CREATE TABLE variant_status_log (
+  id SERIAL PRIMARY KEY,
+  variant_id INTEGER REFERENCES variants(id),
+  status TEXT CHECK (status IN ('dev', 'published', 'deprecated')) NOT NULL,
+  changed_at TIMESTAMP DEFAULT now()
+  changed_by INTEGER REFERENCES users(id)
 );
 ```
 
@@ -267,7 +295,7 @@ CREATE TABLE runs (
 ## 9. Migration Plan
 
 * Migrate existing Firestore variants into the `variants` and `variant_parameters` tables
-* Migrate the `registered` field to the `is_published` field.
+* Migrate the `registered` field to the `status` field.
 * Deprecate the `registered` field for tasks. Instead tasks should be considered "published" if they have any published variants.
 * Dev-mode Firestore runs can be replayed into SQL by minting variants
 * Legacy tasks may require shimming in the API to handle missing variant metadata
