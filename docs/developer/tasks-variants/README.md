@@ -56,7 +56,7 @@ graph TD
 
 * Researcher specifies a known `variant_id`
 * System fetches parameter set from `variant_parameters`
-* Task version is explicitly selected (or defaults to latest stable)
+* Task version defaults to the version pinned in the ROAR-dashboard dependencies (if task is launched from the dashboard) or the latest stable release (if task is launched as a standalone web application).
 * Runtime merges parameters with task version's defaults
 * Run is executed and logged with `variant_id`, `task_version_id`
 
@@ -64,7 +64,7 @@ graph TD
 
 * Researcher provides a custom parameter set
 * Because dev mode may include unversioned or unpublished code changes, the `task_version_id` logged for dev runs may be set to `NULL`, or a special placeholder (e.g., `"unversioned-dev"`) to indicate non-reproducibility. These runs are not guaranteed to be reproducible even though their variant parameters are stored.
-* System auto-mints a new variant with `is_dev_variant = true`
+* System auto-mints a new variant with `is_published = false`
 * A `variant_id` is generated and stored in `variants`
 * Task is run with that variant and task version
 * Run is logged with the new `variant_id`
@@ -80,10 +80,10 @@ Dev-mode runs may use unpublished or unversioned code. While the parameter confi
 
 Dev mode is intended for experimentation without polluting the public registry.
 
-* Dev-mode variants are flagged as `is_dev_variant = true` and are not shown in public researcher dashboards or included in standard reporting or analytics views. This ensures that only validated, production-ready variants are visible for data analysis or deployment purposes.
+* Dev-mode variants are flagged as `is_published = false` and are not shown in public researcher dashboards or included in standard reporting or analytics views. This ensures that only validated, production-ready variants are visible for data analysis or deployment purposes.
 * They may contain parameters not yet in production use
 * These variants are excluded from public dashboards and analytics by default
-* A dev variant can be promoted to a published variant by toggling `is_dev_variant = false` and adding a name/description
+* A dev variant can be promoted to a published variant by toggling `is_published = true` and adding a name/description
 * Since runs completed in the dev environment do not have a specified task version,
 
 ---
@@ -93,7 +93,8 @@ Dev mode is intended for experimentation without polluting the public registry.
 | Scenario                                             | Expected Behavior                                |
 | ---------------------------------------------------- | ------------------------------------------------ |
 | Missing `variant_id` in published mode               | 400 error with message "variant\_id is required" |
-| Parameter mismatch with task version                 | Task resolves using defaults; log warning        |
+| Missing parameter value                              | Task resolves using defaults; log warning        |
+| Unknown parameter or invalid value in production     | Task throws error and halts execution            |
 | Dev-mode variant identical to existing published one | Deduplicate by comparing canonical param hash    |
 | Attempt to promote already published variant         | No-op; return existing variant info              |
 | Unknown parameter in dev mode                        | Allow execution, but log a warning that the parameter is not recognized by the current task version. This supports flexibility while helping researchers catch typos or misconfigurations.  |
@@ -156,7 +157,7 @@ POST /api/runs
     "num_items": 8,
     "shuffle": true
   },
-  "is_dev_variant": false,
+  "is_published": false,
 }
 ```
 
@@ -175,7 +176,7 @@ Returns metadata for a specific run.
     "num_items": 8,
     "shuffle": true
   },
-  "is_dev_variant": false,
+  "is_published": false,
 }
 ```
 
@@ -229,7 +230,7 @@ CREATE TABLE variants (
   variant_id TEXT UNIQUE NOT NULL,
   name TEXT,
   description TEXT,
-  is_dev_variant BOOLEAN DEFAULT false,
+  is_published BOOLEAN DEFAULT false,
   created_at TIMESTAMP DEFAULT now()
 );
 ```
@@ -266,6 +267,8 @@ CREATE TABLE runs (
 ## 9. Migration Plan
 
 * Migrate existing Firestore variants into the `variants` and `variant_parameters` tables
+* Migrate the `registered` field to the `is_published` field.
+* Deprecate the `registered` field for tasks. Instead tasks should be considered "published" if they have any published variants.
 * Dev-mode Firestore runs can be replayed into SQL by minting variants
 * Legacy tasks may require shimming in the API to handle missing variant metadata
 * After migration, new runs must go through the SQL-backed system
