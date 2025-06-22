@@ -1,6 +1,6 @@
 # ROAR Task Configuration and Variant System: Technical Specification
 
-## 1. Purpose and Scope
+## Purpose and Scope
 
 ROAR supports configurable tasks used in assessments. This document defines the technical specification for how researchers interact with configurable ROAR tasks, including:
 
@@ -13,7 +13,7 @@ This spec ensures consistency, auditability, and scalability across both develop
 
 ---
 
-## 2. System Overview
+## System Overview
 
 The ROAR task system consists of the following components:
 
@@ -54,7 +54,7 @@ graph TD
   Execute --> Log[Log run with variant_id + task_version]
 ```
 
-## 3. Runtime Behavior by Mode
+## Runtime Behavior by Mode
 
 ### Published Mode
 
@@ -83,7 +83,7 @@ Dev-mode runs may use unpublished or unversioned code. While the parameter confi
 
 ---
 
-## 5. Edge Cases and Error Handling
+## Edge Cases and Error Handling
 
 | Scenario                                             | Expected Behavior                                |
 | ---------------------------------------------------- | ------------------------------------------------ |
@@ -97,7 +97,7 @@ Dev-mode runs may use unpublished or unversioned code. While the parameter confi
 
 ---
 
-## 6. Design Rationale
+## Design Rationale
 
 * **Separation of variant and version** allows stable IDs while supporting evolving task logic
 * **Variant ID as immutable key** ensures reproducibility and clean version control
@@ -107,7 +107,7 @@ Dev-mode runs may use unpublished or unversioned code. While the parameter confi
 
 ---
 
-## 7. API Contract
+## API Contract
 
 ### `POST /api/runs`
 
@@ -210,7 +210,7 @@ Response:
 
 ---
 
-## 8. SQL Schema
+## SQL Schema
 
 ### `tasks`
 
@@ -292,7 +292,7 @@ CREATE TABLE runs (
 
 ---
 
-## 9. Migration Plan
+## Migration Plan
 
 * Migrate existing Firestore variants into the `variants` and `variant_parameters` tables
 * Migrate the `registered` field to the `status` field.
