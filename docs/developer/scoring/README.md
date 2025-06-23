@@ -372,12 +372,12 @@ POST /api/scoring/trial-scores
 
 ```sql
 CREATE TABLE scores (
-  id SERIAL PRIMARY KEY,
-  run_id INTEGER REFERENCES runs(id) ON DELETE CASCADE,
-  task_id INTEGER REFERENCES tasks(id),
-  variant_id INTEGER REFERENCES variants(id),
-  user_id INTEGER REFERENCES users(id),
-  assignment_id INTEGER REFERENCES assignments(id),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  run_id UUID REFERENCES runs(id) ON DELETE CASCADE,
+  task_id UUID REFERENCES tasks(id),
+  variant_id UUID REFERENCES variants(id),
+  user_id UUID REFERENCES users(id),
+  assignment_id UUID REFERENCES assignments(id),
   value INTEGER NOT NULL,
   name TEXT NOT NULL,
   type TEXT CHECK (type IN ('raw', 'computed')),
@@ -392,11 +392,11 @@ CREATE TABLE scores (
 
 ```sql
 CREATE TABLE trial_scores (
-  id SERIAL PRIMARY KEY,
-  trial_id INTEGER REFERENCES trials(id) ON DELETE CASCADE,
-  run_id INTEGER REFERENCES runs(id) ON DELETE CASCADE,
-  task_id INTEGER REFERENCES tasks(id),
-  variant_id INTEGER REFERENCES variants(id),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  trial_id UUID REFERENCES trials(id) ON DELETE CASCADE,
+  run_id UUID REFERENCES runs(id) ON DELETE CASCADE,
+  task_id UUID REFERENCES tasks(id),
+  variant_id UUID REFERENCES variants(id),
   user_id INTEGER REFERENCES users(id),
   assignment_id INTEGER REFERENCES assignments(id),
   value INTEGER NOT NULL,
@@ -412,8 +412,8 @@ CREATE TABLE trial_scores (
 
 ```sql
 CREATE TABLE score_update_log (
-  id SERIAL PRIMARY KEY,
-  score_id INTEGER REFERENCES scores(id) ON DELETE CASCADE,
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  score_id UUID REFERENCES scores(id) ON DELETE CASCADE,
   old_domain TEXT NOT NULL,
   old_phase TEXT NOT NULL,
   old_type TEXT NOT NULL,
@@ -422,7 +422,7 @@ CREATE TABLE score_update_log (
   new_phase TEXT NOT NULL,
   new_type TEXT NOT NULL,
   new_value INTEGER NOT NULL,
-  updated_by INTEGER REFERENCES user(id),
+  updated_by UUID REFERENCES user(id),
   updated_at TIMESTAMP DEFAULT now(),
   reason TEXT
 );
@@ -432,12 +432,12 @@ CREATE TABLE score_update_log (
 
 ```sql
 CREATE TABLE reliability_events (
-  id SERIAL PRIMARY KEY,
-  run_id INTEGER REFERENCES runs(id) ON DELETE CASCADE,
-  user_id INTEGER REFERENCES users(id),
-  task_id INTEGER REFERENCES tasks(id),
-  variant_id INTEGER REFERENCES variants(id),
-  assignment_id INTEGER REFERENCES assignments(id),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  run_id UUID REFERENCES runs(id) ON DELETE CASCADE,
+  user_id UUID REFERENCES users(id),
+  task_id UUID REFERENCES tasks(id),
+  variant_id UUID REFERENCES variants(id),
+  assignment_id UUID REFERENCES assignments(id),
   reason TEXT,
   reason_code TEXT CHECK (
     reason_code IN (
@@ -457,7 +457,7 @@ CREATE TABLE reliability_events (
       'manual_review'
     )
   ),
-  resolved_by INTEGER REFERENCES users(id),
+  resolved_by UUID REFERENCES users(id),
   created_at TIMESTAMP DEFAULT now()
 );
 ```
@@ -466,10 +466,10 @@ CREATE TABLE reliability_events (
 
 ```sql
 CREATE TABLE browser_interactions (
-  id SERIAL PRIMARY KEY,
-  trial_id INTEGER REFERENCES trials(id) ON DELETE CASCADE,
-  run_id INTEGER REFERENCES runs(id) ON DELETE CASCADE,
-  user_id TEXT NOT NULL,
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  trial_id UUID REFERENCES trials(id) ON DELETE CASCADE,
+  run_id UUID REFERENCES runs(id) ON DELETE CASCADE,
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
   interaction_type TEXT CHECK (
     interaction_type IN ('focus', 'blur', 'fullscreen_enter', 'fullscreen_exit')
   ) NOT NULL,
