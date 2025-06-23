@@ -501,6 +501,7 @@ ADD COLUMN reliable BOOLEAN GENERATED ALWAYS AS (
 - `trial_scores` will not be backfilled.
 - Introduce `score_update_log` forward-looking only — no need to backfill.
 - Update all scoring-related API endpoints to align with new schema.
+- The `/api/scoring/compute` and `/api/scoring/validate` endpoints (and any services required to support them) will be the last to be implemented. The delivery date for those services and endpoints is after the larger "backend" refactoring of Q3 2025.
 
 ## Summary
 
