@@ -11,8 +11,6 @@ ROAR supports configurable tasks used in assessments. This document defines the 
 
 This spec ensures consistency, auditability, and scalability across both development and production contexts.
 
----
-
 ## System Overview
 
 The ROAR task system consists of the following components:
@@ -81,8 +79,6 @@ Dev-mode runs may use unpublished or unversioned code. While the parameter confi
 * Run is logged with the new `variant_id`
 * A dev variant can be promoted to a published variant by toggling `status = "published"` and adding a name/description. In this case, the system also logs a variant status change to `variant_status_log`.
 
----
-
 ## Edge Cases and Error Handling
 
 | Scenario                                             | Expected Behavior                                |
@@ -95,8 +91,6 @@ Dev-mode runs may use unpublished or unversioned code. While the parameter confi
 | Unknown parameter in dev mode                        | Allow execution, but log a warning that the parameter is not recognized by the current task version. This supports flexibility while helping researchers catch typos or misconfigurations.  |
 | Running a dev or deprecated variant in production    | Reject request with 400 or 403 error. Dev variants are not permitted in production. |
 
----
-
 ## Design Rationale
 
 * **Separation of variant and version** allows stable IDs while supporting evolving task logic
@@ -104,8 +98,6 @@ Dev-mode runs may use unpublished or unversioned code. While the parameter confi
 * **Dev variants stored as real variants** avoids custom logic for freeform runs, simplifying the schema
 * **Task Spec abstraction** clearly captures full execution context for a run
 * **Use of a status field** to differentiate between published and dev variants allows for future lifecycle states.
-
----
 
 ## API Contract
 
@@ -208,19 +200,18 @@ Response:
 }
 ```
 
----
-
 ## SQL Schema
 
 ### `tasks`
 
 ```sql
 CREATE TABLE tasks (
-  id SERIAL PRIMARY KEY,
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   slug TEXT UNIQUE NOT NULL,
   display_name TEXT NOT NULL,
   description TEXT,
   created_at TIMESTAMP DEFAULT now()
+  created_by UUID REFERENCES users(id)
 );
 ```
 
@@ -228,11 +219,12 @@ CREATE TABLE tasks (
 
 ```sql
 CREATE TABLE task_versions (
-  id SERIAL PRIMARY KEY,
-  task_id INTEGER REFERENCES tasks(id) ON DELETE CASCADE,
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  task_id UUID REFERENCES tasks(id) ON DELETE CASCADE,
   version TEXT NOT NULL,
   description TEXT,
   created_at TIMESTAMP DEFAULT now(),
+  created_by UUID REFERENCES users(id),
   UNIQUE(task_id, version)
 );
 ```
@@ -241,13 +233,13 @@ CREATE TABLE task_versions (
 
 ```sql
 CREATE TABLE variants (
-  id SERIAL PRIMARY KEY,
-  task_id INTEGER REFERENCES tasks(id) ON DELETE CASCADE,
-  variant_id TEXT UNIQUE NOT NULL,
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  task_id UUID REFERENCES tasks(id) ON DELETE CASCADE,
   name TEXT,
   description TEXT,
   status TEXT CHECK (status IN ('dev', 'published', 'deprecated')) NOT NULL DEFAULT 'dev',
   created_at TIMESTAMP DEFAULT now()
+  created_by UUID REFERENCES users(id)
 );
 ```
 
@@ -255,8 +247,8 @@ CREATE TABLE variants (
 
 ```sql
 CREATE TABLE variant_parameters (
-  id SERIAL PRIMARY KEY,
-  variant_id INTEGER REFERENCES variants(id) ON DELETE CASCADE,
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  variant_id UUID REFERENCES variants(id) ON DELETE CASCADE,
   name TEXT NOT NULL,
   value JSONB NOT NULL,
   type TEXT,
@@ -268,11 +260,11 @@ CREATE TABLE variant_parameters (
 
 ```sql
 CREATE TABLE variant_status_log (
-  id SERIAL PRIMARY KEY,
-  variant_id INTEGER REFERENCES variants(id),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  variant_id UUID REFERENCES variants(id),
   status TEXT CHECK (status IN ('dev', 'published', 'deprecated')) NOT NULL,
   changed_at TIMESTAMP DEFAULT now()
-  changed_by INTEGER REFERENCES users(id)
+  changed_by UUID REFERENCES users(id)
 );
 ```
 
@@ -280,17 +272,15 @@ CREATE TABLE variant_status_log (
 
 ```sql
 CREATE TABLE runs (
-  id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  task_version_id INTEGER REFERENCES task_versions(id),
-  variant_id INTEGER REFERENCES variants(id) NOT NULL,
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  task_version_id UUID REFERENCES task_versions(id),
+  variant_id UUID REFERENCES variants(id) NOT NULL,
   created_at TIMESTAMP DEFAULT now()
   -- Note: This schema only includes fields relevant to the task/variant system.
   -- Additional run metadata (e.g. device info, session ID, assignment ID, etc.) will be added in future extensions to the ROAR documentation.
 );
 ```
-
----
 
 ## Migration Plan
 
@@ -300,8 +290,6 @@ CREATE TABLE runs (
 * Dev-mode Firestore runs can be replayed into SQL by minting variants
 * Legacy tasks may require shimming in the API to handle missing variant metadata
 * After migration, new runs must go through the SQL-backed system
-
----
 
 ## Summary
 
