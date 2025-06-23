@@ -3,6 +3,9 @@ home: true
 title: Home
 heroImage: /assets/roar-logo.svg
 actions:
+  - text: Scoring
+    link: /developer/scoring/
+    type: secondary
   - text: Databases
     link: /developer/databases/
     type: secondary
