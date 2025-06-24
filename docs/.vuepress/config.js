@@ -27,6 +27,7 @@ export default defineUserConfig({
         text: "Developer",
         collapsible: true,
         children: [
+          { text: "Tech Specs", link: "/developer/tech-specs/backend/" },
           { text: "Databases", link: "/developer/databases/" },
           { text: "Workflows", link: "/developer/workflows/" },
           { text: "Application", link: "/developer/application/" },
@@ -79,10 +80,10 @@ export default defineUserConfig({
     sidebar: {
       "/developer/": [
         {
-          text: "Tasks and Variants",
-          link: "/developer/tasks-variants/",
+          text: "Tech Specs",
+          link: "/developer/tech-specs/backend/",
           collapsible: true,
-          children: getChildren("./docs/developer/tasks-variants"),
+          children: getChildren("./docs/developer/tech-specs/backend"),
         },
         {
           text: "Databases",

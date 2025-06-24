@@ -3,8 +3,8 @@ home: true
 title: Home
 heroImage: /assets/roar-logo.svg
 actions:
-  - text: Tasks and Variants
-    link: /developer/tasks-variants/
+  - text: Tech Specs
+    link: /developer/tech-specs/backend/
     type: secondary
   - text: Databases
     link: /developer/databases/
