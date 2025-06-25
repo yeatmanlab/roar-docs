@@ -211,7 +211,8 @@ CREATE TABLE tasks (
   display_name TEXT NOT NULL,
   description TEXT,
   created_at TIMESTAMP DEFAULT now()
-  created_by UUID REFERENCES users(id)
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
 );
 ```
 
@@ -224,7 +225,8 @@ CREATE TABLE task_versions (
   version TEXT NOT NULL,
   description TEXT,
   created_at TIMESTAMP DEFAULT now(),
-  created_by UUID REFERENCES users(id),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
   UNIQUE(task_id, version)
 );
 ```
@@ -238,8 +240,9 @@ CREATE TABLE variants (
   name TEXT,
   description TEXT,
   status TEXT CHECK (status IN ('dev', 'published', 'deprecated')) NOT NULL DEFAULT 'dev',
-  created_at TIMESTAMP DEFAULT now()
-  created_by UUID REFERENCES users(id)
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
 );
 ```
 
@@ -253,22 +256,71 @@ CREATE TABLE variant_parameters (
   value JSONB NOT NULL,
   type TEXT,
   UNIQUE(variant_id, name)
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
 );
 ```
 
-### `variant_status_log`
+### `task_change_log`
 
 ```sql
-CREATE TABLE variant_status_log (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  variant_id UUID REFERENCES variants(id),
-  status TEXT CHECK (status IN ('dev', 'published', 'deprecated')) NOT NULL,
-  changed_at TIMESTAMP DEFAULT now()
-  changed_by UUID REFERENCES users(id)
+CREATE TABLE task_change_log (
+  id SERIAL PRIMARY KEY,
+  changed_by_user_id UUID REFERENCES users(id),
+  target_id UUID REFERENCES tasks(id),
+  change_type TEXT CHECK (change_type IN ('create', 'update', 'delete')),
+  changes JSONB, -- e.g., { "email": ["a@x.com", "b@x.com"] }
+  notes TEXT,
+  timestamp TIMESTAMP DEFAULT now(),
+);
+```
+
+### `task_version_change_log`
+
+```sql
+CREATE TABLE task_version_change_log (
+  id SERIAL PRIMARY KEY,
+  changed_by_user_id UUID REFERENCES users(id),
+  target_id UUID REFERENCES task_versions(id),
+  change_type TEXT CHECK (change_type IN ('create', 'update', 'delete')),
+  changes JSONB, -- e.g., { "email": ["a@x.com", "b@x.com"] }
+  notes TEXT,
+  timestamp TIMESTAMP DEFAULT now(),
+);
+```
+
+### `variant_change_log`
+
+```sql
+CREATE TABLE variant_change_log (
+  id SERIAL PRIMARY KEY,
+  changed_by_user_id UUID REFERENCES users(id),
+  target_id UUID REFERENCES variants(id),
+  change_type TEXT CHECK (change_type IN ('create', 'update', 'delete')),
+  changes JSONB, -- e.g., { "email": ["a@x.com", "b@x.com"] }
+  notes TEXT,
+  timestamp TIMESTAMP DEFAULT now(),
+);
+```
+
+### `variant_parameter_change_log`
+
+```sql
+CREATE TABLE variant_parameter_change_log (
+  id SERIAL PRIMARY KEY,
+  changed_by_user_id UUID REFERENCES users(id),
+  target_id UUID REFERENCES variant_parameters(id),
+  change_type TEXT CHECK (change_type IN ('create', 'update', 'delete')),
+  changes JSONB, -- e.g., { "email": ["a@x.com", "b@x.com"] }
+  notes TEXT,
+  timestamp TIMESTAMP DEFAULT now(),
 );
 ```
 
 ### `runs`
+
+Note: This schema only includes fields relevant to the task/variant system. Additional run metadata (e.g. device info, session ID, assignment ID, etc.) will be added in future extensions to the ROAR documentation.
 
 ```sql
 CREATE TABLE runs (
@@ -276,7 +328,9 @@ CREATE TABLE runs (
   user_id UUID REFERENCES users(id) ON DELETE CASCADE,
   task_version_id UUID REFERENCES task_versions(id),
   variant_id UUID REFERENCES variants(id) NOT NULL,
-  created_at TIMESTAMP DEFAULT now()
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
   -- Note: This schema only includes fields relevant to the task/variant system.
   -- Additional run metadata (e.g. device info, session ID, assignment ID, etc.) will be added in future extensions to the ROAR documentation.
 );
