@@ -1,6 +1,195 @@
 # ROAR Administrations & Assignments: Technical Specification
 
+## Purpose and Scope
+
+This spec defines how ROAR handles administration of tasks to users. It includes support for assigning variants to students based on org membership, grade level, or other attributes, and for controlling delivery order and optionality of specific variants.
+
+## System Overview
+
+Administrations and assignments enable educators and researchers to schedule groups of students to take specific task variants during a defined time period. This system ensures clarity, structure, and traceability for large-scale or longitudinal assessments.
+
+### Definitions
+
+* **Administration**: A bundle of variants scheduled for delivery between two dates. Defines ordering and target audience.
+* **Administration Variant**: A variant included in the administration with metadata (order, required, conditional).
+* **Administration Targets**: Defines whether the administration is scoped to a district, school, class, user, etc.
+* **Assignment**: A resolved per-user instance of an administration.
+* **Assignment Variant**: A resolved per-user variant from an administration.
+
+### Component Flow Diagram
+
+```mermaid
+graph TD
+  Admin[Create Administration with variants] --> Targets[Define org/class/user targets]
+  Targets --> Rules[Apply variant conditions]
+  Rules --> Assign[Generate Assignments]
+  Assign --> Dashboard[Show assigned variants]
+  Dashboard --> Run[Run task]
+  Run --> Scores[Write scores]
+```
+
+## Runtime Behavior
+
+* Admins define variants in an administration with optional conditions.
+* Users are assigned via organization membership or direct targeting.
+* System resolves which variants apply to which user (based on org membership and variant conditions like grade).
+* Users complete their assigned variants via the dashboard.
+* Resulting runs and scores are linked to the assignment and administration.
+
+## Edge Cases and Error Handling
+
+| Scenario                                | Behavior                                |
+| --------------------------------------- | --------------------------------------- |
+| Variant condition not met               | Variant excluded from user’s assignment |
+| Multiple targets (user + class) overlap | Deduplicate assignments                 |
+| Optional variant                        | Shown in UI with "optional" label       |
+| Variant fails to load                   | Skip or retry policy defined at runtime |
+
+## Design Rationale
+
+* Separation of admin and assignment layers enables flexible targeting.
+* Variant-level conditions support differential assignment logic
+* Assignments support both ordered and unordered variant sets.
+
+## API Contract
+
 ::: warning This section is under construction
 
-The ROAR administrations & assignments technical specification is currently in development and is not yet available.
+The ROAR administration API is currently in development and is not yet available.
 :::
+
+## SQL Schema
+
+### `administrations`
+
+```sql
+CREATE TABLE administrations (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  public_name TEXT,
+  description TEXT,
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  is_ordered BOOLEAN DEFAULT false,
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
+);
+```
+
+### `administration_variants`
+
+```sql
+CREATE TABLE administration_variants (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  administration_id UUID REFERENCES administrations(id) ON DELETE CASCADE,
+  variant_id UUID REFERENCES variants(id) ON DELETE CASCADE,
+  order_index INTEGER,
+  assignment_conditions JSONB,
+  requirement_conditions JSONB,
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
+);
+```
+
+To distinguish when to assign a variant from when it is required to be completed, we use two separate condition trees:
+
+* assignment_condition_json: logic for whether the variant is assigned to a user.
+
+* requirement_condition_json: logic for whether the assigned variant is required (as opposed to optional).
+
+This allows us to
+
+* Assign a variant to many users but require only a subset to complete it.
+
+* Mark some assigned variants as optional (if requirement conditions are not met).
+
+Both of these fields store a JSONB object that encodes the full conditional logic as a tree, with `AND` and `OR` operators as internal nodes and leaf nodes representing field-based conditions. For example,
+
+```json
+{
+  "AND": [
+    { "field": "age", "operator": "<=", "value": "12" },
+    {
+      "OR": [
+        { "field": "school_level", "operator": "=", "value": "elementary" },
+        { "field": "school_level", "operator": "=", "value": "middle" }
+      ]
+    }
+  ]
+}
+```
+
+You can nest `AND` and `OR` operators to arbitrary depth. The leaf nodes are always of the form `{ field, operator, value }`.
+
+When the condition JSON is `NULL`, it means that the condition is always true. And when we want the condition always to evaluate to false, we can use `{ "type": "const", "value": false }`. The following table shows different scenarios for the assignment and required conditions:
+
+| Scenario                                       | `assignment_condition_json` | `requirement_condition_json`          |
+| ---------------------------------------------- | --------------------------- | ------------------------------------- |
+| Assigned and required for all                  | `NULL`                      | `NULL`                                |
+| Assigned to all, optional                      | `NULL`                      | `{ "type": "const", "value": false }` |
+| Assigned to all, conditionally required        | `NULL`                      | JSON condition                        |
+| Conditionally assigned, required               | JSON condition              | `NULL`                                |
+| Conditionally assigned, optional               | JSON condition              | `{ "type": "const", "value": false }` |
+| Conditionally assigned, conditionally required | JSON condition              | JSON condition                        |
+
+### `administration_targets`
+
+```sql
+CREATE TABLE administration_targets (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  administration_id UUID REFERENCES administrations(id) ON DELETE CASCADE,
+  target_id UUID,
+  target_type TEXT CHECK (target_type IN ('org', 'class', 'user')),
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
+);
+```
+
+### `assignments`
+
+```sql
+CREATE TABLE assignments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  administration_id UUID REFERENCES administrations(id) ON DELETE CASCADE,
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  started_at TIMESTAMP,
+  completed_at TIMESTAMP,
+  status TEXT CHECK (status IN ('not_started', 'in_progress', 'completed', 'skipped')) DEFAULT 'not_started',
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
+);
+```
+
+### `assignment_variants`
+
+```sql
+CREATE TABLE assignment_variants (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  assignment_id UUID REFERENCES assignments(id) ON DELETE CASCADE,
+  variant_id UUID REFERENCES variants(id) ON DELETE CASCADE,
+  order_index INTEGER,
+  is_required BOOLEAN DEFAULT true,
+  status TEXT CHECK (status IN ('not_started', 'in_progress', 'completed', 'skipped')) DEFAULT 'not_started',
+  started_at TIMESTAMP,
+  completed_at TIMESTAMP,
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
+);
+```
+
+## Migration Plan
+
+* Backfill existing administrations from Firestore.
+* Backfill existing administration_variants from Firestore. They are currently stored in the administration documents themselves.
+* Backfill existing assignment and requirement conditions from Firestore. They are currently stored in the administraiton documents themselves.
+* Backfill existing assignments from Firestore.
+* Backfill existing assignment_variants from Firestore. They are currently stored in the assignment documents themselves.
+
+## Summary
+
+This design allows flexible, condition-aware scheduling of task variants across users. It supports both required and optional content, ordered delivery, and individualized assignment resolution based on user attributes.
