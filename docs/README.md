@@ -3,8 +3,8 @@ home: true
 title: Home
 heroImage: /assets/roar-logo.svg
 actions:
-  - text: Scoring
-    link: /developer/scoring/
+  - text: Tech Specs
+    link: /developer/tech-specs/backend/
     type: secondary
   - text: Databases
     link: /developer/databases/

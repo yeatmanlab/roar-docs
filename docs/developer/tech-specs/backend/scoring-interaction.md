@@ -385,6 +385,8 @@ CREATE TABLE scores (
   domain TEXT DEFAULT 'composite',
   status TEXT CHECK (status in ('final', 'partial', 'invalid')),
   created_at TIMESTAMP DEFAULT now()
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
 );
 ```
 
@@ -404,7 +406,9 @@ CREATE TABLE trial_scores (
   type TEXT CHECK (type IN ('raw', 'computed')),
   phase TEXT CHECK (phase IN ('practice', 'test')) default 'test',
   domain TEXT DEFAULT 'composite',
-  created_at TIMESTAMP DEFAULT now()
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
 );
 ```
 
@@ -458,7 +462,9 @@ CREATE TABLE reliability_events (
     )
   ),
   resolved_by UUID REFERENCES users(id),
-  created_at TIMESTAMP DEFAULT now()
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
 );
 ```
 
@@ -474,7 +480,10 @@ CREATE TABLE browser_interactions (
     interaction_type IN ('focus', 'blur', 'fullscreen_enter', 'fullscreen_exit')
   ) NOT NULL,
   timestamp TIMESTAMP DEFAULT now(),
-  metadata JSONB
+  metadata JSONB,
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
 );
 ```
 

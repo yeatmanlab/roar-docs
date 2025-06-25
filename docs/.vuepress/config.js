@@ -27,7 +27,7 @@ export default defineUserConfig({
         text: "Developer",
         collapsible: true,
         children: [
-          { text: "Scoring", link: "/developer/scoring/" },
+          { text: "Tech Specs", link: "/developer/tech-specs/" },
           { text: "Databases", link: "/developer/databases/" },
           { text: "Workflows", link: "/developer/workflows/" },
           { text: "Application", link: "/developer/application/" },
@@ -79,6 +79,12 @@ export default defineUserConfig({
     prevLinks: true,
     sidebar: {
       "/developer/": [
+        {
+          text: "Tech Specs",
+          link: "/developer/tech-specs/",
+          collapsible: true,
+          children: getChildren("./docs/developer/tech-specs"),
+        },
         {
           text: "Databases",
           link: "/developer/databases/",
