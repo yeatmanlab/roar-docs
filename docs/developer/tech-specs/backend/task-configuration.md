@@ -27,6 +27,8 @@ The ROAR task system consists of the following components:
 
   A variant is a unique, immutable configuration of a task's parameters. It is identified by a variant ID, which acts like a DOI. Once created, it will always refer to the same parameter set.
 
+* **Task Bundles**: A grouping of curated variants under a reusable identifier (e.g., "ROAR Core Four" for batch administration).
+
 * **Variant Status**: `dev`, `published`, or `deprecated`
 
   A variant can be in one of three states: `dev`, `published`, or `deprecated`. The `dev` state indicates that the variant is in development and is not yet ready for production use. The `published` state indicates that the variant is ready for production use and is available for use in assessments. The `deprecated` state indicates that the variant is no longer recommended for use in assessments but is preserved for historical reproducibility or auditability.
@@ -200,6 +202,25 @@ Response:
 }
 ```
 
+### `GET /api/task-bundles/{slug}`
+
+Returns metadata and ordered variants for a single task package.
+
+```json
+{
+  "id": 1,
+  "slug": "core-4",
+  "name": "Core 4 Literacy Tasks",
+  "description": "The ROAR Core 4 literacy tasks",
+  "variants": [
+    { "variant_id": "uuid-1", "task_slug": "roar-letter", "sort_order": 1 },
+    { "variant_id": "uuid-2", "task_slug": "roar-phoneme", "sort_order": 2 },
+    { "variant_id": "uuid-3", "task_slug": "roar-word", "sort_order": 3 },
+    { "variant_id": "uuid-4", "task_slug": "roar-sentence", "sort_order": 4 },
+  ]
+}
+```
+
 ## SQL Schema
 
 ### `tasks`
@@ -236,7 +257,8 @@ CREATE TABLE task_versions (
 ```sql
 CREATE TABLE variants (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  task_id UUID REFERENCES tasks(id) ON DELETE CASCADE,
+  task_id UUID NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
+  task_slug TEXT NOT NULL REFERENCES tasks(slug),
   name TEXT,
   description TEXT,
   status TEXT CHECK (status IN ('dev', 'published', 'deprecated')) NOT NULL DEFAULT 'dev',
@@ -259,6 +281,35 @@ CREATE TABLE variant_parameters (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP DEFAULT now(),
   deleted_at TIMESTAMP,
+);
+```
+
+### `task_bundles`
+
+```sql
+CREATE TABLE task_bundles (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  slug TEXT UNIQUE NOT NULL,
+  name TEXT NOT NULL,
+  description TEXT,
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
+);
+```
+
+### `task_bundle_variants`
+
+```sql
+CREATE TABLE task_bundle_variants (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  task_bundle_id UUID REFERENCES task_bundles(id) ON DELETE CASCADE,
+  variant_id UUID REFERENCES variants(id) ON DELETE CASCADE,
+  sort_order INT,
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
+  UNIQUE(task_bundle_id, variant_id)
 );
 ```
 
