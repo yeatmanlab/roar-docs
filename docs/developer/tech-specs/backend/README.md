@@ -12,7 +12,7 @@ Covers:
 - Task versioning
 - Dev vs production parameter handling
 
-## Assessment Execution (Upcoming)
+## [Assessment Execution](assessment-execution.md)
 
 Covers:
 
@@ -40,7 +40,7 @@ Covers:
 - Historical org membership
 - Rostering provenance and audit logs
 
-## Administrations & Assignments (Upcoming)
+## [Administrations & Assignments](administrations-assignments.md)
 
 Covers:
 
@@ -48,7 +48,7 @@ Covers:
 - Linking students and educators to tasks
 - Tracking completion across assigned groups
 
-## Permissions & Access Control (Upcoming)
+## [Permissions & Access Control](permissions.md)
 
 Covers:
 

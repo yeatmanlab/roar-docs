@@ -59,6 +59,7 @@ graph TD
 * An enum for org types enables special-case logic (e.g., school vs. family).
 * Separating courses and classes from other orgs aligns with both OneRoster and Clever data models (N.B. Clever refers to classes as "sections").
 * Separate courses and classes allows course reuse across multiple classes (sections).
+* In Clever's data model each course and class are associated with only one grade, term, period, and subject. However, in the OneRoster data model, a course can be associated with multiple grades, terms, periods, and subjects. ROAR conforms to the OneRoster model by adding many-to-many join tables for these relationships. This aligns with OneRoster and is also more expressive (e.g., it supports multi-subject interdisciplinary classes, blended grades, and rolling terms).
 * Separate roles per org allows nuanced modeling (e.g., teacher in one, admin in another).
 * The `*_change_logs` tables track all changes to user, org, and user-org relationships. This enables traceable provenance of enrollment and staff assignments: who made each change, when it happened, and what was changed. This is essential for supporting auditability, compliance, and longitudinal data accuracy.
 
@@ -249,6 +250,8 @@ INSERT INTO external_id_types (name, display_name, description) VALUES
   ('custom', 'Custom ID', 'Locally defined or imported identifier'),
   ('state_id', 'State ID', 'State-assigned unique student or org identifier'),
   ('local_id', 'Local ID', 'District-assigned ID not tied to a formal rostering system');
+  ('nces_id', 'NCES ID', 'NCES-assigned unique identifier');
+  ('mdr_number', 'MDR Number', 'MDR-assigned unique identifier')
 ```
 
 ### `user_external_ids`
@@ -296,6 +299,19 @@ CREATE TABLE orgs (
   name TEXT NOT NULL,
   org_type TEXT REFERENCES org_types(name),
   parent_org_id UUID REFERENCES orgs(id) ON DELETE SET NULL,
+
+  -- Location
+  location_address_line1 TEXT;
+  location_address_line2 TEXT;
+  location_city TEXT;
+  location_state_province TEXT;
+  location_postal_code TEXT;
+  location_country CHAR(2) DEFAULT 'US';  -- ISO 3166-1 alpha-2
+  location_timezone TEXT;
+  location_lat NUMERIC(9,6);
+  location_long NUMERIC(9,6);
+
+  -- Metadata
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP DEFAULT now(),
   deleted_at TIMESTAMP,
