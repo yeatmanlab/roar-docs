@@ -27,29 +27,43 @@ The ROAR task system consists of the following components:
 
   A variant is a unique, immutable configuration of a task's parameters. It is identified by a variant ID, which acts like a DOI. Once created, it will always refer to the same parameter set.
 
-* **Task Bundles**: A grouping of curated variants under a reusable identifier (e.g., "ROAR Core Four" for batch administration).
-
 * **Variant Status**: `dev`, `published`, or `deprecated`
 
-  A variant can be in one of three states: `dev`, `published`, or `deprecated`. The `dev` state indicates that the variant is in development and is not yet ready for production use. The `published` state indicates that the variant is ready for production use and is available for use in assessments. The `deprecated` state indicates that the variant is no longer recommended for use in assessments but is preserved for historical reproducibility or auditability.
+  A variant can be in one of three states: `dev`, `published`, or `deprecated`. The `dev` state indicates that the variant is in development and is not yet ready for production use. Dev variants can be edited. Once published, variants are immutable. The `published` state indicates that the variant is ready for production use and is available for use in assessments. The `deprecated` state indicates that the variant is no longer recommended for use in assessments but is preserved for historical reproducibility or auditability.
+
+* **Task Bundles**: A grouping of curated variants under a reusable identifier (e.g., "ROAR Core Four" for batch administration).
 
 * **Task Spec**: `{ variant_id, task_version }` — uniquely defines runtime behavior
 
   A Task Spec is the pair `{ variant_id, task_version }`. This combination fully determines the behavior of a task run, including default parameters, logic, and scoring. It is important to realize that the variant_id is not tied to any specific task version. The same variant_id may be used with different task versions, and it is the combination of variant_id and task_version — the Task Spec — that determines the full behavior of a task run.
 
-* **Runs**: Executions of a task with a specific `variant_id` and `task_version`
+* **Runs**: Executions of a task spec (i.e., a specific `variant_id` and `task_version`)
 
   A run is a specific instance of a student or researcher interacting with a task. Every run references a variant_id and a task_version_id, allowing the exact task behavior to be reconstructed from the database.
 
-### Component Flow Diagram
+### Component Flow Diagrams
+
+#### Researcher task development
 
 ```mermaid
 graph TD
-  UI[Researcher UI] --> API[API: run task]
-  API -->|dev mode| Dev[Create dev variant]
-  API -->|published mode| Lookup[Lookup variant]
-  Dev --> Resolve[Resolve parameters]
-  Lookup --> Resolve
+  UI[Researcher UI] --> CreateVariant[Create or edit a dev variant]
+  CreateVariant --> |variant ID| LaunchRun[Launch a run]
+  LaunchRun --> Lookup[Lookup variant ID]
+  Lookup --> Resolve[Resolve parameters]
+  Resolve --> TaskReady[Is task ready?]
+  TaskReady --> |yes| Publish[Promote variant to published]
+  TaskReady --> |no| CreateVariant
+```
+
+#### Participant task execution
+
+```mermaid
+graph TD
+  UI[Partner UI] --> AssignVariant[Assign a variant to students]
+  AssignVariant --> |variant ID| LaunchRun[Participant launches run]
+  LaunchRun --> Lookup[Lookup variant ID]
+  Lookup --> Resolve[Resolve parameters]
   Resolve --> Execute[Execute task]
   Execute --> Log[Log run with variant_id + task_version]
 ```
@@ -58,7 +72,7 @@ graph TD
 
 ### Published Mode
 
-* Researcher specifies a known `variant_id`
+* Partner specifies a known `variant_id`
 * System fetches parameter set from `variant_parameters`
 * Task version defaults to the version pinned in the ROAR-dashboard dependencies (if task is launched from the dashboard) or the latest stable release (if task is launched as a standalone web application).
 * Runtime merges parameters with task version's defaults
@@ -66,20 +80,12 @@ graph TD
 
 ### Dev Mode
 
-::: info Reproducibility in Dev Mode
-
-Dev-mode runs may use unpublished or unversioned code. While the parameter configuration is stored, exact task behavior may not be fully reproducible unless the development environment is version-controlled and pinned. The task_version_id for dev runs may be null or reference a placeholder.
-:::
-
-* Researcher provides a custom parameter set
-* Because dev mode may include unversioned or unpublished code changes, the `task_version_id` logged for dev runs may be set to `NULL`, or a special placeholder (e.g., `"unversioned-dev"`) to indicate non-reproducibility. These runs are not guaranteed to be reproducible even though their variant parameters are stored.
-* System auto-mints a new variant with `status = "dev"`.
-* System logs a variant status change to `variant_status_log`.
+* Researcher creates a new variant with `status = "dev"` and provides a custom parameter set
 * Variants with `status = "dev"` are not shown in public researcher dashboards or included in standard reporting or analytics views. This ensures that only validated, production-ready variants are visible for data analysis or deployment purposes.
-* A `variant_id` is generated and stored in `variants`
-* Task is run with that variant and task version
-* Run is logged with the new `variant_id`
-* A dev variant can be promoted to a published variant by toggling `status = "published"` and adding a name/description. In this case, the system also logs a variant status change to `variant_status_log`.
+* Researcher develops and tests the task using the dev variant
+* Researcher edit the dev variant as needed.
+* When it is ready for production, the researcher toggles `status = "published"` and adds a name/description.
+* The variant is now available for use in assessments.
 
 ## Edge Cases and Error Handling
 
@@ -88,9 +94,8 @@ Dev-mode runs may use unpublished or unversioned code. While the parameter confi
 | Missing `variant_id` in published mode               | 400 error with message "variant\_id is required" |
 | Missing parameter value                              | Task resolves using defaults; log warning        |
 | Unknown parameter or invalid value in production     | Task throws error and halts execution            |
-| Dev-mode variant identical to existing published one | Deduplicate by comparing canonical param hash    |
+| Attempt to publish a dev variant with identical parameters to existing published one | Deduplicate by comparing canonical param hash    |
 | Attempt to promote already published variant         | No-op; return existing variant info              |
-| Unknown parameter in dev mode                        | Allow execution, but log a warning that the parameter is not recognized by the current task version. This supports flexibility while helping researchers catch typos or misconfigurations.  |
 | Running a dev or deprecated variant in production    | Reject request with 400 or 403 error. Dev variants are not permitted in production. |
 
 ## Design Rationale
@@ -106,23 +111,6 @@ Dev-mode runs may use unpublished or unversioned code. While the parameter confi
 ### `POST /api/runs`
 
 Creates a new run
-
-* In published mode, it uses a supplied `variant_id`
-* In dev mode, it mints a new dev variant (if needed) using the provided parameters
-
-#### Dev Mode Request
-
-```json
-POST /api/runs
-{
-  "task_slug": "swr",
-  "task_version": "v2.0.0",
-  "parameters": { "num_items": 8, "shuffle": true },
-  "user_id": 12345
-}
-```
-
-#### Published Mode Request
 
 ```json
 POST /api/runs
@@ -182,23 +170,46 @@ Returns metadata for a specific task.
 
 Returns metadata for all available versions of a specific task. Dev variants are excluded by default.
 
-### `POST /api/variants/{variant_id}/change_status`
+### `POST /api/variants`
 
-Changes the status of a variant. Valid statuses are `"dev"`, `"published"`, and `"deprecated"`.
+Creates a dev variant.
 
-```json
-POST /api/variants/{variant_id}/change_status
+```http
+POST /api/variants
 {
-  "status": "published"
+  "task_slug": "swr",
+  "parameters": {
+    "num_items": 8,
+    "shuffle": true
+  }
 }
 ```
 
-Response:
+### `PATCH /api/variants/{variant_id}`
 
-```json
+Edits a dev variant.
+
+```http
+PATCH /api/variants/{variant_id}
 {
-  "variant_id": 123,
-  "status": "published"
+  "parameters": {
+    "num_items": 8,
+    "shuffle": true
+  }
+}
+```
+
+Allowed only if the variant status is `"dev"`.
+
+### `POST /api/variants/{variant_id}/publish`
+
+Promotes a dev variant to published. Freezes the variant parameters and assigns a name and description.
+
+```http
+POST /api/variants/{variant_id}/publish
+{
+  "name": "My Variant",
+  "description": "My Variant Description"
 }
 ```
 
@@ -310,62 +321,6 @@ CREATE TABLE task_bundle_variants (
   updated_at TIMESTAMP DEFAULT now(),
   deleted_at TIMESTAMP,
   UNIQUE(task_bundle_id, variant_id)
-);
-```
-
-### `task_change_log`
-
-```sql
-CREATE TABLE task_change_log (
-  id SERIAL PRIMARY KEY,
-  changed_by_user_id UUID REFERENCES users(id),
-  target_id UUID REFERENCES tasks(id),
-  change_type TEXT CHECK (change_type IN ('create', 'update', 'delete')),
-  changes JSONB, -- e.g., { "email": ["a@x.com", "b@x.com"] }
-  notes TEXT,
-  timestamp TIMESTAMP DEFAULT now(),
-);
-```
-
-### `task_version_change_log`
-
-```sql
-CREATE TABLE task_version_change_log (
-  id SERIAL PRIMARY KEY,
-  changed_by_user_id UUID REFERENCES users(id),
-  target_id UUID REFERENCES task_versions(id),
-  change_type TEXT CHECK (change_type IN ('create', 'update', 'delete')),
-  changes JSONB, -- e.g., { "email": ["a@x.com", "b@x.com"] }
-  notes TEXT,
-  timestamp TIMESTAMP DEFAULT now(),
-);
-```
-
-### `variant_change_log`
-
-```sql
-CREATE TABLE variant_change_log (
-  id SERIAL PRIMARY KEY,
-  changed_by_user_id UUID REFERENCES users(id),
-  target_id UUID REFERENCES variants(id),
-  change_type TEXT CHECK (change_type IN ('create', 'update', 'delete')),
-  changes JSONB, -- e.g., { "email": ["a@x.com", "b@x.com"] }
-  notes TEXT,
-  timestamp TIMESTAMP DEFAULT now(),
-);
-```
-
-### `variant_parameter_change_log`
-
-```sql
-CREATE TABLE variant_parameter_change_log (
-  id SERIAL PRIMARY KEY,
-  changed_by_user_id UUID REFERENCES users(id),
-  target_id UUID REFERENCES variant_parameters(id),
-  change_type TEXT CHECK (change_type IN ('create', 'update', 'delete')),
-  changes JSONB, -- e.g., { "email": ["a@x.com", "b@x.com"] }
-  notes TEXT,
-  timestamp TIMESTAMP DEFAULT now(),
 );
 ```
 
