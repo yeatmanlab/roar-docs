@@ -93,15 +93,15 @@ To query assesement data, you will need the `bq` command line tool to interact w
 
 1. Install the `bq` tool if it is not already included:
 
-    ```bash
-    gcloud components install bq
-    ```
+   ```bash
+   gcloud components install bq
+   ```
 
 1. Verify installation:
 
-    ```bash
-    bq version
-    ```
+   ```bash
+   bq version
+   ```
 
 The initialization step above should have authenticated you into your Google account. But if you need to log in again, use
 
@@ -157,7 +157,7 @@ This next query will fail. You're not doing anything wrong. It is supposed to fa
 :::
 
 ```bash
-bq query --nouse_legacy_sql --format=csv \
+bq query --nouse_legacy_sql --format=csv --header=true, --overwrite=true\
 'SELECT
   *
 FROM
