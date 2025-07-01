@@ -168,62 +168,6 @@ CREATE TABLE user_roles (
 );
 ```
 
-### `roles_change_logs`
-
-```sql
-CREATE TABLE roles_change_logs (
-  id SERIAL PRIMARY KEY,
-  changed_by_user_id UUID REFERENCES users(id),
-  target_id UUID REFERENCES roles(id),
-  change_type TEXT CHECK (change_type IN ('create', 'update', 'delete')),
-  changes JSONB, -- e.g., { "name": ["Old Role", "New Role"] }
-  notes TEXT,
-  timestamp TIMESTAMP DEFAULT now(),
-);
-```
-
-### `role_permissions_change_logs`
-
-```sql
-CREATE TABLE role_permissions_change_logs (
-  id SERIAL PRIMARY KEY,
-  changed_by_user_id UUID REFERENCES users(id),
-  target_id UUID REFERENCES role_permissions(id),
-  change_type TEXT CHECK (change_type IN ('create', 'update', 'delete')),
-  changes JSONB, -- e.g., { "permission_type": ["view", "edit"] }
-  notes TEXT,
-  timestamp TIMESTAMP DEFAULT now(),
-);
-```
-
-### `direct_permissions_change_logs`
-
-```sql
-CREATE TABLE direct_permissions_change_logs (
-  id SERIAL PRIMARY KEY,
-  changed_by_user_id UUID REFERENCES users(id),
-  target_id UUID REFERENCES direct_permissions(id),
-  change_type TEXT CHECK (change_type IN ('create', 'update', 'delete')),
-  changes JSONB, -- e.g., { "permission_type": ["view", "edit"] }
-  notes TEXT,
-  timestamp TIMESTAMP DEFAULT now(),
-);
-```
-
-### `user_roles_change_logs`
-
-```sql
-CREATE TABLE user_roles_change_logs (
-  id SERIAL PRIMARY KEY,
-  changed_by_user_id UUID REFERENCES users(id),
-  target_id UUID REFERENCES user_roles(id),
-  change_type TEXT CHECK (change_type IN ('create', 'update', 'delete')),
-  changes JSONB, -- e.g., { "role_id": ["Old Role", "New Role"] }
-  notes TEXT,
-  timestamp TIMESTAMP DEFAULT now(),
-);
-```
-
 ### `access_audit_logs`
 
 ```sql

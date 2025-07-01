@@ -169,6 +169,7 @@ CREATE TABLE assignments (
 ```sql
 CREATE TABLE assignment_variants (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  administration_id UUID REFERENCES administrations(id) ON DELETE CASCADE,
   assignment_id UUID REFERENCES assignments(id) ON DELETE CASCADE,
   variant_id UUID REFERENCES variants(id) ON DELETE CASCADE,
   order_index INTEGER,
@@ -180,6 +181,138 @@ CREATE TABLE assignment_variants (
   updated_at TIMESTAMP DEFAULT now(),
   deleted_at TIMESTAMP,
 );
+```
+
+### `runs`
+
+```sql
+CREATE TABLE runs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  administration_id UUID NOT NULL REFERENCES administrations(id),
+  assignment_id UUID NOT NULL REFERENCES assignments(id),
+  assignment_variant_id UUID NOT NULL REFERENCES assignment_variants(id),
+  user_id UUID NOT NULL REFERENCES users(id),
+  variant_id UUID NOT NULL REFERENCES variants(id),
+  task_version_id UUID NOT NULL REFERENCES task_versions(id),
+  task_id UUID NOT NULL REFERENCES tasks(id),
+  started_at TIMESTAMP NOT NULL,
+  completed_at TIMESTAMP,
+  status TEXT NOT NULL CHECK (status IN ('not_started', 'in_progress', 'completed', 'skipped')) DEFAULT 'not_started',
+  use_for_reporting BOOLEAN DEFAULT false,
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
+);
+```
+
+### `run_targets`
+
+```sql
+CREATE TABLE run_targets (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  run_id UUID NOT NULL REFERENCES runs(id),
+  target_id UUID,
+  target_type TEXT CHECK (target_type IN ('org', 'class', 'user')),
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
+);
+```
+
+We must also ensure that there is at most one "used for reporting" run per `(assignment_id, variant_id, user_id)`.
+
+```sql
+CREATE UNIQUE INDEX one_reporting_run_per_assignment_variant_user
+ON runs(assignment_id, variant_id, user_id)
+WHERE use_for_reporting = true;
+```
+
+## Administration stats
+
+It is important to report administration progress statistics. For example, for a given administration:
+
+* How many assignments have been created?
+* How many assignments have been started?
+* How many assignments have been completed?
+* There are versions of all of the above questions but grouped by variant or task.
+
+We can use this query to get the total number of assignees for a given administration:
+
+```sql
+SELECT COUNT(*) FROM assignments WHERE administration_id = :admin_id;
+```
+
+We can use the following SQL query to get the number of assignments with different statuses for a given administration:
+
+```sql
+SELECT
+  COUNT(*) AS total_reporting_runs,
+  COUNT(*) FILTER (WHERE status = 'started') AS started,
+  COUNT(*) FILTER (WHERE status = 'completed') AS completed
+FROM runs
+WHERE administration_id = :admin_id
+  AND use_for_reporting = true;
+```
+
+We can group those results by `task_id` using the following query:
+
+```sql
+SELECT
+  task_id,
+  COUNT(*) AS total,
+  COUNT(*) FILTER (WHERE status = 'started') AS started,
+  COUNT(*) FILTER (WHERE status = 'completed') AS completed
+FROM runs
+WHERE administration_id = :admin_id
+  AND use_for_reporting = true
+GROUP BY task_id;
+```
+
+Similarly, we can group those results by `variant_id`:
+
+```sql
+SELECT
+  variant_id,
+  COUNT(*) AS total_reporting_runs,
+  COUNT(*) FILTER (WHERE status = 'started') AS started,
+  COUNT(*) FILTER (WHERE status = 'completed') AS completed
+FROM runs
+WHERE administration_id = :admin_id
+  AND use_for_reporting = true
+GROUP BY variant_id;
+```
+
+And we can group by `org_id` using
+
+```sql
+SELECT
+  rt.target_id AS org_id,
+  COUNT(*) AS total,
+  COUNT(*) FILTER (WHERE r.status = 'started') AS started,
+  COUNT(*) FILTER (WHERE r.status = 'completed') AS completed
+FROM runs r
+JOIN run_targets rt ON r.id = rt.run_id
+WHERE r.administration_id = :admin_id
+  AND r.use_for_reporting = true
+  AND rt.target_type = 'org'
+GROUP BY rt.target_id;
+```
+
+or by `class_id` if we change the `rt.target_type` filter to `class`. We can even further group these results by `variant_id` using
+
+```sql
+SELECT
+  rt.target_id AS org_id,
+  r.variant_id,
+  COUNT(*) AS total,
+  COUNT(*) FILTER (WHERE r.status = 'started') AS started,
+  COUNT(*) FILTER (WHERE r.status = 'completed') AS completed
+FROM runs r
+JOIN run_targets rt ON r.id = rt.run_id
+WHERE r.administration_id = :admin_id
+  AND r.use_for_reporting = true
+  AND rt.target_type = 'org'
+GROUP BY rt.target_id, r.variant_id;
 ```
 
 ## Migration Plan

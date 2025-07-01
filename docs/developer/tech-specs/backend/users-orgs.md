@@ -61,7 +61,6 @@ graph TD
 * Separate courses and classes allows course reuse across multiple classes (sections).
 * In Clever's data model each course and class are associated with only one grade, term, period, and subject. However, in the OneRoster data model, a course can be associated with multiple grades, terms, periods, and subjects. ROAR conforms to the OneRoster model by adding many-to-many join tables for these relationships. This aligns with OneRoster and is also more expressive (e.g., it supports multi-subject interdisciplinary classes, blended grades, and rolling terms).
 * Separate roles per org allows nuanced modeling (e.g., teacher in one, admin in another).
-* The `*_change_logs` tables track all changes to user, org, and user-org relationships. This enables traceable provenance of enrollment and staff assignments: who made each change, when it happened, and what was changed. This is essential for supporting auditability, compliance, and longitudinal data accuracy.
 
 ## API Contract
 
@@ -482,92 +481,6 @@ CREATE TABLE class_periods (
   updated_at TIMESTAMP DEFAULT now(),
   deleted_at TIMESTAMP,
   UNIQUE(class_id, period),
-);
-```
-
-### `orgs_change_logs`
-
-```sql
-CREATE TABLE orgs_change_logs (
-  id SERIAL PRIMARY KEY,
-  changed_by_user_id UUID REFERENCES users(id),
-  target_id UUID REFERENCES orgs(id),
-  change_type TEXT CHECK (change_type IN ('create', 'update', 'delete')),
-  changes JSONB, -- e.g., { "name": ["Old School", "New School"] }
-  notes TEXT,
-  timestamp TIMESTAMP DEFAULT now(),
-);
-```
-
-### `courses_change_logs`
-
-```sql
-CREATE TABLE courses_change_logs (
-  id SERIAL PRIMARY KEY,
-  changed_by_user_id UUID REFERENCES users(id),
-  target_id UUID REFERENCES courses(id),
-  change_type TEXT CHECK (change_type IN ('create', 'update', 'delete')),
-  changes JSONB, -- e.g., { "name": ["Old Course", "New Course"] }
-  notes TEXT,
-  timestamp TIMESTAMP DEFAULT now(),
-);
-```
-
-### `classes_change_logs`
-
-```sql
-CREATE TABLE classes_change_logs (
-  id SERIAL PRIMARY KEY,
-  changed_by_user_id UUID REFERENCES users(id),
-  target_id UUID REFERENCES classes(id),
-  change_type TEXT CHECK (change_type IN ('create', 'update', 'delete')),
-  changes JSONB, -- e.g., { "name": ["Old Class", "New Class"] }
-  notes TEXT,
-  timestamp TIMESTAMP DEFAULT now(),
-);
-```
-
-### `users_change_logs`
-
-```sql
-CREATE TABLE users_change_logs (
-  id SERIAL PRIMARY KEY,
-  changed_by_user_id UUID REFERENCES users(id),
-  target_id UUID REFERENCES users(id),
-  change_type TEXT CHECK (change_type IN ('create', 'update', 'delete')),
-  changes JSONB, -- e.g., { "email": ["a@x.com", "b@x.com"] }
-  notes TEXT,
-  timestamp TIMESTAMP DEFAULT now(),
-);
-```
-
-### `users_orgs_change_log`
-
-```sql
-CREATE TABLE users_orgs_change_log (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  changed_by_user_id UUID REFERENCES users(id),
-  target_user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-  target_org_id UUID REFERENCES orgs(id) ON DELETE CASCADE,
-  change_type TEXT CHECK (change_type IN ('create', 'update', 'delete')),
-  changes JSONB, -- e.g., { "role": ["teacher", "admin"] }
-  notes TEXT,
-  timestamp TIMESTAMP DEFAULT now(),
-);
-```
-
-### `user_external_ids_change_log`
-
-```sql
-CREATE TABLE user_external_ids_change_log (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  changed_by_user_id UUID REFERENCES users(id),
-  target_user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-  target_external_id_id UUID REFERENCES user_external_ids(id) ON DELETE CASCADE,
-  change_type TEXT CHECK (change_type IN ('create', 'update', 'delete')),
-  changes JSONB, -- e.g., { "external_id": ["old_id", "new_id"] }
-  notes TEXT,
-  timestamp TIMESTAMP DEFAULT now(),
 );
 ```
 
