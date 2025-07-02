@@ -192,6 +192,17 @@ CREATE TABLE runs (
   assignment_id UUID NOT NULL REFERENCES assignments(id),
   assignment_variant_id UUID NOT NULL REFERENCES assignment_variants(id),
   user_id UUID NOT NULL REFERENCES users(id),
+
+  -- User demographics snapshot at run creation
+  user_age_in_months_at_run INTEGER NOT NULL,
+  gender_at_run TEXT,
+  grade_at_run TEXT REFERENCES grade_levels(name),
+  race_at_run TEXT[],
+  hispanic_ethnicity_at_run BOOLEAN,
+  frl_status_at_run frl_status_enum,
+  iep_status_at_run BOOLEAN,
+  ell_status_at_run BOOLEAN,
+
   variant_id UUID NOT NULL REFERENCES variants(id),
   task_version_id UUID NOT NULL REFERENCES task_versions(id),
   task_id UUID NOT NULL REFERENCES tasks(id),

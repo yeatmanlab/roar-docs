@@ -28,6 +28,10 @@ ROAR supports hierarchical and non-hierarchical organizations. Users may belong 
 
 * **Role**: A user’s function in an org (e.g., teacher, student, admin)
 
+* **Opt-out status**: Whether a user has opted out of research, either directly (as an individual) or indirectly through association with an organization that has opted out. Opted out users must never be included in research data, but their data is retained in order to fulfill obligations to partners (e.g., score reporting). Once the service obligation to a partner is terminated, opted out users are permanently deleted from the database and all backups.
+
+* **Personally Identifiable Information (PII)**: PII for education records is a FERPA term referring to identifiable information that is maintained in education records and includes direct identifiers, such as a student’s name or identification number, indirect identifiers, such as a student’s date of birth, or other information which can be used to distinguish or trace an individual’s identity either directly or indirectly through linkages with other information. See [Family Educational Rights and Privacy Act Regulations, 34 CFR §99.3](https://studentprivacy.ed.gov/ferpa), for a complete definition of PII specific to education records and for examples of other data elements that are defined to constitute PII.
+
 ### Component Flow Diagram
 
 ```mermaid
@@ -40,10 +44,67 @@ graph TD
 ## Runtime Behavior
 
 * A user may belong to multiple orgs at once.
-
 * Roles are stored per org membership. That is, a user may have different roles in different orgs.
-
 * Org hierarchies enable queries like "all students in a district."
+
+### Annual PII scrubbing
+
+To comply with FERPA and data minimization principles, ROAR performs an annual PII scrubbing process to remove personally identifiable information (PII) for users who are no longer affiliated with any active organizations.
+
+A user is eligible for PII scrubbing if:
+
+* The user has no active `user_orgs` records (i.e., all associated `user_orgs.end_date` values are in the past)
+* The user has not already been scrubbed (users.pii_scrubbed_at IS NULL)
+
+For each user to be scrubbed, we take the following actions:
+
+* In the `users` table:
+  * Nullify:
+    * email
+    * username
+    * name fields
+    * date_of_birth
+  * Set `pii_scrubbed_at = CURRENT_TIMESTAMP`
+
+* In the `user_external_ids` table:
+  * Nullify all identifiers not explicitly retained for reporting. This includes `sis_id`, `state_student_id`, `clever_id`, `classlink_id`
+  * `pii_scrubbed_at = CURRENT_TIMESTAMP`
+
+The scrub job is scheduled to run annually (e.g., each July) but it may be invoked manually or run in batches for performance. Here is SQL pseudocode for the annual scrubber:
+
+```sql
+-- 1. Identify users who are eligible for scrubbing (not previously scrubbed and no current orgs).
+WITH scrub_candidates AS (
+  SELECT u.id AS user_id
+  FROM users u
+  WHERE u.pii_scrubbed_at IS NULL
+    AND NOT EXISTS (
+      SELECT 1
+      FROM user_orgs uo
+      WHERE uo.user_id = u.id
+        AND (uo.end_date IS NULL OR uo.end_date > CURRENT_DATE)
+    )
+)
+
+-- 2. Scrub PII fields in the `users` table
+UPDATE users
+SET
+  email = NULL,
+  username = NULL,
+  dob = NULL,
+  name_first = NULL,
+  name_last = NULL,
+  name_middle = NULL,
+  pii_scrubbed_at = CURRENT_TIMESTAMP
+WHERE id IN (SELECT user_id FROM scrub_candidates);
+
+-- 3. Scrub external identifiers
+UPDATE user_external_ids
+SET
+  value = NULL,
+  scrubbed_at = CURRENT_TIMESTAMP
+WHERE user_id IN (SELECT user_id FROM scrub_candidates);
+```
 
 ## Edge Cases and Error Handling
 
@@ -147,6 +208,12 @@ PATCH /api/users/:id
 
 ## SQL Schema
 
+### `frl_status_enum`
+
+```sql
+CREATE TYPE frl_status_enum AS ENUM ('free', 'reduced', 'paid', 'unknown');
+```
+
 ### `grade_levels`
 
 ```sql
@@ -205,10 +272,12 @@ CREATE TABLE users (
   school_level TEXT,         -- Derived (elementary, middle, etc.)
   hispanic_ethnicity BOOLEAN,
   race TEXT[],               -- Multiselect array (e.g., ['White', 'Asian'])
+  frl_status frl_status_enum DEFAULT 'unknown',
+  iep_status BOOLEAN,
+  ell_status BOOLEAN,
+  pii_scrubbed_at TIMESTAMP WITH TIME ZONE,
 
   -- Identifiers
-  state_id TEXT,
-  local_id TEXT,
   pid TEXT UNIQUE NOT NULL,  -- Human-readable unique participant ID
   email TEXT UNIQUE,
 
@@ -220,7 +289,7 @@ CREATE TABLE users (
 );
 ```
 
-The `*_change_log` tables include a `changed_by_user_id` field to track who created the record. This is used for audit logging and provenance tracking. However, it's common to run into cases where no human user directly initiated the action — e.g., a backend job, sync service, or webhook from Clever or another system. In these cases, we use a special "system" user (with `is_system_user` set to `true`) to represent the action. For example:
+Some tables include fields which track different users who have made changes or authorized certain actions. These could be used for audit logging and provenance tracking. However, it's common to run into cases where no human user directly initiated the action — e.g., a backend job, sync service, or webhook from Clever or another system. In these cases, we use a special "system" user (with `is_system_user` set to `true`) to represent the action. For example:
 
 ```sql
 INSERT INTO users (id, name_first, name_last, username, email, pid, is_system_user)
@@ -261,6 +330,7 @@ CREATE TABLE user_external_ids (
   user_id UUID REFERENCES users(id),
   external_id TEXT NOT NULL,
   external_id_type TEXT REFERENCES external_id_types(name) NOT NULL,
+  pii_scrubbed_at TIMESTAMP WITH TIME ZONE,
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP DEFAULT now(),
   deleted_at TIMESTAMP,
