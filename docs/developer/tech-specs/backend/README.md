@@ -48,6 +48,14 @@ Covers:
 - Linking students and educators to tasks
 - Tracking completion across assigned groups
 
+## [Agreements](agreements.md)
+
+Covers:
+
+- User agreements such as assent, consent, and TOS
+- Versioning different agreements
+- Associating agreement versions with administrations
+
 ## [Permissions & Access Control](permissions.md)
 
 Covers:
