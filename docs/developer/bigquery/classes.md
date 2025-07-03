@@ -5,13 +5,12 @@ The BigQuery table `gse-roar-assessment.assessment.classes` conforms to the foll
 | Field name                  | Data type      | Key type | Description                                                                      |
 | :-------------------------- | :------------- | :------: | :------------------------------------------------------------------------------- |
 | class_id                    | STRING         |    PK    | The unique class ID in the ROAR system                                           |
-| document_name               | STRING         |    UK    | The database document path                                                       |
-| timestamp                   | TIMESTAMP      |          | A timestamp indicating when the database document was last modified              |
 | archived                    | BOOLEAN        |          | Whether this class has been archived or unenrolled                               |
 | clever_roster_created       | TIMESTAMP      |          | The date this class created its Clever roster                                    |
 | clever_roster_last_modified | TIMESTAMP      |          | The date this class's roster was last modified in Clever                         |
 | current_activation_code     | STRING         |    UK    | The class's current parent sign-up activation code                               |
 | district_id                 | STRING         |    FK    | The ID of this class's district                                                  |
+| document_name               | STRING         |    UK    | The database document path                                                       |
 | grade                       | STRING         |          | The grade associated with this class                                             |
 | is_classlink                | BOOLEAN        |          | Indicates whether this class is a ClassLink class                                |
 | is_clever                   | BOOLEAN        |          | Indicates whether this class is a Clever class                                   |
@@ -24,4 +23,5 @@ The BigQuery table `gse-roar-assessment.assessment.classes` conforms to the foll
 | school_level                | STRING         |          | The school level (e.g., elementary, middle, etc)                                 |
 | subject                     | STRING         |          | The class subject                                                                |
 | tags                        | ARRAY\<STRING> |          | An array of metadata tags for this class                                         |
+| timestamp                   | TIMESTAMP      |          | A timestamp indicating when the database document was last modified              |
 | valid_activation_codes      | ARRAY\<STRING> |    UK    | An array of valid activation codes for this class                                |
