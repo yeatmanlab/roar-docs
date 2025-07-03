@@ -7,8 +7,6 @@ The BigQuery table `gse-roar-assessment.assessment.users` conforms to the follow
 | Field name        | Data type      | Key type | Description                                                                                  |
 | :---------------- | :------------- | :------: | :------------------------------------------------------------------------------------------- |
 | roar_uid          | STRING         |    PK    | The user's unique ID in the ROAR system                                                      |
-| document_name     | STRING         |    UK    | The database document path                                                                   |
-| timestamp         | TIMESTAMP      |          | A timestamp indicating when the database document was last modified                          |
 | archived          | BOOLEAN        |          | Whether this user has been archived or unenrolled                                            |
 | assessment_pid    | STRING         |    UK    | A human readable and unique "participant ID"                                                 |
 | assessment_uid    | STRING         |    UK    | The UID associated with this user's Firebase auth account in the gse-roar-assessment project |
@@ -18,6 +16,8 @@ The BigQuery table `gse-roar-assessment.assessment.users` conforms to the follow
 | classes_current   | ARRAY\<STRING> |    FK    | An array of currently enrolled class IDs associated with this user                           |
 | districts_all     | ARRAY\<STRING> |    FK    | An array of all district IDs associated with this user                                       |
 | districts_current | ARRAY\<STRING> |    FK    | An array of currently enrolled district IDs associated with this user                        |
+| document_name     | STRING         |    UK    | The database document path                                                                   |
+| email             | STRING UK      |          | The user's email                                                                             |
 | families_all      | ARRAY\<STRING> |    FK    | An array of all family IDs associated with this user                                         |
 | families_current  | ARRAY\<STRING> |    FK    | An array of currently enrolled family IDs associated with this user                          |
 | grade             | STRING         |          | The current grade of the user                                                                |
@@ -29,10 +29,10 @@ The BigQuery table `gse-roar-assessment.assessment.users` conforms to the follow
 | schools_all       | ARRAY\<STRING> |    FK    | An array of all school IDs associated with this user                                         |
 | schools_current   | ARRAY\<STRING> |    FK    | An array of currently enrolled school IDs associated with this user                          |
 | sso_type          | STRING         |          | The user's single sign-on (SSO) provider                                                     |
+| tasks             | ARRAY\<STRING> |    FK    | An array of task IDs that this user has attempted                                            |
+| timestamp         | TIMESTAMP      |          | A timestamp indicating when the database document was last modified                          |
 | user_type         | STRING         |          | The user type (e.g., student, admin, educator)                                               |
 | username          | STRING UK      |          | The user's username                                                                          |
-| email             | STRING UK      |          | The user's email                                                                             |
-| tasks             | ARRAY\<STRING> |    FK    | An array of task IDs that this user has attempted                                            |
 | variants          | ARRAY\<STRING> |    FK    | An array of variant IDs that this user has attempted                                         |
 
 ## Admin Users
@@ -42,8 +42,6 @@ The BigQuery table `gse-roar-admin.admin.users` conforms to the following schema
 | Field name         | Data type      | Key type | Description                                                                                  |
 | :----------------- | :------------- | :------: | :------------------------------------------------------------------------------------------- |
 | roar_uid           | STRING         |    PK    | The user's unique ID in the ROAR system                                                      |
-| document_name      | STRING         |    UK    | The database document path                                                                   |
-| timestamp          | TIMESTAMP      |          | A timestamp indicating when the database document was last modified                          |
 | archived           | BOOLEAN        |          | Whether this user has been archived or unenrolled                                            |
 | assessment_pid     | STRING         |    UK    | A human readable and unique "participant ID"                                                 |
 | assessment_uid     | STRING         |    UK    | The UID associated with this user's Firebase auth account in the gse-roar-assessment project |
@@ -52,13 +50,19 @@ The BigQuery table `gse-roar-admin.admin.users` conforms to the following schema
 | districts_all      | ARRAY\<STRING> |    FK    | An array of all district IDs associated with this user                                       |
 | districts_current  | ARRAY\<STRING> |    FK    | An array of currently enrolled district IDs associated with this user                        |
 | dob                | DATE           |          | The date of birth of the user                                                                |
+| document_name      | STRING         |    UK    | The database document path                                                                   |
+| ell_status         | STRING         |          | The user's English language learner (ELL) status                                             |
+| email              | STRING UK      |          | The user's email                                                                             |
 | families_all       | ARRAY\<STRING> |    FK    | An array of all family IDs associated with this user                                         |
 | families_current   | ARRAY\<STRING> |    FK    | An array of currently enrolled family IDs associated with this user                          |
+| frl_status         | STRING         |          | The user's free and reduced lunch (FRL) status                                               |
 | gender             | STRING         |          | The gender of the user                                                                       |
 | grade              | STRING         |          | The current grade of the user                                                                |
 | groups_all         | ARRAY\<STRING> |    FK    | An array of all group IDs associated with this user                                          |
 | groups_current     | ARRAY\<STRING> |    FK    | An array of currently enrolled group IDs associated with this user                           |
 | hispanic_ethnicity | STRING         |          | Whether the user is Hispanic or Latino                                                       |
+| home_language      | Array\<STRING> |          | The user's home language                                                                     |
+| iep_status         | STRING         |          | The user's Individualized Education Program (IEP) status                                     |
 | last_roar_sync     | TIMESTAMP      |          | The date and time when this user's data was last synced between Clever and ROAR              |
 | last_updated       | TIMESTAMP      |          | The date and time this user was last updated in ROAR                                         |
 | race               | STRING         |          | The user's race or ethnicity (e.g., Asian, Black, Hispanic, White, etc)                      |
@@ -69,8 +73,8 @@ The BigQuery table `gse-roar-admin.admin.users` conforms to the following schema
 | sso_type           | STRING         |          | The user's single sign-on (SSO) provider                                                     |
 | state_id           | STRING         |          | The user's state ID                                                                          |
 | student_number     | STRING         |          | The user's student number                                                                    |
+| tasks              | ARRAY\<STRING> |    FK    | An array of task IDs that this user has attempted                                            |
+| timestamp          | TIMESTAMP      |          | A timestamp indicating when the database document was last modified                          |
 | user_type          | STRING         |          | The user type (e.g., student, admin, educator)                                               |
 | username           | STRING UK      |          | The user's username                                                                          |
-| email              | STRING UK      |          | The user's email                                                                             |
-| tasks              | ARRAY\<STRING> |    FK    | An array of task IDs that this user has attempted                                            |
 | variants           | ARRAY\<STRING> |    FK    | An array of variant IDs that this user has attempted                                         |
