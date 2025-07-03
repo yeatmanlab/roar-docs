@@ -1,10 +1,10 @@
 # Data Organization
 
 ## BigQuery - a tool to help researchers pull ROAR data in an efficient way  
-- Please read Adam’s documentation and introduction to [BigQuery](https://yeatmanlab.github.io/roar-docs/bigquery/). 
-    1. [Installing BigQuery](https://yeatmanlab.github.io/roar-docs/bigquery/#installation-and-initialization)
-    2. [Learning SQL to query data](https://yeatmanlab.github.io/roar-docs/bigquery/#querying-data)
-    3. [Exporting data to a google cloud bucket](https://yeatmanlab.github.io/roar-docs/bigquery/#exporting-large-queries-to-a-google-cloud-bucket) 
+- Please read Adam’s documentation and introduction to [BigQuery](https://yeatmanlab.github.io/roar-docs/developer/bigquery/). 
+    1. [Installing BigQuery](https://yeatmanlab.github.io/roar-docs/developer/bigquery/#installation-and-initialization)
+    2. [Learning SQL to query data](https://yeatmanlab.github.io/roar-docs/developer/bigquery/#querying-data)
+    3. [Exporting data to a google cloud bucket](https://yeatmanlab.github.io/roar-docs/developer/bigquery/#exporting-large-queries-to-a-google-cloud-bucket) 
     4. Learn more about ROAR data through the BigQuery Schemas 
 
 ## Guidelines to organizing pulled data
