@@ -1,6 +1,6 @@
 # Data Requests
 
-If you have any questions regarding ROAR data please review the documentation on this website. If you still have questions regarding ROAR data, please submit an Data Request Form here: [text](https://github.com/yeatmanlab/roar-bigquery/issues). 
+If you have any questions regarding ROAR data please review the documentation on this website. If you still have questions regarding ROAR data, please submit an [Data Request Form](https://github.com/yeatmanlab/roar-bigquery/issues). 
 
 ## Why a Data Request Form? 
 The Data Request Form is a great way for researchers to review previous questions proposed by members within the lab regarding ROAR data--think of it like a Stack Overflow or Reddit thread. 
