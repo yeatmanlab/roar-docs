@@ -27,6 +27,7 @@ export default defineUserConfig({
         text: "Developer",
         collapsible: true,
         children: [
+          { text: "Tech Specs", link: "/developer/tech-specs/backend/" },
           { text: "Databases", link: "/developer/databases/" },
           { text: "Workflows", link: "/developer/workflows/" },
           { text: "Application", link: "/developer/application/" },
@@ -79,6 +80,12 @@ export default defineUserConfig({
     sidebar: {
       "/developer/": [
         {
+          text: "Tech Specs",
+          link: "/developer/tech-specs/backend/",
+          collapsible: true,
+          children: getChildren("./docs/developer/tech-specs/backend"),
+        },
+        {
           text: "Databases",
           link: "/developer/databases/",
           collapsible: true,
@@ -123,7 +130,7 @@ export default defineUserConfig({
               link: "/developer/github-actions/dashboard",
               collapsible: true,
               children: getChildren(
-                "./docs/developer/github-actions/dashboard",
+                "./docs/developer/github-actions/dashboard"
               ),
             },
           ],
@@ -150,7 +157,7 @@ export default defineUserConfig({
               link: "/developer/backend-architecture/architecture/",
               collapsible: true,
               children: getChildren(
-                "./docs/developer/backend-architecture/architecture",
+                "./docs/developer/backend-architecture/architecture"
               ),
             },
             {
@@ -163,7 +170,7 @@ export default defineUserConfig({
                   link: "/developer/backend-architecture/api/classes/",
                   collapsible: true,
                   children: getChildren(
-                    "./docs/developer/backend-architecture/api/classes",
+                    "./docs/developer/backend-architecture/api/classes"
                   ),
                 },
                 {
@@ -171,7 +178,7 @@ export default defineUserConfig({
                   link: "/developer/backend-architecture/api/enumerations/",
                   collapsible: true,
                   children: getChildren(
-                    "./docs/developer/backend-architecture/api/enumerations",
+                    "./docs/developer/backend-architecture/api/enumerations"
                   ),
                 },
                 {
@@ -179,7 +186,7 @@ export default defineUserConfig({
                   link: "/developer/backend-architecture/api/functions/",
                   collapsible: true,
                   children: getChildren(
-                    "./docs/developer/backend-architecture/api/functions",
+                    "./docs/developer/backend-architecture/api/functions"
                   ),
                 },
                 {
@@ -187,7 +194,7 @@ export default defineUserConfig({
                   link: "/developer/backend-architecture/api/interfaces/",
                   collapsible: true,
                   children: getChildren(
-                    "./docs/developer/backend-architecture/api/interfaces",
+                    "./docs/developer/backend-architecture/api/interfaces"
                   ),
                 },
                 {
@@ -195,7 +202,7 @@ export default defineUserConfig({
                   link: "/developer/backend-architecture/api/type-aliases/",
                   collapsible: true,
                   children: getChildren(
-                    "./docs/developer/backend-architecture/api/type-aliases",
+                    "./docs/developer/backend-architecture/api/type-aliases"
                   ),
                 },
                 {
@@ -203,7 +210,7 @@ export default defineUserConfig({
                   link: "/developer/backend-architecture/api/variables/",
                   collapsible: true,
                   children: getChildren(
-                    "./docs/developer/backend-architecture/api/variables",
+                    "./docs/developer/backend-architecture/api/variables"
                   ),
                 },
               ],
@@ -213,7 +220,7 @@ export default defineUserConfig({
               link: "/developer/backend-architecture/examples/",
               collapsible: true,
               children: getChildren(
-                "./docs/developer/backend-architecture/examples",
+                "./docs/developer/backend-architecture/examples"
               ),
             },
             {
@@ -221,7 +228,7 @@ export default defineUserConfig({
               link: "/developer/backend-architecture/guides/",
               collapsible: true,
               children: getChildren(
-                "./docs/developer/backend-architecture/guides",
+                "./docs/developer/backend-architecture/guides"
               ),
             },
           ],
@@ -236,7 +243,7 @@ export default defineUserConfig({
               link: "/developer/cloud-functions/gse-roar-admin/",
               collapsible: true,
               children: getChildren(
-                "./docs/developer/cloud-functions/gse-roar-admin",
+                "./docs/developer/cloud-functions/gse-roar-admin"
               ),
             },
             {
@@ -244,7 +251,7 @@ export default defineUserConfig({
               link: "/developer/cloud-functions/gse-roar-assessment/",
               collapsible: true,
               children: getChildren(
-                "./docs/developer/cloud-functions/gse-roar-assessment",
+                "./docs/developer/cloud-functions/gse-roar-assessment"
               ),
             },
           ],
@@ -289,7 +296,7 @@ export default defineUserConfig({
               link: "/developer/emulation/running-the-emulator/",
               collapsible: true,
               children: getChildren(
-                "./docs/developer/emulation/running-the-emulator",
+                "./docs/developer/emulation/running-the-emulator"
               ),
             },
             {
@@ -297,7 +304,7 @@ export default defineUserConfig({
               link: "/developer/emulation/emulator-configuration-guide/",
               collapsible: true,
               children: getChildren(
-                "./docs/developer/emulation/emulator-configuration-guide",
+                "./docs/developer/emulation/emulator-configuration-guide"
               ),
             },
           ],
