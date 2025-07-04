@@ -1,8 +1,8 @@
-# ROAR Scoring System: Technical Specification
+# ROAR Task Integration with Measurement Services: Technical Specification
 
-## 1. Purpose and Scope
+## Purpose and Scope
 
-This specification defines how the ROAR ecosystem generates, stores, computes, validates, and retrieves scores associated with task runs. It supports:
+This specification defines how the ROAR ecosystem generates, stores, computes, validates, and retrieves scores associated with task runs, and how tasks integrate with psychometric measurement services. It supports:
 
 - Trial-level and run-level score handling
 - Final vs. partial score storage
@@ -12,10 +12,11 @@ This specification defines how the ROAR ecosystem generates, stores, computes, v
 - Persistent post-run score storage
 - On-demand score computation from item responses
 - Score validation submitted by external clients
+- Integration with stopping condition and item selection services
 
-The API is grouped under the `/api/scoring/` namespace to support extensibility and clear separation from task execution flows.
+The API is grouped under the `/api/measurement/` namespace to support extensibility and clear separation from task execution flows.
 
-## 2. System Overview
+## System Overview
 
 ### Definitions
 
@@ -56,20 +57,56 @@ The API is grouped under the `/api/scoring/` namespace to support extensibility 
 
 ```mermaid
 graph TD
-  RunStart[Assessment Run Begins] --> ItemLoop[Loop over Items]
-  ItemLoop --> DetectBrowserInteraction[Check for browser interactions]
-  DetectBrowserInteraction --> | Yes | PostInteraction[POST Browser Interaction]
-  DetectBrowserInteraction --> ReliabilityEval[Check reliability conditions]
-  ReliabilityEval --> ComputeScore[Compute scores from scoring service]
-  ComputeScore --> TrialScore[POST trial score]
-  ReliabilityEval -->| If concern | PostEvent[POST reliability event]
-  ReliabilityEval -->| If resolved | PatchReliability[PATCH run reliability status]
-  TrialScore --> RunComplete{Run Completed?}
-  RunComplete -->| Yes | CompleteRun[Complete run and POST final scores]
-  RunComplete -->| No | ItemLoop
+  Start[Run Begins] --> ItemInitialization[Call item selection service]
+  ItemInitialization --> |Initial N items| PresentItems[Present N items to user]
+  PresentItems --> CaptureResponses[Capture responses and metadata]
+  
+  CaptureResponses --> WriteTrials[Write trials to DB service]
+  CaptureResponses --> WriteInteractions[Write interaction events to DB service]
+  CaptureResponses --> ComputeScores[Call score service]
+  CaptureResponses --> ComputeReliability[Call reliability service]
+  
+  ComputeScores --> WriteScores[Write returned scores to DB service]
+  ComputeReliability --> WriteReliability[Write returned reliability to DB service]
+  
+  WriteScores --> CheckStopping[Call stopping condition service]
+  WriteReliability --> CheckStopping
+  CheckStopping --> |Stop| End[Run Complete]
+  CheckStopping --> |Continue| SelectNextItems[Call item selection service]
+  SelectNextItems --> |Next N items| PresentItems
 ```
 
 ## Runtime Behavior
+
+The task runtime operates as a thin orchestrator. It presents items, collects responses and metadata, and invokes services to interpret that data. Services are invoked after each item chunk and may operate in parallel. In practice, the chunk size N is set to one. But tasks are designed to support arbitrary item chunk sizes. For each item chunk (size N):
+
+1. Present Items: The task presents a chunk of N items to the user.
+1. Capture Responses and Metadata, including:
+   - Trial-level responses
+   - Response timestamps
+   - Interaction events (e.g., focus/blur, fullscreen)
+   - Device-level metadata
+   - Eye tracking data
+1. Parallel Service Calls:
+   - Database Writes:
+     - POST /api/scoring/trial-scores (one per trial)
+     - POST /api/scoring/browser-interactions (if applicable)
+   - Score Computation:
+     - Call the score service with trial-level response data
+     - Receive a list of raw and computed scores
+     - Write scores via POST /api/scoring/scores
+   - Reliability Evaluation:
+     - Call the reliability service with responses + interactions
+     - Receive a judgment and optional list of reliability events
+     - Write events via POST /api/scoring/reliability-events
+     - Set reliability status via PATCH /api/runs/{run_id}
+1. Stopping Condition Evaluation:
+   - Call the stopping condition service with trial and run metadata
+   - If should_stop = true, finalize the run
+   - Otherwise, continue
+1. Item Selection:
+   - Call the item selection service
+   - Present the next chunk of N items
 
 - During each trial, the task computes trials via `POST /api/scoring/compute` and submits trial-level scores via `POST /api/scoring/trial-scores`.
 - The task also records browser interactions and submits them via `POST /api/scoring/browser/interactions`.
@@ -86,41 +123,54 @@ graph TD
 | Run completed normally             | Scores logged with status = 'final'                          |
 | Run ended early but is usable      | Trial scores promoted; scores logged with status = 'partial' |
 | Run aborted with insufficient data | No scores logged                                              |
-| Researcher updates score           | Append entry to `score_update_log`                           |
+| Score service unavailable          | Task retries or defers; run marked incomplete                 |
+| Reliability service fails          | Reliability status left undefined or deferred                 |
+| Stopping condition service fails   | Default stopping heuristic used (e.g., item count threshold)  |
+| No items returned from selector    | Run ends with status = 'complete'                             |
 | Reliability issue detected         | Add entry to `reliability_events` and update run metadata     |
 
 ## Design Rationale
 
-- Encapsulating scoring endpoints in `/api/scoring/*`
-  - Distinguishes between persistent and transient scoring operations
-  - Designs for future support (IRT, model versioning, audit trails)
-  - Enables QA, partner integrations, and downstream analytics
-- **Separation of trial and final scores**: Enables real-time feedback and post-hoc evaluation without cluttering the final scores table.
-- **Partial scoring**: Promotes best-effort summaries when assessments terminate early.
-- **Reliability metadata**: Keeps qualitative annotations separate from numeric scores.
-- **Update auditing**: Supports transparent revision history without modifying core data.
-- **Domain and phase fields**: Allow disaggregated and nuanced reporting across subskills and assessment stages.
+- Measurement service abstraction separates raw data capture from psychometric logic; supports plugging in different scoring engines, stopping models, or reliability classifiers.
+- Chunked item loop: Improves control over runtime memory, UI responsiveness, and async evaluation of trial data.
+- Parallel service invocation: Decouples response collection from scoring and reliability computation; enables responsive UIs.
+- Separation of scoring from reliability: Allows independent evaluation and debugging of accuracy vs. validity.
+- Pluggable, injectable services: Supports experimentation, model versioning, and local vs. cloud-based execution.
+- Explicit stopping and item selection logic: Makes adaptive behaviors testable, observable, and replaceable.
+- Use of /api/measurement/ namespace: Reflects full scope of evaluation logic, not limited to scoring.
+- Separation of trial and final scores: Enables real-time feedback and post-hoc evaluation without cluttering the final scores table.
+- Partial scoring: Promotes best-effort summaries when assessments terminate early.
+- Domain and phase fields: Allow disaggregated and nuanced reporting across subskills and assessment stages.
 
-## 7. API Contract
+## Pluggable Services
 
-### `POST /api/scoring/compute`
+::: warning Pluggable Services
+
+These endpoints represent pluggable interfaces. Their implementation may vary by environment (e.g., local module, internal microservice, or remote API).
+
+These services may be exposed publicly or remain internal-only, depending on how the system is deployed. Clients should treat this as a logical service contract rather than a fixed URL.
+
+Do not hardcode assumptions about endpoint location or availability. If you're implementing a client, inject the service endpoint via configuration.
+:::
+
+### POST /internal/measurement/compute-scores
 
 Computes scores (raw, computed, IRT) from item responses. This simply returns scores and does not write to the database.
 
-#### `/api/scoring/compute` request
+Request:
 
 ```json
-POST /api/scoring/compute
+POST /internal/measurement/compute-scores
 {
   "task_slug": "roar-word",
-  "item_responses": [
-    { "phase": "test", "a": 1, "b": 0, "c": 0, "d": 1, "correct": true },
-    { "phase": "test", "a": 1, "b": 0, "c": 0, "d": 1, "correct": false },
+  "responses": [
+    { "phase": "test", "domain": "blockA", "a": 1, "b": 0, "c": 0, "d": 1, "correct": true },
+    { "phase": "test", "domain": "blockA", "a": 1, "b": 0, "c": 0, "d": 1, "correct": false },
   ],
 }
 ```
 
-#### `/api/scoring/compute` response
+Response:
 
 ```json
 {
@@ -129,8 +179,29 @@ POST /api/scoring/compute
       "name": "total_correct",
       "value": 1,
       "type": "raw",
+      "domain": "blockA",
+      "phase": "test",
+    },
+    {
+      "name": "total_correct",
+      "value": 1,
+      "type": "raw",
       "domain": "composite",
       "phase": "test",
+    },
+    {
+      "name": "theta_estimate",
+      "value": 0.91,
+      "type": "raw",
+      "domain": "blockA",
+      "phase": "test"
+    },
+    {
+      "name": "theta_se",
+      "value": 0.08,
+      "type": "raw",
+      "domain": "blockA",
+      "phase": "test"
     },
     {
       "name": "theta_estimate",
@@ -164,14 +235,111 @@ POST /api/scoring/compute
 }
 ```
 
-### `POST /api/scoring/validate`
+### POST /internal/measurement/evaluate-reliability
+
+Evaluates reliability of a task run based on response patterns and interaction data.
+
+::: warning TODO
+The Request/Response needs refinement.
+:::
+
+Request:
+
+```json
+POST /internal/measurement/evaluate-reliability
+{
+  "task_slug": "roar-word",
+  "trials": [
+    {
+      "trial_id": "t1",
+      "response_time_ms": 420,
+      "correct": true,
+      "response_pattern": "ABCD"
+    },
+    {
+      "trial_id": "t2",
+      "response_time_ms": 190,
+      "correct": false,
+      "response_pattern": "DDDD"
+    }
+  ],
+  "interactions": [
+    {
+      "interaction_type": "fullscreen_exit",
+      "timestamp": "2025-07-03T10:00:00Z",
+      "trial_id": "t1",
+      "metadata": { "window_width": 1024, "window_height": 768 }
+    }
+  ]
+}
+```
+
+Response:
+
+```json
+{
+  "reliable": false,
+  "events": [
+    {
+      "reason": "Mean RT under 200ms for 5+ trials",
+      "reason_code": "fast_response"
+    },
+    {
+      "reason": "Fullscreen exited twice",
+      "reason_code": "fullscreen_exit"
+    }
+  ]
+}
+```
+
+### POST /internal/measurement/evaluate-stopping-condition
+
+Determines whether the task should stop based on accumulated scores, standard error, item count, or elapsed time.
+
+::: warning TODO
+The Request/Response needs refinement.
+:::
+
+Request:
+
+```json
+POST /internal/measurement/evaluate-stopping-condition
+{
+  "task_slug": "roar-word",
+  "elapsed_time_sec": 305,
+  "num_items": 32,
+  "theta_se": 0.12,
+}
+```
+
+Response:
+
+```json
+{
+  "should_stop": true,
+  "reason": "Item count threshold reached",
+  "reason_code": "item_count"
+}
+```
+
+### POST /internal/measurement/select-items
+
+Selects the next chunk of items based on current ability estimate and available item pool.
+
+::: warning TODO
+The Request/Response needs refinement.
+:::
+
+## API Contract
+
+### `POST /api/measurement/validate`
 
 Validates provided scores against computed results
 
-#### `/api/scoring/validate` request
+#### `/api/measurement/validate` request
 
 ```json
-POST /api/scoring/validate
+POST /api/measurement/validate
 {
   "task_slug": "roar-word",
   "item_responses": [
@@ -188,7 +356,7 @@ POST /api/scoring/validate
 }
 ```
 
-#### `/api/scoring/validate` response
+#### `/api/measurement/validate` response
 
 If valid, returns
 
@@ -214,65 +382,66 @@ If invalid, returns
 }
 ```
 
-### `POST /api/scoring/reliability-events`
+### `POST /api/measurement/reliability-events`
 
 Records a reliability event for a run.
 
 ```json
-POST /api/scoring/reliability-events
+POST /api/measurement/reliability-events
 {
-  "run_id": 123,
-  "user_id": 456,
-  "task_id": 789,
-  "variant_id": 444,
-  "assignment_id": 923,
+  "run_id": uuid,
+  "user_id": uuid,
+  "task_id": uuid,
+  "variant_id": uuid,
+  "assignment_id": uuid,
+  "trial_id": uuid,
   "reason": "Mean RT under 200ms for 5+ trials",
   "reason_code": "fast_response"
 }
 ```
 
-### `PATCH /api/scoring/reliability-events/{run_id}`
+### `PATCH /api/measurement/reliability-events/{run_id}`
 
 Marks all reliability events for a run as resolved.
 
 ```json
-PATCH /api/scoring/reliability-events/{run_id}
+PATCH /api/measurement/reliability-events/{run_id}
 {
   "resolution": "Run behavior normalized after block 2",
   "resolution_code": "recovered"
 }
 ```
 
-### `POST /api/scoring/browser-interactions`
+### `POST /api/measurement/browser-interactions`
 
 Captures a browser interaction during a trial.
 
 ```json
-POST /api/scoring/browser-interactions
+POST /api/measurement/browser-interactions
 {
-  "trial_id": 789,
-  "run_id": 123,
-  "user_id": 456,
-  "task_id": 789,
-  "variant_id": 444,
-  "assignment_id": 923,
+  "trial_id": uuid,
+  "run_id": uuid,
+  "user_id": uuid,
+  "task_id": uuid,
+  "variant_id": uuid,
+  "assignment_id": uuid,
   "interaction_type": "fullscreen_exit",
   "metadata": { "window_width": 1024, "window_height": 768 }
 }
 ```
 
-### `POST /api/scoring/scores`
+### `POST /api/measurement/scores`
 
 Creates final or partial scores for a completed or aborted run.
 
 ```json
-POST /api/scoring/scores
+POST /api/measurement/scores
 {
-  "run_id": 123,
-  "user_id": 456,
-  "task_id": 789,
-  "variant_id": 101,
-  "assignment_id": 111,
+  "run_id": uuid,
+  "user_id": uuid,
+  "task_id": uuid,
+  "variant_id": uuid,
+  "assignment_id": uuid,
   "scores": [
     {
       "name": "total_correct",
@@ -313,19 +482,19 @@ POST /api/scoring/scores
 }
 ```
 
-### `POST /api/scoring/trial-scores`
+### `POST /api/measurement/trial-scores`
 
 Writes a single score from an individual trial (typically in dev or adaptive scenarios).
 
 ```json
-POST /api/scoring/trial-scores
+POST /api/measurement/trial-scores
 {
-  "trial_id": 213,
-  "run_id": 123,
-  "user_id": 456,
-  "task_id": 789,
-  "variant_id": 101,
-  "assignment_id": 111,
+  "trial_id": uuid,
+  "run_id": uuid,
+  "user_id": uuid,
+  "task_id": uuid,
+  "variant_id": uuid,
+  "assignment_id": uuid,
   "scores": [
     {
       "name": "total_correct",
@@ -366,7 +535,7 @@ POST /api/scoring/trial-scores
 }
 ```
 
-## 8. SQL Schema
+## SQL Schema
 
 ### `scores`
 
@@ -442,6 +611,7 @@ CREATE TABLE reliability_events (
   task_id UUID REFERENCES tasks(id),
   variant_id UUID REFERENCES variants(id),
   assignment_id UUID REFERENCES assignments(id),
+  trial_id UUID REFERENCES trials(id),
   reason TEXT,
   reason_code TEXT CHECK (
     reason_code IN (

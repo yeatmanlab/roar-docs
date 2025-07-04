@@ -21,15 +21,17 @@ Covers:
 - Runtime modes (practice/test)
 - Linking variants to executions
 
-## [Scoring & Interaction](scoring-interaction.md)
+## [Measurement Services Integration](measurement-services.md)
 
 Covers:
 
+- Integration of task runtimes with measurement services
 - Score schema (raw, computed, normed)
 - Trial-level score accumulation
-- Reliability event tracking
+- Reliability evaluation and event tracking
+- Stopping condition and item selection services
 - Browser interaction logging
-- Score compute/validate endpoints
+- Score and reliability compute/validate endpoints
 
 ## [Users & Organizations](users-orgs.md)
 
