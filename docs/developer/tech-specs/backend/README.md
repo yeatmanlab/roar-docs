@@ -1,18 +1,49 @@
 # ROAR Backend Technical Specification
 
 This index organizes all of ROAR's backend technical specifications by functional domain.
+Incomplete specs are marked (in progress).
 
-## [Task Configuration](task-configuration.md)
+## Identity and Access
+
+### [Users & Organizations](users-orgs.md)
+
+Covers:
+
+- User account model
+- Org hierarchy (district → school → class, families, groups)
+- Historical org membership
+- Rostering provenance and audit logs
+- FERPA/PII compliance and data minimization
+
+### [Permissions & Access Control](permissions.md)
+
+Covers:
+
+- RBAC (Role-Based Access Control) design
+- Granting permissions to orgs, users, and entities
+- Role expiration and provenance
+- Access and mutation logging
+
+### [Parent Accounts and Access Modes](parent-accounts.md)
+
+Covers:
+
+- School-linked vs ROAR@Home access modes
+- Parent-child relationship management
+- Identity linking and cohort enrollment
+
+## Task Infrastructure
+
+### [Task Configuration](task-configuration.md)
 
 Covers:
 
 - Task definitions
 - Parameter management
-- Variant IDs
+- Variant ID system
 - Task versioning
-- Dev vs production parameter handling
 
-## [Assessment Execution](assessment-execution.md)
+### [Assessment Execution](assessment-execution.md) (in progress)
 
 Covers:
 
@@ -21,7 +52,7 @@ Covers:
 - Runtime modes (practice/test)
 - Linking variants to executions
 
-## [Measurement Services Integration](measurement-services.md)
+### [Measurement Services Integration](measurement-services.md)
 
 Covers:
 
@@ -33,44 +64,21 @@ Covers:
 - Browser interaction logging
 - Score and reliability compute/validate endpoints
 
-## [Users & Organizations](users-orgs.md)
+## Delivery and Research Operations
 
-Covers:
-
-- User account model
-- Org hierarchy (district → school → class, families, groups)
-- Historical org membership
-- Rostering provenance and audit logs
-
-## [Administrations & Assignments](administrations-assignments.md)
+### [Administrations & Assignments](administrations-assignments.md)
 
 Covers:
 
 - Assignment creation and management
+- Administration series and scheduling logic
 - Linking students and educators to tasks
 - Tracking completion across assigned groups
 
-## [Agreements](agreements.md)
+### [Agreements](agreements.md)
 
 Covers:
 
 - User agreements such as assent, consent, and TOS
-- Versioning different agreements
+- Agreement versioning and translations
 - Associating agreement versions with administrations
-
-## [Permissions & Access Control](permissions.md)
-
-Covers:
-
-- RBAC (Role-Based Access Control) design
-- Granting permissions to orgs, users, and entities
-- Role expiration and provenance
-- Access audit logs (reads, updates, escalations)
-
-## [Parent Accounts and Access Modes](parent-accounts.md)
-
-Covers:
-
-- Parent account model
-- Access modes (school-linked access and ROAR@Home access)
-- Parent-child relationship management
