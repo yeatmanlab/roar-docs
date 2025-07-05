@@ -3,6 +3,9 @@ home: true
 title: Home
 heroImage: /assets/roar-logo.svg
 actions:
+  - text: Tech Specs
+    link: /developer/tech-specs/backend/
+    type: secondary
   - text: Databases
     link: /developer/databases/
     type: secondary
