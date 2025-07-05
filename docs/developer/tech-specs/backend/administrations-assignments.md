@@ -10,9 +10,10 @@ Administrations and assignments enable educators and researchers to schedule gro
 
 ### Definitions
 
-* **Administration**: A bundle of variants scheduled for delivery between two dates. Defines ordering and target audience.
+* **Administration**: A bundle of variants scheduled for delivery between two dates. Defines ordering and target audience. Only one run per user per variant per administration is selected for scoring.
 * **Administration Variant**: A variant included in the administration with metadata (order, required, conditional).
 * **Administration Targets**: Defines whether the administration is scoped to a district, school, class, user, etc.
+* **Administration Series**: For use cases requiring repeated, scheduled assessments (e.g., weekly benchmarks or longitudinal studies), ROAR uses administration series. An administration series is a collection of administrations that share the same variants and targets.
 * **Assignment**: A resolved per-user instance of an administration.
 * **Assignment Variant**: A resolved per-user variant from an administration.
 
@@ -50,6 +51,7 @@ graph TD
 * Separation of admin and assignment layers enables flexible targeting.
 * Variant-level conditions support differential assignment logic
 * Assignments support both ordered and unordered variant sets.
+* Administration series support repeatable or longitudinal patterns without duplicating logic.
 
 ## API Contract
 
@@ -68,6 +70,8 @@ CREATE TABLE administrations (
   name TEXT NOT NULL,
   public_name TEXT,
   description TEXT,
+  series_id UUID REFERENCES administration_series(id) ON DELETE CASCADE,
+  series_index INTEGER,
   start_date DATE NOT NULL,
   end_date DATE NOT NULL,
   is_ordered BOOLEAN DEFAULT false,
@@ -77,9 +81,65 @@ CREATE TABLE administrations (
 );
 ```
 
-### `administration_variants`
+Both `series_id` and `series_index` are optional. An administration may exist independently outside of any series.
+
+### `administration_series`
 
 ```sql
+CREATE TABLE administration_series (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  public_name TEXT,
+  description TEXT,
+  schedule_type TEXT CHECK (schedule_type IN ('fixed', 'rolling')),
+  recurrence_interval_unit TEXT,  -- e.g., 'WEEKLY', 'DAILY'
+  recurrence_interval_value INTEGER,  -- e.g., every 1 week
+  total_occurrences INTEGER,  -- number of administrations to generate
+  start_date DATE,
+  duration_days INTEGER,
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
+);
+```
+
+There are two scheduling types:
+
+* Fixed series (`schedule_type = 'fixed'`): Each administration has an explicit `start_date` and `end_date`, defined at creation time. All participants share the same calendar window. The `start_date` and `end_date` for the administration with series index `series_index` are calculated using the following pseudo-code:
+
+  ```ts
+  const interval = getRecurrenceIntervalDateTimeDelta(recurrence_interval_unit, recurrence_interval_value);
+  const start_date = start_date + series_index * interval;
+  const end_date = start_date + duration_days;
+  ```
+
+  Use case: Assign a task every Monday for 4 weeks
+
+* Rolling series (`schedule_type = 'rolling'`): Participants are assigned an `enrollment_date`, and each administration's effective window is computed relative to that date. The `start_date` and `end_date` for the administration with series index `series_index` are calculated using the following pseudo-code:
+
+  ```ts
+  const interval = getRecurrenceIntervalDateTimeDelta(recurrence_interval_unit, recurrence_interval_value);
+  const start_date = enrollment_date + series_index * interval;
+  const end_date = start_date + duration_days;
+  ```
+
+  Use case: Each participant takes 10 sessions weekly starting from their enrollmentment date.
+
+### `administration_series_variants` and `administration_variants`
+
+```sql
+CREATE TABLE administration_series_variants (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  administration_series_id UUID REFERENCES administration_series(id) ON DELETE CASCADE,
+  variant_id UUID REFERENCES variants(id) ON DELETE CASCADE,
+  order_index INTEGER,
+  assignment_conditions JSONB,
+  requirement_conditions JSONB,
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
+);
+
 CREATE TABLE administration_variants (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   administration_id UUID REFERENCES administrations(id) ON DELETE CASCADE,
@@ -134,9 +194,19 @@ When the condition JSON is `NULL`, it means that the condition is always true. A
 | Conditionally assigned, optional               | JSON condition              | `{ "type": "const", "value": false }` |
 | Conditionally assigned, conditionally required | JSON condition              | JSON condition                        |
 
-### `administration_targets`
+### `administration_series_targets` and `administration_targets`
 
 ```sql
+CREATE TABLE administration_series_targets (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  administration_series_id UUID REFERENCES administration_series(id) ON DELETE CASCADE,
+  target_id UUID,
+  target_type TEXT CHECK (target_type IN ('org', 'class', 'user')),
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
+);
+
 CREATE TABLE administration_targets (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   administration_id UUID REFERENCES administrations(id) ON DELETE CASCADE,

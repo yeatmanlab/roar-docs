@@ -66,3 +66,11 @@ Covers:
 - Granting permissions to orgs, users, and entities
 - Role expiration and provenance
 - Access audit logs (reads, updates, escalations)
+
+## [Parent Accounts and Access Modes](parent-accounts.md)
+
+Covers:
+
+- Parent account model
+- Access modes (school-linked access and ROAR@Home access)
+- Parent-child relationship management

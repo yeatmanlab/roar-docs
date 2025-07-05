@@ -1,5 +1,7 @@
 # ROAR Permissions: Technical Specification
 
+ROAR uses a role-based access control (RBAC) system layered on top of org membership and identity resolution.
+
 ## Purpose and Scope
 
 This document defines a role-based access control (RBAC) system for the ROAR platform. The system enables fine-grained access control to resources such as users, scores, runs, assignments, and organizations, supporting secure and auditable data access across educational roles (e.g., teachers, admins, researchers).
@@ -47,6 +49,10 @@ graph TD
 * When accessing a resource, both role-based and direct permissions are evaluated.
 * Expired permissions are ignored.
 * Audit logs are recorded for every data access and permission change.
+* A user's access is determined by
+  * Their canonical user ID (resolved through `merged_into`, if present)
+  * Their roles in specific orgs via `users_orgs`
+  * The org type and permissions associated with that role
 
 ## Edge Cases and Error Handling
 
@@ -119,6 +125,16 @@ CREATE TABLE roles (
   updated_at TIMESTAMP DEFAULT now(),
   deleted_at TIMESTAMP,
 );
+```
+
+Example initial seed values:
+
+```sql
+INSERT INTO roles (name, description) VALUES
+('admin', 'Admin role'),
+('teacher', 'Can assign tasks, view student results, manage assignments within a class'),
+('student', 'Can complete tasks assigned via orgs or classes'),
+('parent_of_student', "Designed for read-only access to their child's school-assigned tasks and scores")
 ```
 
 ### `role_permissions`

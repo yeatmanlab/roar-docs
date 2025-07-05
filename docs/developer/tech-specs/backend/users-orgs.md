@@ -14,7 +14,20 @@ ROAR supports hierarchical and non-hierarchical organizations. Users may belong 
 
 * **Organization (Org)**: A logical unit like a school or group
 
-* **Org Type**: A string enum: district, school, family, group
+* **Org Type**:
+
+  ROAR supports multiple types of organizations. Each org is identified by an `org_type`, which controls its behavior, relationships, and access patterns:
+
+  | `org_type` | Description                                                                                                                                    |
+  | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+  | `district` | A school district, typically the top-level administrative unit for school rostering and SSO.                                       |
+  | `school`   | An individual school (e.g., elementary, middle, high school) belonging to a district.                                                          |
+  | `local`    | A city or community education authority (e.g., city early childhood services). May own one or more schools but does not imply a full district. |
+  | `state`    | A state or province-level education agency (e.g., NYSED, TEA).                                                                            |
+  | `region`   | A multi-district cooperative, county office, or non-state regional education unit.                                                             |
+  | `family`   | A parent-created organization representing a household. It contains children and parent(s).                                    |
+  | `group`    | A general-purpose user-defined org for collaboration, e.g., a teacher club, study group, or research circle.                                   |
+  | `cohort`   | A research study participant cohort, composed primarily of children enrolled via invitation codes or researcher enrollment.                     |
 
 * **Org Hierarchy**: Parent-child relationships among orgs
 
@@ -28,9 +41,11 @@ ROAR supports hierarchical and non-hierarchical organizations. Users may belong 
 
 * **Role**: A user’s function in an org (e.g., teacher, student, admin)
 
-* **Opt-out status**: Whether a user has opted out of research, either directly (as an individual) or indirectly through association with an organization that has opted out. Opted out users must never be included in research data, but their data is retained in order to fulfill obligations to partners (e.g., score reporting). Once the service obligation to a partner is terminated, opted out users are permanently deleted from the database and all backups.
+* **Opt-out status**: Whether a user has individually opted out of research. Opted out users must never be included in research data, but their data is retained in order to fulfill obligations to partners (e.g., score reporting). Once the service obligation to a partner is terminated, opted out users are permanently deleted from the database and all backups.
 
 * **Personally Identifiable Information (PII)**: PII for education records is a FERPA term referring to identifiable information that is maintained in education records and includes direct identifiers, such as a student’s name or identification number, indirect identifiers, such as a student’s date of birth, or other information which can be used to distinguish or trace an individual’s identity either directly or indirectly through linkages with other information. See [Family Educational Rights and Privacy Act Regulations, 34 CFR §99.3](https://studentprivacy.ed.gov/ferpa), for a complete definition of PII specific to education records and for examples of other data elements that are defined to constitute PII.
+
+* **Invitation Codes**: To support self-service linking of users (especially children) to cohorts or groups, ROAR supports invitation codes. Invitation codes are stored in the `invitation_codes` table. Codes are typically used to join cohort, group, or family orgs. Codes must not be used for district, school, or class orgs tied to official rostering. After a code is redeemed, the child is added to the org_membership table with the designated role.
 
 ### Component Flow Diagram
 
@@ -46,6 +61,11 @@ graph TD
 * A user may belong to multiple orgs at once.
 * Roles are stored per org membership. That is, a user may have different roles in different orgs.
 * Org hierarchies enable queries like "all students in a district."
+* User authentication and role checks should always resolve to the canonical `user_id` after following `merged_into` pointers. This allows multiple login credentials (e.g., SSO and email) to be linked to a unified identity.
+* Org Type Constraints:
+  * family, group, and cohort orgs support flexible membership and invitation code-based joining.
+  * district, school, and class orgs are roster-controlled. Membership must be provisioned via integrations (e.g., OneRoster API, Clever API) or trusted internal workflows (e.g., CSV upload).
+  * Invitation codes must not grant access to roster-controlled orgs to avoid unverified role elevation.
 
 ### Annual PII scrubbing
 
@@ -53,7 +73,7 @@ To comply with FERPA and data minimization principles, ROAR performs an annual P
 
 A user is eligible for PII scrubbing if:
 
-* The user has no active `user_orgs` records (i.e., all associated `user_orgs.end_date` values are in the past)
+* The user has no active `users_orgs` records (i.e., all associated `users_orgs.end_date` values are in the past)
 * The user has not already been scrubbed (users.pii_scrubbed_at IS NULL)
 
 For each user to be scrubbed, we take the following actions:
@@ -80,7 +100,7 @@ WITH scrub_candidates AS (
   WHERE u.pii_scrubbed_at IS NULL
     AND NOT EXISTS (
       SELECT 1
-      FROM user_orgs uo
+      FROM users_orgs uo
       WHERE uo.user_id = u.id
         AND (uo.end_date IS NULL OR uo.end_date > CURRENT_DATE)
     )
@@ -108,20 +128,25 @@ WHERE user_id IN (SELECT user_id FROM scrub_candidates);
 
 ## Edge Cases and Error Handling
 
-| Scenario                         | Behavior                       |
-| -------------------------------- | ------------------------------ |
-| User has no orgs                 | May have limited access only   |
-| Org with invalid `parent_org_id` | 400 Bad Request                |
-| Circular org hierarchy attempted | 400 Bad Request or block at UI |
+| Scenario                                                       | Behavior                       |
+| -------------------------------------------------------------- | ------------------------------ |
+| User has no orgs                                               | May have limited access only   |
+| Org with invalid `parent_org_id`                               | 400 Bad Request                |
+| Circular org hierarchy attempted                               | 400 Bad Request or block at UI |
+| Attempt to create or redeem invitation codes for rostered orgs | 400 Bad Request                |
 
 ## Design Rationale
 
 * A unified orgs table (as opposed to separate tables for districts, schools, etc.) keeps the model simple, flexible, and extensible.
-* An enum for org types enables special-case logic (e.g., school vs. family).
+* Separate org types enable special-case logic (e.g., school vs. family).
+* Role scoping in `users_orgs` supports distinct permissions per org and use case.
 * Separating courses and classes from other orgs aligns with both OneRoster and Clever data models (N.B. Clever refers to classes as "sections").
 * Separate courses and classes allows course reuse across multiple classes (sections).
 * In Clever's data model each course and class are associated with only one grade, term, period, and subject. However, in the OneRoster data model, a course can be associated with multiple grades, terms, periods, and subjects. ROAR conforms to the OneRoster model by adding many-to-many join tables for these relationships. This aligns with OneRoster and is also more expressive (e.g., it supports multi-subject interdisciplinary classes, blended grades, and rolling terms).
 * Separate roles per org allows nuanced modeling (e.g., teacher in one, admin in another).
+* `org_type = 'cohort'` enables research-specific grouping and consent control.
+* Invitation codes enable secure, controlled, opt-in enrollment for ROAR@Home and study use.
+* `merged_into` allows identity unification without data loss or duplication.
 
 ## API Contract
 
@@ -206,6 +231,31 @@ PATCH /api/users/:id
 }
 ```
 
+### Merge users
+
+Performs identity merge and updates `merged_into`.
+
+```http
+POST /api/admin/users/merge
+{
+  "from_user_id": "uuid-home",
+  "into_user_id": "uuid-ssologin",
+  "justification": "User authenticated in both systems"
+}
+```
+
+### Redeem an invitation code
+
+```http
+POST /api/invitations/redeem
+{
+  "code": "study-a-code",
+  "child_id": "uuid-of-child"
+}
+```
+
+Returns success or an error if the code is invalid, expired, or not applicable to the given child.
+
 ## SQL Schema
 
 ### `frl_status_enum`
@@ -282,12 +332,15 @@ CREATE TABLE users (
   email TEXT UNIQUE,
 
   -- Metadata
+  merged_into UUID REFERENCES users(id),
   is_system_user BOOLEAN DEFAULT false,
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP DEFAULT now(),
   deleted_at TIMESTAMP,
 );
 ```
+
+To support account linking (e.g., a parent with both a ROAR@Home and district SSO account), ROAR tracks identity merges with the `merged_into` column. If `merged_into IS NULL`, this is the canonical user account. If not null, the user record is a shadow of another user and all access should resolve to the target user.
 
 Some tables include fields which track different users who have made changes or authorized certain actions. These could be used for audit logging and provenance tracking. However, it's common to run into cases where no human user directly initiated the action — e.g., a backend job, sync service, or webhook from Clever or another system. In these cases, we use a special "system" user (with `is_system_user` set to `true`) to represent the action. For example:
 
@@ -357,7 +410,8 @@ INSERT INTO org_types (name, one_roster_equiv) VALUES
   ('state', 'state'),
   ('region', 'region'),
   ('family', 'other'),
-  ('group', 'other');
+  ('group', 'other'),
+  ('cohort', 'other');
 ```
 
 ### `orgs`
@@ -404,18 +458,20 @@ CREATE TABLE org_external_ids (
 
 ### `users_orgs`
 
+The `users_orgs` table links users to orgs with a role. A user can belong to multiple orgs of different types (e.g., a child can be in a family, a class, and a cohort).
+
 ```sql
 CREATE TABLE users_orgs (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES users(id),
-  org_id UUID REFERENCES orgs(id),
-  role TEXT CHECK (role IN ('teacher', 'student', 'admin')),
+  user_id UUID NOT NULL REFERENCES users(id),
+  org_id UUID NOT NULL REFERENCES orgs(id),
+  role TEXT NOT NULL REFERENCES roles(name),
   start_date DATE DEFAULT CURRENT_DATE,
   end_date DATE, -- NULL means currently active
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP DEFAULT now(),
   deleted_at TIMESTAMP,
-  UNIQUE(user_id, org_id),
+  UNIQUE(user_id, org_id, role),
 );
 ```
 
@@ -551,6 +607,24 @@ CREATE TABLE class_periods (
   updated_at TIMESTAMP DEFAULT now(),
   deleted_at TIMESTAMP,
   UNIQUE(class_id, period),
+);
+```
+
+### `invitation_codes`
+
+```sql
+CREATE TABLE invitation_codes (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  code TEXT UNIQUE NOT NULL,
+  org_id UUID NOT NULL REFERENCES orgs(id),
+  role TEXT NOT NULL REFERENCES roles(name),
+  expires_at TIMESTAMP,
+  max_uses INTEGER,
+  used_count INTEGER DEFAULT 0,
+  created_by UUID REFERENCES users(id),
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
 );
 ```
 
