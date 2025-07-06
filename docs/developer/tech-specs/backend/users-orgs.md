@@ -148,114 +148,6 @@ WHERE user_id IN (SELECT user_id FROM scrub_candidates);
 * Invitation codes enable secure, controlled, opt-in enrollment for ROAR@Home and study use.
 * `merged_into` allows identity unification without data loss or duplication.
 
-## API Contract
-
-### Create an org
-
-```http
-POST /api/orgs
-{
-  "name": "Lincoln High",
-  "org_type": "school",
-  "parent_org_id": "uuid-of-district"
-}
-```
-
-### Update an org
-
-```http
-PATCH /api/orgs/:id
-{
-  "name": "Lincoln High"
-}
-```
-
-### List orgs
-
-```http
-GET /api/orgs
-```
-
-### Get an org
-
-```http
-GET /api/orgs/:id
-```
-
-### Add a user to an org
-
-```http
-POST /api/user-orgs
-{
-  "user_id": "uuid",
-  "org_id": "uuid",
-  "role": "teacher"
-}
-```
-
-### Remove a user from an org
-
-```http
-DELETE /api/user-orgs/:user_id/:org_id
-```
-
-### List user-org memberships
-
-```http
-GET /api/users
-```
-
-### Get a user
-
-```http
-GET /api/users/:id
-```
-
-### Create a user
-
-```http
-POST /api/users
-{
-  "name": "John Doe",
-  "email": "john.doe@example.com",
-  "password": "password"
-}
-```
-
-### Update a user
-
-```http
-PATCH /api/users/:id
-{
-  "name": "John Doe"
-}
-```
-
-### Merge users
-
-Performs identity merge and updates `merged_into`.
-
-```http
-POST /api/admin/users/merge
-{
-  "from_user_id": "uuid-home",
-  "into_user_id": "uuid-ssologin",
-  "justification": "User authenticated in both systems"
-}
-```
-
-### Redeem an invitation code
-
-```http
-POST /api/invitations/redeem
-{
-  "code": "study-a-code",
-  "child_id": "uuid-of-child"
-}
-```
-
-Returns success or an error if the code is invalid, expired, or not applicable to the given child.
-
 ## SQL Schema
 
 ### `frl_status_enum`
@@ -627,6 +519,114 @@ CREATE TABLE invitation_codes (
   deleted_at TIMESTAMP,
 );
 ```
+
+## API Contract
+
+### Create an org
+
+```http
+POST /api/orgs
+{
+  "name": "Lincoln High",
+  "org_type": "school",
+  "parent_org_id": "uuid-of-district"
+}
+```
+
+### Update an org
+
+```http
+PATCH /api/orgs/:id
+{
+  "name": "Lincoln High"
+}
+```
+
+### List orgs
+
+```http
+GET /api/orgs
+```
+
+### Get an org
+
+```http
+GET /api/orgs/:id
+```
+
+### Add a user to an org
+
+```http
+POST /api/user-orgs
+{
+  "user_id": "uuid",
+  "org_id": "uuid",
+  "role": "teacher"
+}
+```
+
+### Remove a user from an org
+
+```http
+DELETE /api/user-orgs/:user_id/:org_id
+```
+
+### List user-org memberships
+
+```http
+GET /api/users
+```
+
+### Get a user
+
+```http
+GET /api/users/:id
+```
+
+### Create a user
+
+```http
+POST /api/users
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "password": "password"
+}
+```
+
+### Update a user
+
+```http
+PATCH /api/users/:id
+{
+  "name": "John Doe"
+}
+```
+
+### Merge users
+
+Performs identity merge and updates `merged_into`.
+
+```http
+POST /api/admin/users/merge
+{
+  "from_user_id": "uuid-home",
+  "into_user_id": "uuid-ssologin",
+  "justification": "User authenticated in both systems"
+}
+```
+
+### Redeem an invitation code
+
+```http
+POST /api/invitations/redeem
+{
+  "code": "study-a-code",
+  "child_id": "uuid-of-child"
+}
+```
+
+Returns success or an error if the code is invalid, expired, or not applicable to the given child.
 
 ## Migration Plan
 

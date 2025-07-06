@@ -53,13 +53,6 @@ graph TD
 * Assignments support both ordered and unordered variant sets.
 * Administration series support repeatable or longitudinal patterns without duplicating logic.
 
-## API Contract
-
-::: warning This section is under construction
-
-The ROAR administration API is currently in development and is not yet available.
-:::
-
 ## SQL Schema
 
 ### `administrations`
@@ -395,6 +388,13 @@ WHERE r.administration_id = :admin_id
   AND rt.target_type = 'org'
 GROUP BY rt.target_id, r.variant_id;
 ```
+
+## API Contract
+
+::: warning This section is under construction
+
+The ROAR administration API is currently in development and is not yet available.
+:::
 
 ## Migration Plan
 

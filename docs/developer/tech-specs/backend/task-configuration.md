@@ -106,132 +106,6 @@ graph TD
 * **Task Spec abstraction** clearly captures full execution context for a run
 * **Use of a status field** to differentiate between published and dev variants allows for future lifecycle states.
 
-## API Contract
-
-### `POST /api/runs`
-
-Creates a new run
-
-```json
-POST /api/runs
-{
-  "task_slug": "swr",
-  "task_version": "v2.0.0",
-  "variant_id": 123,
-  "user_id": 12345
-}
-```
-
-#### Response
-
-```json
-{
-  "run_id": 12345,
-  "user_id": 12345,
-  "task_slug": "swr",
-  "task_version": "v2.0.0",
-  "variant_id": 123,
-  "parameters": {
-    "num_items": 8,
-    "shuffle": true
-  },
-  "status": "dev",
-}
-```
-
-### `GET /api/runs/{run_id}`
-
-Returns metadata for a specific run.
-
-```json
-{
-  "run_id": 12345,
-  "user_id": 12345,
-  "task_slug": "swr",
-  "task_version": "v2.0.0",
-  "variant_id": 123,
-  "parameters": {
-    "num_items": 8,
-    "shuffle": true
-  },
-  "status": "dev",
-}
-```
-
-### `GET /api/tasks/`
-
-Returns metadata for all available tasks.
-
-### `GET /api/tasks/{task_slug}`
-
-Returns metadata for a specific task.
-
-### `GET /api/tasks/{task_slug}/versions`
-
-Returns metadata for all available versions of a specific task. Dev variants are excluded by default.
-
-### `POST /api/variants`
-
-Creates a dev variant.
-
-```http
-POST /api/variants
-{
-  "task_slug": "swr",
-  "parameters": {
-    "num_items": 8,
-    "shuffle": true
-  }
-}
-```
-
-### `PATCH /api/variants/{variant_id}`
-
-Edits a dev variant.
-
-```http
-PATCH /api/variants/{variant_id}
-{
-  "parameters": {
-    "num_items": 8,
-    "shuffle": true
-  }
-}
-```
-
-Allowed only if the variant status is `"dev"`.
-
-### `POST /api/variants/{variant_id}/publish`
-
-Promotes a dev variant to published. Freezes the variant parameters and assigns a name and description.
-
-```http
-POST /api/variants/{variant_id}/publish
-{
-  "name": "My Variant",
-  "description": "My Variant Description"
-}
-```
-
-### `GET /api/task-bundles/{slug}`
-
-Returns metadata and ordered variants for a single task package.
-
-```json
-{
-  "id": 1,
-  "slug": "core-4",
-  "name": "Core 4 Literacy Tasks",
-  "description": "The ROAR Core 4 literacy tasks",
-  "variants": [
-    { "variant_id": "uuid-1", "task_slug": "roar-letter", "sort_order": 1 },
-    { "variant_id": "uuid-2", "task_slug": "roar-phoneme", "sort_order": 2 },
-    { "variant_id": "uuid-3", "task_slug": "roar-word", "sort_order": 3 },
-    { "variant_id": "uuid-4", "task_slug": "roar-sentence", "sort_order": 4 },
-  ]
-}
-```
-
 ## SQL Schema
 
 ### `tasks`
@@ -326,20 +200,82 @@ CREATE TABLE task_bundle_variants (
 
 ### `runs`
 
-Note: This schema only includes fields relevant to the task/variant system. Additional run metadata (e.g. device info, session ID, assignment ID, etc.) will be added in future extensions to the ROAR documentation.
+See the [assessment-execution](assessment-execution.md) section for the full schema.
 
-```sql
-CREATE TABLE runs (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-  task_version_id UUID REFERENCES task_versions(id),
-  variant_id UUID REFERENCES variants(id) NOT NULL,
-  created_at TIMESTAMP DEFAULT now(),
-  updated_at TIMESTAMP DEFAULT now(),
-  deleted_at TIMESTAMP,
-  -- Note: This schema only includes fields relevant to the task/variant system.
-  -- Additional run metadata (e.g. device info, session ID, assignment ID, etc.) will be added in future extensions to the ROAR documentation.
-);
+## API Contract
+
+### `GET /api/tasks/`
+
+Returns metadata for all available tasks.
+
+### `GET /api/tasks/{task_slug}`
+
+Returns metadata for a specific task.
+
+### `GET /api/tasks/{task_slug}/versions`
+
+Returns metadata for all available versions of a specific task. Dev variants are excluded by default.
+
+### `POST /api/variants`
+
+Creates a dev variant.
+
+```http
+POST /api/variants
+{
+  "task_slug": "swr",
+  "parameters": {
+    "num_items": 8,
+    "shuffle": true
+  }
+}
+```
+
+### `PATCH /api/variants/{variant_id}`
+
+Edits a dev variant.
+
+```http
+PATCH /api/variants/{variant_id}
+{
+  "parameters": {
+    "num_items": 8,
+    "shuffle": true
+  }
+}
+```
+
+Allowed only if the variant status is `"dev"`.
+
+### `POST /api/variants/{variant_id}/publish`
+
+Promotes a dev variant to published. Freezes the variant parameters and assigns a name and description.
+
+```http
+POST /api/variants/{variant_id}/publish
+{
+  "name": "My Variant",
+  "description": "My Variant Description"
+}
+```
+
+### `GET /api/task-bundles/{slug}`
+
+Returns metadata and ordered variants for a single task package.
+
+```json
+{
+  "id": 1,
+  "slug": "core-4",
+  "name": "Core 4 Literacy Tasks",
+  "description": "The ROAR Core 4 literacy tasks",
+  "variants": [
+    { "variant_id": "uuid-1", "task_slug": "roar-letter", "sort_order": 1 },
+    { "variant_id": "uuid-2", "task_slug": "roar-phoneme", "sort_order": 2 },
+    { "variant_id": "uuid-3", "task_slug": "roar-word", "sort_order": 3 },
+    { "variant_id": "uuid-4", "task_slug": "roar-sentence", "sort_order": 4 },
+  ]
+}
 ```
 
 ## Migration Plan

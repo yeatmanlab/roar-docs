@@ -84,34 +84,6 @@ graph TD
 
   * Historical traceability: Change logs provide a structured record of who changed what and when, which supports compliance, rollback, and investigations. Having separate change logs for each table also allows us to enforce that the UUID fields actually reference an existing row in that table.
 
-## API Contract
-
-### Assign a role to a user
-
-```http
-POST /api/permissions/roles/assign
-{
-  "user_id": "uuid",
-  "role_id": "uuid",
-  "entity_type": "org",
-  "entity_id": "uuid",
-  "expires_at": "2025-12-31T23:59:59Z",
-}
-```
-
-### Grant a direct permission
-
-```http
-POST /api/permissions/grant
-{
-  "user_id": "uuid",
-  "entity_type": "assignment",
-  "entity_id": "uuid",
-  "permission_type": "view",
-  "expires_at": "2025-12-31T23:59:59Z",
-}
-```
-
 ## SQL Schema
 
 ### `roles`
@@ -198,6 +170,34 @@ CREATE TABLE access_audit_logs (
   source_ip TEXT,
   user_agent TEXT,
 );
+```
+
+## API Contract
+
+### Assign a role to a user
+
+```http
+POST /api/permissions/roles/assign
+{
+  "user_id": "uuid",
+  "role_id": "uuid",
+  "entity_type": "org",
+  "entity_id": "uuid",
+  "expires_at": "2025-12-31T23:59:59Z",
+}
+```
+
+### Grant a direct permission
+
+```http
+POST /api/permissions/grant
+{
+  "user_id": "uuid",
+  "entity_type": "assignment",
+  "entity_id": "uuid",
+  "permission_type": "view",
+  "expires_at": "2025-12-31T23:59:59Z",
+}
 ```
 
 ## Migration Plan

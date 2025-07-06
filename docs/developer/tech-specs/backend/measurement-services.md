@@ -330,6 +330,132 @@ Selects the next chunk of items based on current ability estimate and available 
 The Request/Response needs refinement.
 :::
 
+## SQL Schema
+
+### `scores`
+
+```sql
+CREATE TABLE scores (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  run_id UUID REFERENCES runs(id) ON DELETE CASCADE,
+  task_id UUID REFERENCES tasks(id),
+  variant_id UUID REFERENCES variants(id),
+  user_id UUID REFERENCES users(id),
+  assignment_id UUID REFERENCES assignments(id),
+  value INTEGER NOT NULL,
+  name TEXT NOT NULL,
+  type TEXT CHECK (type IN ('raw', 'computed')),
+  phase TEXT CHECK (phase IN ('practice', 'test')) default 'test',
+  domain TEXT DEFAULT 'composite',
+  status TEXT CHECK (status in ('final', 'partial', 'invalid')),
+  created_at TIMESTAMP DEFAULT now()
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
+);
+```
+
+### `trial_scores`
+
+```sql
+CREATE TABLE trial_scores (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  trial_id UUID REFERENCES trials(id) ON DELETE CASCADE,
+  run_id UUID REFERENCES runs(id) ON DELETE CASCADE,
+  task_id UUID REFERENCES tasks(id),
+  variant_id UUID REFERENCES variants(id),
+  user_id INTEGER REFERENCES users(id),
+  assignment_id INTEGER REFERENCES assignments(id),
+  value INTEGER NOT NULL,
+  name TEXT NOT NULL,
+  type TEXT CHECK (type IN ('raw', 'computed')),
+  phase TEXT CHECK (phase IN ('practice', 'test')) default 'test',
+  domain TEXT DEFAULT 'composite',
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
+);
+```
+
+### `score_update_log`
+
+```sql
+CREATE TABLE score_update_log (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  score_id UUID REFERENCES scores(id) ON DELETE CASCADE,
+  old_domain TEXT NOT NULL,
+  old_phase TEXT NOT NULL,
+  old_type TEXT NOT NULL,
+  old_value INTEGER NOT NULL,
+  new_domain TEXT NOT NULL,
+  new_phase TEXT NOT NULL,
+  new_type TEXT NOT NULL,
+  new_value INTEGER NOT NULL,
+  updated_by UUID REFERENCES user(id),
+  updated_at TIMESTAMP DEFAULT now(),
+  reason TEXT
+);
+```
+
+### `reliability_events`
+
+```sql
+CREATE TABLE reliability_events (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  run_id UUID REFERENCES runs(id) ON DELETE CASCADE,
+  user_id UUID REFERENCES users(id),
+  task_id UUID REFERENCES tasks(id),
+  variant_id UUID REFERENCES variants(id),
+  assignment_id UUID REFERENCES assignments(id),
+  trial_id UUID REFERENCES trials(id),
+  reason TEXT,
+  reason_code TEXT CHECK (
+    reason_code IN (
+      'fast_response',
+      'blurred_focus',
+      'fullscreen_exit',
+      'inconsistent_response',
+      'low_accuracy',
+      'manual_review'
+    )
+  ),
+  resolution TEXT,
+  resolution_code TEXT CHECK (
+    resolution_code IN (
+      'recovered',
+      'invalidated',
+      'manual_review'
+    )
+  ),
+  resolved_by UUID REFERENCES users(id),
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
+);
+```
+
+### `browser_interactions`
+
+```sql
+CREATE TABLE browser_interactions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  trial_id UUID REFERENCES trials(id) ON DELETE CASCADE,
+  run_id UUID REFERENCES runs(id) ON DELETE CASCADE,
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  interaction_type TEXT CHECK (
+    interaction_type IN ('focus', 'blur', 'fullscreen_enter', 'fullscreen_exit')
+  ) NOT NULL,
+  timestamp TIMESTAMP DEFAULT now(),
+  metadata JSONB,
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
+);
+```
+
+### `runs`
+
+See the [assessment-execution](assessment-execution.md) section for the full schema.
+
 ## API Contract
 
 ### `POST /api/measurement/validate`
@@ -533,144 +659,6 @@ POST /api/measurement/trial-scores
     },
   ]
 }
-```
-
-## SQL Schema
-
-### `scores`
-
-```sql
-CREATE TABLE scores (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  run_id UUID REFERENCES runs(id) ON DELETE CASCADE,
-  task_id UUID REFERENCES tasks(id),
-  variant_id UUID REFERENCES variants(id),
-  user_id UUID REFERENCES users(id),
-  assignment_id UUID REFERENCES assignments(id),
-  value INTEGER NOT NULL,
-  name TEXT NOT NULL,
-  type TEXT CHECK (type IN ('raw', 'computed')),
-  phase TEXT CHECK (phase IN ('practice', 'test')) default 'test',
-  domain TEXT DEFAULT 'composite',
-  status TEXT CHECK (status in ('final', 'partial', 'invalid')),
-  created_at TIMESTAMP DEFAULT now()
-  updated_at TIMESTAMP DEFAULT now(),
-  deleted_at TIMESTAMP,
-);
-```
-
-### `trial_scores`
-
-```sql
-CREATE TABLE trial_scores (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  trial_id UUID REFERENCES trials(id) ON DELETE CASCADE,
-  run_id UUID REFERENCES runs(id) ON DELETE CASCADE,
-  task_id UUID REFERENCES tasks(id),
-  variant_id UUID REFERENCES variants(id),
-  user_id INTEGER REFERENCES users(id),
-  assignment_id INTEGER REFERENCES assignments(id),
-  value INTEGER NOT NULL,
-  name TEXT NOT NULL,
-  type TEXT CHECK (type IN ('raw', 'computed')),
-  phase TEXT CHECK (phase IN ('practice', 'test')) default 'test',
-  domain TEXT DEFAULT 'composite',
-  created_at TIMESTAMP DEFAULT now(),
-  updated_at TIMESTAMP DEFAULT now(),
-  deleted_at TIMESTAMP,
-);
-```
-
-### `score_update_log`
-
-```sql
-CREATE TABLE score_update_log (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  score_id UUID REFERENCES scores(id) ON DELETE CASCADE,
-  old_domain TEXT NOT NULL,
-  old_phase TEXT NOT NULL,
-  old_type TEXT NOT NULL,
-  old_value INTEGER NOT NULL,
-  new_domain TEXT NOT NULL,
-  new_phase TEXT NOT NULL,
-  new_type TEXT NOT NULL,
-  new_value INTEGER NOT NULL,
-  updated_by UUID REFERENCES user(id),
-  updated_at TIMESTAMP DEFAULT now(),
-  reason TEXT
-);
-```
-
-### `reliability_events`
-
-```sql
-CREATE TABLE reliability_events (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  run_id UUID REFERENCES runs(id) ON DELETE CASCADE,
-  user_id UUID REFERENCES users(id),
-  task_id UUID REFERENCES tasks(id),
-  variant_id UUID REFERENCES variants(id),
-  assignment_id UUID REFERENCES assignments(id),
-  trial_id UUID REFERENCES trials(id),
-  reason TEXT,
-  reason_code TEXT CHECK (
-    reason_code IN (
-      'fast_response',
-      'blurred_focus',
-      'fullscreen_exit',
-      'inconsistent_response',
-      'low_accuracy',
-      'manual_review'
-    )
-  ),
-  resolution TEXT,
-  resolution_code TEXT CHECK (
-    resolution_code IN (
-      'recovered',
-      'invalidated',
-      'manual_review'
-    )
-  ),
-  resolved_by UUID REFERENCES users(id),
-  created_at TIMESTAMP DEFAULT now(),
-  updated_at TIMESTAMP DEFAULT now(),
-  deleted_at TIMESTAMP,
-);
-```
-
-### `browser_interactions`
-
-```sql
-CREATE TABLE browser_interactions (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  trial_id UUID REFERENCES trials(id) ON DELETE CASCADE,
-  run_id UUID REFERENCES runs(id) ON DELETE CASCADE,
-  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-  interaction_type TEXT CHECK (
-    interaction_type IN ('focus', 'blur', 'fullscreen_enter', 'fullscreen_exit')
-  ) NOT NULL,
-  timestamp TIMESTAMP DEFAULT now(),
-  metadata JSONB,
-  created_at TIMESTAMP DEFAULT now(),
-  updated_at TIMESTAMP DEFAULT now(),
-  deleted_at TIMESTAMP,
-);
-```
-
-### `runs` Table Schema Changes
-
-```sql
--- Add reliability_status with a constraint
-ALTER TABLE runs
-ADD COLUMN reliability_status TEXT CHECK (
-  reliability_status IN ('reliable', 'unreliable', 'questionable')
-) DEFAULT 'reliable';
-
--- Add reliable as a generated column for binary logic
-ALTER TABLE runs
-ADD COLUMN reliable BOOLEAN GENERATED ALWAYS AS (
-  reliability_status = 'reliable'
-) STORED;
 ```
 
 ## Migration Plan

@@ -62,22 +62,6 @@ graph TD
 * Storing agreement content in DB ensures transactional integrity and simplifies backups/version control.
 * Single current version per agreement ensures clarity and avoids ambiguity in enforcement.
 
-## API Contract
-
-### `GET /api/users/:user_id/administration/:administration_id/agreements/pending`
-
-Returns a list of agreement versions the user must sign before proceeding.
-
-### `POST /api/users/:user_id/agreements/:agreement_version_id/sign`
-
-Marks the agreement version as signed.
-
-```json
-{
-  "signed_locale": "en"
-}
-```
-
 ## SQL Schema
 
 ```sql
@@ -127,6 +111,22 @@ CREATE TABLE user_agreements (
   signed_locale TEXT NOT NULL,
   UNIQUE (user_id, agreement_version_id)
 );
+```
+
+## API Contract
+
+### `GET /api/users/:user_id/administration/:administration_id/agreements/pending`
+
+Returns a list of agreement versions the user must sign before proceeding.
+
+### `POST /api/users/:user_id/agreements/:agreement_version_id/sign`
+
+Marks the agreement version as signed.
+
+```json
+{
+  "signed_locale": "en"
+}
 ```
 
 ## Migration Plan
