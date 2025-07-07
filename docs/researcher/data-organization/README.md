@@ -1,5 +1,7 @@
 # Data Organization
 
+The purpose of this page is to get researchers familiar with BigQuery, SQL, and using the terminal to query ROAR data and Google Buckets to store the ROAR data. 
+
 ## BigQuery - a tool to help researchers pull ROAR data in an efficient way  
 - Please read Adam’s documentation and introduction to [BigQuery](https://yeatmanlab.github.io/roar-docs/developer/bigquery/). 
     1. [Installing BigQuery](https://yeatmanlab.github.io/roar-docs/developer/bigquery/#installation-and-initialization)
