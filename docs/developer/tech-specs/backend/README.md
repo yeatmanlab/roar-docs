@@ -15,6 +15,14 @@ Covers:
 - Rostering provenance and audit logs
 - FERPA/PII compliance and data minimization
 
+### [Rostering Integration](rostering-integration.md)
+
+Covers:
+
+- Rostering workflows via API and CSV ingestion
+- Deferred Auth UID binding
+- Detection of stale users and unenrollment
+
 ### [Permissions & Access Control](permissions.md)
 
 Covers:

@@ -199,6 +199,7 @@ Here is the entire `grade_levels` table:
 ```sql
 CREATE TABLE users (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  auth_uid TEXT UNIQUE, -- Can be null on creation. Gets set when auth credentials are provisioned
   username TEXT UNIQUE NOT NULL,
   email TEXT,
 
@@ -225,6 +226,7 @@ CREATE TABLE users (
 
   -- Metadata
   merged_into UUID REFERENCES users(id),
+  last_rostering_update TIMESTAMP,
   is_system_user BOOLEAN DEFAULT false,
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP DEFAULT now(),
