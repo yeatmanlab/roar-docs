@@ -1,7 +1,11 @@
 # ROAR Backend Technical Specification
 
+::: warning Draft Notice
+
+These technical specifications reflect Adam's current thinking and design direction. They have not yet been thoroughly vetted by the rest of the development team and are not endorsed as an official ROAR standard. Please review with discretion and open issues for any questions or concerns.
+:::
+
 This index organizes all of ROAR's backend technical specifications by functional domain.
-Incomplete specs are marked (in progress).
 
 ## Identity and Access
 
@@ -51,7 +55,7 @@ Covers:
 - Variant ID system
 - Task versioning
 
-### [Assessment Execution](assessment-execution.md) (in progress)
+### [Assessment Execution](assessment-execution.md)
 
 Covers:
 
