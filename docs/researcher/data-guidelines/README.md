@@ -1,3 +1,0 @@
-# Data Guidelines
-
-Under construction...
