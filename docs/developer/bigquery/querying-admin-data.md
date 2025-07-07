@@ -54,4 +54,4 @@ The admin dataset (`gse-roar-admin.admin`) contains the following tables:
 [link_schema_legal]: ./legal.md
 [link_schema_legal_versions]: ./legal-versions.md
 [link_schema_schools]: ./schools.md
-[link_schema_users]: ./users.md
+[link_schema_users]: ./users.md#admin-users
