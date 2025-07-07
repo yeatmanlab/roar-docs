@@ -68,7 +68,7 @@ export default defineUserConfig({
         text: "Researcher",
         collapsible: true,
         children: [
-          { text: "Data Guidelines", link: "/researcher/data-guidelines/" },
+          { text: "Data Tools", link: "/researcher/data-tools/" },
           { text: "Data Organization", link: "/researcher/data-organization/" },
           { text: "Data Requests", link: "/researcher/data-requests/" },
         ],
@@ -317,10 +317,10 @@ export default defineUserConfig({
           children: getChildren("./docs/researcher/data-organization"),
         },
         {
-          text: "Data Guidelines",
-          link: "/researcher/data-guidelines/",
+          text: "Data Tools",
+          link: "/researcher/data-tools/",
           collapsible: true,
-          children: getChildren("./docs/researcher/data-guidelines"),
+          children: getChildren("./docs/researcher/data-tools"),
         },
         {
           text: "Data Requests",

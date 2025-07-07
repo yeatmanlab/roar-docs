@@ -48,7 +48,7 @@ actions:
   - text: Clowder Implementation
     link: /developer/clowder-implementation/
     type: secondary
-  - text: Data Guidelines
+  - text: Data Tools
     link: /researcher/data-guidelines/
     type: secondary
   - text: Data Organization
