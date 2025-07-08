@@ -28,6 +28,7 @@ export default defineUserConfig({
         collapsible: true,
         children: [
           { text: "Tech Specs", link: "/developer/tech-specs/backend/" },
+          { text: "Auth", link: "/developer/tech-specs/auth.md" },
           { text: "Databases", link: "/developer/databases/" },
           { text: "Workflows", link: "/developer/workflows/" },
           { text: "Application", link: "/developer/application/" },
@@ -84,6 +85,11 @@ export default defineUserConfig({
           link: "/developer/tech-specs/backend/",
           collapsible: true,
           children: getChildren("./docs/developer/tech-specs/backend"),
+        },
+        {
+          text: "Auth",
+          link: "/developer/tech-specs/auth.md",
+          collapsible: true,
         },
         {
           text: "Databases",
