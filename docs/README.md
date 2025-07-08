@@ -6,6 +6,9 @@ actions:
   - text: Tech Specs
     link: /developer/tech-specs/backend/
     type: secondary
+  - text: Authentication
+    link: /developer/tech-specs/auth.md
+    type: secondary
   - text: Databases
     link: /developer/databases/
     type: secondary
