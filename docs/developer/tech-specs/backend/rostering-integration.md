@@ -26,7 +26,7 @@ This document defines how ROAR integrates with rostering partners (e.g. school d
 
 ### Full Rostering Ingestion
 
-ROAR currently only supports full rostering ingestion. Future work will support incremental ingestion using "delta" records. This full rostering sync can be run on command or scheduled weekly.
+ROAR currently only supports full rostering ingestion. Future work may support incremental ingestion using "delta" records. This full rostering sync can be run on command or scheduled weekly. A "rostering run" is a single execution of the ingestion process for one rostering partner.
 
 ```mermaid
 graph TD
@@ -36,10 +36,10 @@ graph TD
   C2 --> C3[Sync users in batches]
   C3 --> C4{Source Type}
   C4 --> |CSV| C5[Create auth credentials and upsert user with auth_uid]
-  C4 --> |API| C6[Upsert user with `auth_uid = NULL`]
+  C4 --> |API| C6[Upsert user. If auth_uid is not already defined, set auth_uid = NULL]
   C5 & C6 --> C7[Sync user-org associations]
   C5 & C6 --> C8[Sync user-class associations]
-  C8 --> D[Mark all processed entities with last_rostering_update]
+  C7 & C8 --> D[Mark all processed entities with last_rostering_update]
   D --> E[Log per-entity sync status]
   E --> F[Retry failed batches with exponential backoff]
   F --> G{All batches succeeded?}
@@ -60,7 +60,7 @@ graph TD
   E --> F[Complete Login]
 ```
 
-### Stale Detection
+### Unenrollment Flow (stale user detection)
 
 ```mermaid
 graph TD
@@ -69,7 +69,18 @@ graph TD
   C --> D[Flag users with stale update timestamps]
   D --> E[Unenroll users from orgs of this partner]
   E --> F[Log unenrollment events]
-  F --> G[Generate report for admin]
+  F --> G[Generate report]
+```
+
+### Roster Sync Validation
+
+```mermaid
+graph TD
+  A[After Sync Completion and Unenrollment] --> B[Use rostering API to get latest counts]
+  B --> C[Compare with counts in DB for users, orgs, classes, courses]
+  C --> D{Are counts within tolerance?}
+  D -->|Yes| E[No action needed]
+  D -->|No| F[Send alert]
 ```
 
 ### Monitoring & Alerts
@@ -138,6 +149,12 @@ CREATE TABLE rostering_run_stats (
 
 ### `user_rostering_events`
 
+::: info Discuss
+
+Is this necessary? We could just use the `rostering_sync_status` table to capture this information.
+
+:::
+
 This table captures notable, discrete events during rostering runs, primarily for audit and tracking. Think of it as a log of business-level outcomes like:
 
 * A user being unenrolled
@@ -147,9 +164,9 @@ This table captures notable, discrete events during rostering runs, primarily fo
 ```sql
 CREATE TABLE user_rostering_events (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  rostering_run_id UUID REFERENCES rostering_runs(id),
-  event_type TEXT, -- e.g., 'unenroll', 'auth_bind'
-  user_id UUID REFERENCES users(id),
+  rostering_run_id UUID NOT NULL REFERENCES rostering_runs(id),
+  event_type TEXT NOT NULL CHECK (event_type IN ('unenroll', 'auth_bind', 'batch_skip')),
+  user_id UUID NOT NULL REFERENCES users(id),
   timestamp TIMESTAMP,
   details JSONB,
   created_at TIMESTAMP DEFAULT now(),
@@ -169,11 +186,14 @@ This table records the result of attempting to sync each entity (user, org, clas
 ```sql
 CREATE TABLE rostering_sync_status (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  rostering_run_id UUID REFERENCES rostering_runs(id),
-  entity_type TEXT, -- e.g., 'user', 'org', 'class'
-  entity_id UUID,
+  rostering_run_id UUID NOT NULL REFERENCES rostering_runs(id),
+  entity_type TEXT NOT NULL CHECK (entity_type IN ('user', 'org', 'class', 'course', 'enrollment')),
+  entity_id UUID NOT NULL,
   status TEXT, -- 'success', 'failed', 'skipped', etc.
   error_message TEXT,
   processed_at TIMESTAMP DEFAULT now()
+  created_at TIMESTAMP DEFAULT now(),
+  updated_at TIMESTAMP DEFAULT now(),
+  deleted_at TIMESTAMP,
 );
 ```
