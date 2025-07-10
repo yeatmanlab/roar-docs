@@ -6,15 +6,15 @@ tagline: Select your role to get started
 ---
 
 <div class="role-cards">
-<a class="role-card" href="/developer/">
+<a class="role-card" href="developer/">
   <h2>Developer</h2>
   <p>Build, deploy, and maintain ROAR apps and services.</p>
 </a>
-<a class="role-card" href="/researcher/">
+<a class="role-card" href="researcher/">
   <h2>Researcher</h2>
   <p>Access, analyze, and request ROAR data.</p>
 </a>
-<a class="role-card" href="/partnerships/">
+<a class="role-card" href="partnerships/">
   <h2>Partnerships</h2>
   <p>Resources and guidance for collaborators and institutional partners.</p>
 </a>
