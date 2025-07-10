@@ -318,17 +318,17 @@ export default defineUserConfig({
       ],
       "/researcher/": [
         {
-          text: "Data Organization",
-          link: "/researcher/data-organization/",
-          collapsible: true,
-          children: getChildren("./docs/researcher/data-organization"),
-        },
-        {
           text: "Data Tools",
           link: "/researcher/data-tools/",
           collapsible: true,
           children: getChildren("./docs/researcher/data-tools"),
         },
+        {
+          text: "Data Organization",
+          link: "/researcher/data-organization/",
+          collapsible: true,
+          children: getChildren("./docs/researcher/data-organization"),
+        },        
         {
           text: "Data Requests",
           link: "/researcher/data-requests/",
