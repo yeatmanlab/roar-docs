@@ -38,6 +38,12 @@ Once the user finds the repository that they would like to contribute to, they w
 5. The Desktop should say the repository name in the top left corner under "Current Repository", "main" indicating the user is on the main branch under "Current Branch" and a "Fetch origin" button. 
 The repository now exists locally on the user's device. 
 
+::: tip Try to clone a repository on GitHub
+
+Try to clone the following repository [github-learning](https://github.com/yeatmanlab/github-learning). This repository is a fake repository, so feel free to play around, add text to the existing documents, add new files, rewrite text, etc. Please message Kelly Wentzlof on slack if you do not have access. 
+:::
+
+
 ### Creating a new branch 
 Before any changes are made, the user should create their own new branch and make changes on the new branch. Creating a branch can happen on the GitHub Desktop or on the GitHub.com website. 
 
@@ -57,6 +63,11 @@ Before any changes are made, the user should create their own new branch and mak
 5. Now navigate back to GitHub Desktop, click the "Fetch" button. 
 6. Please click "Current Branch" and select the new branch you created. 
 
+::: tip Try to create a new branch 
+
+Try to create a branch on the following repository [github-learning](https://github.com/yeatmanlab/github-learning). Please name the branch with your initials and an informational description of what you are changing (e.g., kw-adding-scatter-plot-iris).
+:::
+
 ### Making a contribution to a repository
 Once the user has cloned the repository to their local device, they will likely want to make a contribution to one or more of the files within the repository. Reminder to never edit the main branch and to only make edits on the new branch the user created. 
 
@@ -73,6 +84,11 @@ Once the user has cloned the repository to their local device, they will likely 
 9. Click "Commit to branch-name". 
 10. In the middle top, where it once said "Fetch origin", you will see an option to "Push origin". This will push all the changes you made to the GitHub.com website where other users can see it. 
 The change(s) you made will now appear on the GitHub.com website under the branch you made. 
+
+::: tip Try to make a contribution on a branch
+
+Try to make a contribution to the branch that you created. Please remember to switch to your branch before committing and pushing any changes. 
+:::
 
 ### Making a pull request (PR)
 Once the user has pushed changes to their branch, they will have the option to create a pull request. Pull requests can happen after the user has already pushed changes to a branch.
@@ -93,16 +109,26 @@ This feature is especially helpful when multiple users are working on the same r
 5. Click the green button "Create pull request". 
 Now a pull request has been created. This pull request is associated with the branch that you created. Therefore, any commits that are pushed to the branch are recorded in the pull request. 
 
+::: tip Try to make a pull request 
+
+Try to create a pull request with a title, details, add an assignee and a reviewer for the commits you pushed to your branch. 
+:::
+
 ### Merging a pull request into the main branch 
 Once you have made all the changes you want to the files, you can merge this pull request into the main branch. However, you will often want someone to review your work before you do. 
 
-1. GitHub will automatically check to see if there are any conflicts with the base branch (in most cases the base branch is the main branch). If there are merging issues, please have someone review and/or reach out to Kelly Wentzlof or Adam Richie-Halford to help resolve the merging issues. 
+1. GitHub will automatically check to see if there are any conflicts with the base branch (in most cases the base branch is the main branch). If there are merging issues, please have someone review and/or fill out a [data request form](https://github.com/yeatmanlab/roar-bigquery/issues) to get help with resolving the merging issues. 
 2. If there are no merging issues, after being reviewed, click the green "Merge pull request" button. 
 3. You can change the commit message or description to something more informational. 
 4. Click "Confirm merge". 
 5. You will then be told "Pull request successfully merged and closed". 
 6. If you do not plan to make any more changes to the branch you were working out of, click "Delete branch". 
 You now have merged a pull reqeust from your own branch into main. 
+
+::: tip Try to merge the pull request 
+
+Try to merge the pull request that you created with all the commits that you pushed to the branch you created (these should all be tracked within the same pull request). Review the changes and if there are no merging issues, merge into main. If there are merging issues, try to work through them, if you are struggling please fill out a [data request form](https://github.com/yeatmanlab/roar-bigquery/issues). 
+:::
 
 ### Creating an issue 
 Issues are a great way of tracking tasks and communication between users. 
@@ -115,6 +141,11 @@ Issues are a great way of tracking tasks and communication between users.
 6. Click the green button "Create". 
 You can continue to comment within the issue to talk about progress with other users or to write notes to yourself. Additionally, you can comment the related pull requests or branches that are working on solving the issue. Comment the PR or branch by doing # and selecting the corresponding branch/PR from the dropdown that appears. 
 
+::: tip Try to create an issue
+
+Try to create an issue related to the current repository, it can be anything. Assign it to yourself and make a few comments, tag the pull request related to the issue, etc. 
+:::
+
 ### Good practices 
 - Always "Fetch origin" before committing changes. 
 - Commit and Push more often than you would think--this helps other users see your changes in "live" time. 
@@ -123,8 +154,5 @@ You can continue to comment within the issue to talk about progress with other u
 - Never push to main. Even when you think you are the only one working on a repository, always work out of a separate branch and merge. 
 - Don't be afraid to ask questions--GitHub is very daunting at the beginning, just reach out to devs or Kelly Wentzlof and everyone will be happy to help. 
 
-### Try GitHub out
-Try out all of the steps above on this [github-learning](https://github.com/yeatmanlab/github-learning) repository. Please message Kelly Wentzlof on slack if you do not have access. 
-
-Note: Label your branches, descriptions, PRs well so we can see who is working where. 
-
+### Try out GitHub
+The repository [github-learning](https://github.com/yeatmanlab/github-learning) is a way for researchers to get hands-on experience with GitHub without the fear of messing up research code or lab materials. Feel free to mess around with it as much as possible, get comfortable with this fake repository, so you are confident in the real repository with real data. 
