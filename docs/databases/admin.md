@@ -12,7 +12,7 @@ The database is organized into collections of documents. Each document is able t
 which itself is a collection of documents. Below is a schema for the structure of the database, as well
 as expected fields in each document. A '?' appended to the field name denotes an optional field.
 
-The admin database (`gse-roar-admin`)  is crucial for managing information about administrations, organizations, users, and legal compliance across various educational entities involved in the project.
+The admin database (`gse-roar-admin`) is crucial for managing information about administrations, organizations, users, and legal compliance across various educational entities involved in the project.
 
 ## Information stored
 
@@ -31,7 +31,10 @@ The admin database (`gse-roar-admin`)  is crucial for managing information about
 
 ## **Database Schema Documentation**
 
+new changes
+
 ### **/administrations/**
+
 - **Purpose**: Stores metadata about each administration including the sequence of tasks, involved organizations, and visibility control.
 - **Fields**:
   - `name`: Name of the administration.
@@ -43,6 +46,7 @@ The admin database (`gse-roar-admin`)  is crucial for managing information about
   - `dateCreated`, `dateOpened`, `dateClosed`: Timestamps marking the administration lifecycle.
 
 ### **/districts/**
+
 - **Purpose**: Manages information about districts, including associated schools and optional details such as contact and sync information.
 - **Fields**:
   - `name`, `abbreviation`, `id`: Basic identity and optional abbreviation.
@@ -50,6 +54,7 @@ The admin database (`gse-roar-admin`)  is crucial for managing information about
   - `clever`, `districtContact`, `lastSync`, `launchDate`, `loginMethods`, `portalUrl`, `sisType`: Optional fields primarily for districts integrating with external systems like Clever.
 
 ### **/schools/**
+
 - **Purpose**: Contains data about schools, including their districts and optional location details.
 - **Fields**:
   - `name`, `abbreviation`, `districtId`: Essential identifiers.
@@ -57,48 +62,54 @@ The admin database (`gse-roar-admin`)  is crucial for managing information about
   - `location`, `lowGrade`, `highGrade`, `mdrNumber`, `ncesId`, `phone`, `principal`, `schoolNumber`, `stateId`: Optional detailed information.
 
 ### **/classes/**
+
 - **Purpose**: Details about classes, including school affiliation and optional educational details.
 - **Fields**:
   - `name`, `districtId`, `grade`, `schoolId`, `schoolLevel`: Core class identifiers.
   - `created`, `lastModified`, `subject`, `tags`, `clever`, `sectionId`: Optional attributes for further classification and integration.
 
 ### **/groups/**
+
 - **Purpose**: Manages group data, potentially representing subgroups within other organizational units.
 - **Fields**:
   - `name`, `abbreviation`: Basic identifiers.
   - `parentOrgType`, `parentOrgId`, `familyId`: Optional fields for hierarchical organization.
 
 ### **/families/**
+
 - **Purpose**: Stores data on family units, useful for organizing user data and permissions.
 - **Fields**:
   - `name`: Identifier for the family.
   - `createdAt`, `lastUpdated`: Optional timestamps.
 
 ### **/legal/**
+
 - **Purpose**: Tracks versions of legal documents using GitHub as a reference point.
 - **Fields**:
   - `currentCommit`, `fileName`, `gitHubOrg`, `gitHubRepository`: Identifiers linking to specific GitHub documents.
   - `validFrom`: Date from which a version is considered valid.
 
 ### **/users/**
+
 - **Purpose**: Stores comprehensive user data including demographics, assignments, and organizational affiliations.
 - **Fields**: Extensive including demographics, legal compliance, assignment tracking, and organizational history.
 
 ### **/userClaims/**
+
 - **Purpose**: Manages custom claims for users, facilitating access control based on administrative roles or organizational affiliations.
 - **Fields**:
   - `claims`: Stores administrative and assessment-related UIDs and organizational claims.
   - `lastUpdated`: Timestamp of the last update.
 
 ### **/deleted-users/**
+
 - **Purpose**: Archives data of users who have been removed from the active users collection.
 - **Fields**: Mirrors `/users/` with adjustments for assignment tracking.
-
-
 
 ## Database Schema
 
 ### /administrations/{administrationId}
+
 ```json
 {
   "name": "string",
@@ -130,7 +141,8 @@ The admin database (`gse-roar-admin`)  is crucial for managing information about
 }
 ```
 
-###  /administrations/{administrationId}/stats/completion
+### /administrations/{administrationId}/stats/completion
+
 ```json
 {
   "total": {
@@ -161,6 +173,7 @@ The admin database (`gse-roar-admin`)  is crucial for managing information about
 ```
 
 ### /districts/{districtId}
+
 ```json
 {
   "name": "string",
@@ -184,11 +197,10 @@ The admin database (`gse-roar-admin`)  is crucial for managing information about
   "portalUrl": "string",
   "sisType": "string"
 }
-
 ```
 
-
 ### /schools/{schoolId}
+
 ```json
 {
   "name": "string",
@@ -215,8 +227,8 @@ The admin database (`gse-roar-admin`)  is crucial for managing information about
 }
 ```
 
-
 ### /classes/{classId}
+
 ```json
 {
   "name": "string",
@@ -234,6 +246,7 @@ The admin database (`gse-roar-admin`)  is crucial for managing information about
 ```
 
 ### /groups/{groupId}
+
 ```json
 {
   "name": "string",
@@ -245,6 +258,7 @@ The admin database (`gse-roar-admin`)  is crucial for managing information about
 ```
 
 ### /families/{familyId}
+
 ```json
 {
   "name": "string",
@@ -262,11 +276,12 @@ The legal collection keeps track of which versions of the legal documents are cu
   "currentCommit": "string",
   "fileName": "string",
   "gitHubOrg": "string",
-  "gitHubRepository": "string",
+  "gitHubRepository": "string"
 }
 ```
 
 ## /legal/[{assent, consent, tos}]/versions/{versionId}
+
 ```json
 {
   "validFrom": "ISO8601-date-string"
@@ -274,6 +289,7 @@ The legal collection keeps track of which versions of the legal documents are cu
 ```
 
 ### /users/{userId}
+
 ```json
 {
   "assessmentPid": "string",
@@ -322,6 +338,7 @@ The legal collection keeps track of which versions of the legal documents are cu
 ```
 
 ### /users/{userId}/assignments/{assignmentId}
+
 ```json
 {
   "assessments": [
@@ -372,10 +389,10 @@ The legal collection keeps track of which versions of the legal documents are cu
     "username": "janeqdoe"
   }
 }
-
 ```
 
 ### /users/{userId}/externalData/clever
+
 ```json
 {
   "created": "2024-04-15T00:00:00Z",
@@ -401,6 +418,7 @@ The legal collection keeps track of which versions of the legal documents are cu
 ```
 
 ### /userClaims/{userId}
+
 ```json
 {
   "claims": {
