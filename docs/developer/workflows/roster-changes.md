@@ -18,7 +18,7 @@ ROAR users information can be updated in three ways:
 - Clever, via a cloud function that uses the Clever API to sync organizations and their users, and
 - ClassLink, via a similar cloud function that syncs organizations and their users.
 
-When a user's information changes in these service providers, the ROAR platform must update it's own internal information accordingly. Most user information (such as name) can simply be updated in a user's Firestore documents. However, changes to the following fields must be handled differently:
+When a user's information changes in these service providers, the ROAR platform must update its own internal information accordingly. Most user information (such as name) can simply be updated in a user's Firestore documents. However, changes to the following fields must be handled differently:
 
 - date of birth (DOB), and therefore age
 - grade
