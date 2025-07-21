@@ -14,4 +14,6 @@ actions:
     type: secondary
 ---
 
-<p style="text-align: center;">This section provides technical documentation for researchers contributing to ROAR. To suggest edits, please open a pull request on the <a href="https://github.com/yeatmanlab/roar-docs" target="_blank">GitHub repository</a>.</p>
+This section provides technical documentation for researchers contributing to ROAR. To suggest edits, please open a pull request on the [GitHub repository][link_roar_docs_github].
+
+[link_roar_docs_github]: https://github.com/yeatmanlab/roar-docs
