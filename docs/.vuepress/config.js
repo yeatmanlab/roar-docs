@@ -27,7 +27,7 @@ export default defineUserConfig({
         text: "Developer",
         collapsible: true,
         children: [
-          { text: "Tech Specs", link: "/developer/tech-specs/backend/" },
+          { text: "Tech Specs", link: "/developer/tech-specs/" },
           { text: "Databases", link: "/developer/databases/" },
           { text: "Workflows", link: "/developer/workflows/" },
           { text: "Application", link: "/developer/application/" },
@@ -81,9 +81,9 @@ export default defineUserConfig({
       "/developer/": [
         {
           text: "Tech Specs",
-          link: "/developer/tech-specs/backend/",
+          link: "/developer/tech-specs/",
           collapsible: true,
-          children: getChildren("./docs/developer/tech-specs/backend"),
+          children: getChildren("./docs/developer/tech-specs"),
         },
         {
           text: "Databases",
@@ -328,7 +328,7 @@ export default defineUserConfig({
           link: "/researcher/data-organization/",
           collapsible: true,
           children: getChildren("./docs/researcher/data-organization"),
-        },        
+        },
         {
           text: "Data Requests",
           link: "/researcher/data-requests/",
