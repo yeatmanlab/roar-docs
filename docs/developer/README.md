@@ -4,7 +4,7 @@ title: Developer Documentation
 heroImage: /assets/roar-logo.svg
 actions:
   - text: Tech Specs
-    link: /developer/tech-specs/backend/
+    link: /developer/tech-specs/
     type: secondary
   - text: Databases
     link: /developer/databases/
