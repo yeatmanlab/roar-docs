@@ -17,6 +17,8 @@ The BigQuery table `gse-roar-assessment.assessment.user_trials` conforms to the 
 | document_name     | STRING    |    UK    | The database document path                                                                            |
 | goal              | STRING    |          |                                                                                                       |
 | internal_node_id  | STRING    |          | The internal node ID of this trial in the jsPsych timeline                                            |
+| is_demo_data      | BOOLEAN   |          | Whether this trial is demo data or not                                                                |
+| is_test_data      | BOOLEAN   |          | Whether this trial is test data or not                                                                |
 | item              | STRING    |          |                                                                                                       |
 | item_id           | STRING    |          |                                                                                                       |
 | keyboard_response | STRING    |          | Indicates the keyboard button that the participant pressed                                            |
@@ -43,7 +45,7 @@ The BigQuery table `gse-roar-assessment.assessment.user_trials` conforms to the 
 | theta_std_err     | FLOAT     |          | The standard error in the ability estimate                                                            |
 | theat_std_err_2   | FLOAT     |          | The standard error in the second ability estimate                                                     |
 | time_elapsed      | INTEGER   |          | Time elapsed since the beginning of the run                                                           |
-| timestamp         | TIMESTAMP |          | A timestamp indicating when the database document was last modified                                   |
+| timestamp         | TIMESTAMP |          | The commit timestamp of this change in Cloud Firestore.                                               |
 | timezone          | STRING    |          | The timezone in which this trial was completed                                                        |
 | trial_index       | INTEGER   |          |                                                                                                       |
 | trial_num_block   | INTEGER   |          |                                                                                                       |

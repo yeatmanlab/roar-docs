@@ -23,6 +23,8 @@ The BigQuery table `gse-roar-assessment.assessment.users` conforms to the follow
 | grade             | STRING         |          | The current grade of the user                                                                |
 | groups_all        | ARRAY\<STRING> |    FK    | An array of all group IDs associated with this user                                          |
 | groups_current    | ARRAY\<STRING> |    FK    | An array of currently enrolled group IDs associated with this user                           |
+| is_demo_data      | BOOLEAN        |          | Whether this user is demo data or not                                                        |
+| is_test_data      | BOOLEAN        |          | Whether this user is test data or not                                                        |
 | last_roar_sync    | TIMESTAMP      |          | The date and time when this user's data was last synced between Clever and ROAR              |
 | last_updated      | TIMESTAMP      |          | The date and time this user was last updated in ROAR                                         |
 | school_level      | STRING         |          | The user's school level (e.g., elementary, middle, etc)                                      |
@@ -30,7 +32,7 @@ The BigQuery table `gse-roar-assessment.assessment.users` conforms to the follow
 | schools_current   | ARRAY\<STRING> |    FK    | An array of currently enrolled school IDs associated with this user                          |
 | sso_type          | STRING         |          | The user's single sign-on (SSO) provider                                                     |
 | tasks             | ARRAY\<STRING> |    FK    | An array of task IDs that this user has attempted                                            |
-| timestamp         | TIMESTAMP      |          | A timestamp indicating when the database document was last modified                          |
+| timestamp         | TIMESTAMP      |          | The commit timestamp of this change in Cloud Firestore.                                      |
 | user_type         | STRING         |          | The user type (e.g., student, admin, educator)                                               |
 | username          | STRING UK      |          | The user's username                                                                          |
 | variants          | ARRAY\<STRING> |    FK    | An array of variant IDs that this user has attempted                                         |
@@ -63,6 +65,8 @@ The BigQuery table `gse-roar-admin.admin.users` conforms to the following schema
 | hispanic_ethnicity | STRING         |          | Whether the user is Hispanic or Latino                                                       |
 | home_language      | Array\<STRING> |          | The user's home language                                                                     |
 | iep_status         | STRING         |          | The user's Individualized Education Program (IEP) status                                     |
+| is_demo_data       | BOOLEAN        |          | Whether this user is demo data or not                                                        |
+| is_test_data       | BOOLEAN        |          | Whether this user is test data or not                                                        |
 | last_roar_sync     | TIMESTAMP      |          | The date and time when this user's data was last synced between Clever and ROAR              |
 | last_updated       | TIMESTAMP      |          | The date and time this user was last updated in ROAR                                         |
 | race               | STRING         |          | The user's race or ethnicity (e.g., Asian, Black, Hispanic, White, etc)                      |
@@ -74,7 +78,7 @@ The BigQuery table `gse-roar-admin.admin.users` conforms to the following schema
 | state_id           | STRING         |          | The user's state ID                                                                          |
 | student_number     | STRING         |          | The user's student number                                                                    |
 | tasks              | ARRAY\<STRING> |    FK    | An array of task IDs that this user has attempted                                            |
-| timestamp          | TIMESTAMP      |          | A timestamp indicating when the database document was last modified                          |
+| timestamp          | TIMESTAMP      |          | The commit timestamp of this change in Cloud Firestore.                                      |
 | user_type          | STRING         |          | The user type (e.g., student, admin, educator)                                               |
 | username           | STRING UK      |          | The user's username                                                                          |
 | variants           | ARRAY\<STRING> |    FK    | An array of variant IDs that this user has attempted                                         |

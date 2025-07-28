@@ -21,5 +21,5 @@ The BigQuery table `gse-roar-assessment.assessment.groups` conforms to the follo
 | parent_org_id           | STRING         |    FK    | The ID of the parent organization (if this is a sub-group)               |
 | parent_org_type         | STRING         |          | The type of parent organization (if this is a sub-group)                 |
 | tags                    | ARRAY\<STRING> |          | An array of metadata tags for this group                                 |
-| timestamp               | TIMESTAMP      |          | A timestamp indicating when the database document was last modified      |
+| timestamp               | TIMESTAMP      |          | The commit timestamp of this change in Cloud Firestore.                  |
 | valid_activation_codes  | ARRAY\<STRING> |    UK    | An array of valid activation codes for this group                        |

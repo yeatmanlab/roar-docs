@@ -15,6 +15,8 @@ The BigQuery table `gse-roar-admin.admin.administrations` conforms to the follow
 | document_name          | STRING         |    UK    | The database document path                                                             |
 | families_assigned      | ARRAY\<STRING> |          | The array of families assigned to the administration                                   |
 | groups_assigned        | ARRAY\<STRING> |          | The array of groups assigned to the administration                                     |
+| is_demo_data           | BOOLEAN        |          | Whether the administration is demo data or not                                         |
+| is_test_data           | BOOLEAN        |          | Whether the administration is test data or not                                         |
 | legal                  | STRING         |          | The assent and/or consent documents associated with the administration                 |
 | minimal_orgs_classes   | ARRAY\<STRING> |          | The array of top level classes which assigned the administration to its organization   |
 | minimal_orgs_districts | ARRAY\<STRING> |          | The array of top level districts which assigned the administration to its organization |
@@ -30,5 +32,4 @@ The BigQuery table `gse-roar-admin.admin.administrations` conforms to the follow
 | schools_assigned       | ARRAY\<STRING> |          | The array of schools assigned to the administration                                    |
 | sequential             | BOOLEAN        |          | Whether the administration is sequential or not                                        |
 | tags                   | ARRAY\<STRING> |          | The array of tags assigned to the administration                                       |
-| test_data              | BOOLEAN        |          | Whether the administration is a test data or not                                       |
-| timestamp              | TIMESTAMP      |          | The timestamp indicating when the database document was last modifed                   |
+| timestamp              | TIMESTAMP      |          | The commit timestamp of this change in Cloud Firestore.                                |

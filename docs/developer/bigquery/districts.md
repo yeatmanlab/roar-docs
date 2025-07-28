@@ -31,5 +31,5 @@ The BigQuery table `gse-roar-assessment.assessment.districts` conforms to the fo
 | schools                     | ARRAY\<STRING> |    FK    | An array of IDs for the district's current schools                                   |
 | schools_archived            | ARRAY\<STRING> |    FK    | An array of IDs for the district's archived (i.e., unenrolled) schools               |
 | tags                        | ARRAY\<STRING> |          | An array of metadata tags for this district                                          |
-| timestamp                   | TIMESTAMP      |          | A timestamp indicating when the database document was last modified                  |
+| timestamp                   | TIMESTAMP      |          | The commit timestamp of this change in Cloud Firestore.                              |
 | valid_activation_codes      | ARRAY\<STRING> |    UK    | An array of valid activation codes for this district                                 |

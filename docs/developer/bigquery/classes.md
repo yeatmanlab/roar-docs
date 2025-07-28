@@ -23,5 +23,5 @@ The BigQuery table `gse-roar-assessment.assessment.classes` conforms to the foll
 | school_level                | STRING         |          | The school level (e.g., elementary, middle, etc)                                 |
 | subject                     | STRING         |          | The class subject                                                                |
 | tags                        | ARRAY\<STRING> |          | An array of metadata tags for this class                                         |
-| timestamp                   | TIMESTAMP      |          | A timestamp indicating when the database document was last modified              |
+| timestamp                   | TIMESTAMP      |          | The commit timestamp of this change in Cloud Firestore.                          |
 | valid_activation_codes      | ARRAY\<STRING> |    UK    | An array of valid activation codes for this class                                |

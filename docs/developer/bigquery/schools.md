@@ -32,5 +32,5 @@ The BigQuery table `gse-roar-assessment.assessment.schools` conforms to the foll
 | school_number               | STRING         |          | District or county school identifier                                              |
 | state_id                    | STRING         |          | State school identifier                                                           |
 | tags                        | ARRAY\<STRING> |          | An array of metadata tags for this school                                         |
-| timestamp                   | TIMESTAMP      |          | A timestamp indicating when the database document was last modified               |
+| timestamp                   | TIMESTAMP      |          | The commit timestamp of this change in Cloud Firestore.                           |
 | valid_activation_codes      | ARRAY\<STRING> |    UK    | An array of valid activation codes for this school                                |
