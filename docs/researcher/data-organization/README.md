@@ -182,8 +182,6 @@ WHERE
 '
 ```
 
-## Read Run-level data 
-
 ```{r}
 # All run csv's pulled from BigQuery will have the same run column names 
 # Set the run column names now
