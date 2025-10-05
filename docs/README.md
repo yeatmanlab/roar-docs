@@ -18,6 +18,10 @@ tagline: Select your role to get started
   <h2>Partnerships</h2>
   <p>Resources and guidance for collaborators and institutional partners.</p>
 </a>
+<a class="role-card" href="process/">
+  <h2>Process</h2>
+  <p>Shared workflows, standards, and definitions of done for all teams.</p>
+</a>
 </div>
 
 <style>

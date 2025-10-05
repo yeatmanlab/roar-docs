@@ -74,6 +74,16 @@ export default defineUserConfig({
           { text: "Data Requests", link: "/researcher/data-requests/" },
         ],
       },
+      {
+        text: "Process",
+        collapsible: true,
+        children: [
+          {
+            text: "Project Development Lifecycle & Definitions of Done",
+            link: "/process/project-development-lifecycle/",
+          },
+        ],
+      },
     ],
     nextLinks: true,
     prevLinks: true,
@@ -334,6 +344,14 @@ export default defineUserConfig({
           link: "/researcher/data-requests/",
           collapsible: true,
           children: getChildren("./docs/researcher/data-requests"),
+        },
+      ],
+      "/process/": [
+        {
+          text: "Process Documentation",
+          link: "/process/",
+          collapsible: true,
+          children: getChildren("./docs/process"),
         },
       ],
     },
