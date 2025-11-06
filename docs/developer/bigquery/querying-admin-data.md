@@ -41,6 +41,7 @@ The admin dataset (`gse-roar-admin.admin`) contains the following tables:
 - [`legal`][link_schema_legal]
 - [`legal_versions`][link_schema_legal_versions]
 - [`schools`][link_schema_schools]
+- [`user_assignments`][link_schema_user_assignments]
 - [`users`][link_schema_users]
 
 [link_querying_assessment_data]: ./README.md
@@ -55,3 +56,4 @@ The admin dataset (`gse-roar-admin.admin`) contains the following tables:
 [link_schema_legal_versions]: ./legal-versions.md
 [link_schema_schools]: ./schools.md
 [link_schema_users]: ./users.md#admin-users
+[link_schema_user_assignments]: ./user-assignments.md
