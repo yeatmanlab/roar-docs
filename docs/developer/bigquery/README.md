@@ -7,6 +7,10 @@ ROAR's [assessment data][link_assessment_firestore_doc] is exported from Firesto
 Please read through this entire guide (and work through the examples) before executing your production queries with BigQuery. BigQuery is a very powerful tool but its incorrect use can inflate ROAR's costs so it is important to read through the guide to the end to adopt best practices.
 :::
 
+# Querying Admin Data
+
+ROAR's [admin data][link_bigquery_admin_data] is exported from Firestore to BigQuery in the same manner as assessment data, but with different tables, schema, and views. The following information applies to both admin and assessment BigQuery projects.
+
 ## Tables and Views
 
 BigQuery organizes data into datasets and tables (or views). Below are the key views available for querying in our lab's BigQuery project. The diagram below represents the relationships between these different views.
@@ -71,6 +75,7 @@ The diagram above only lists a subset of the attributes for each entity. For an 
 
 - [`users`][link_schema_users]
 - [`user_runs`][link_schema_user_runs]
+- [`user_scores`][link_schema_user_scores]
 - [`user_trials`][link_schema_user_trials]
 - [`districts`][link_schema_districts]
 - [`schools`][link_schema_schools]
@@ -425,14 +430,16 @@ Exporting to a GCS Bucket requires a few steps.
 
 [link_assessment_firestore_doc]: ../databases/assessment.md
 [link_bigquery]: https://cloud.google.com/bigquery?hl=en
+[link_bigquery_admin_data]: ./querying-admin-data.md
 [link_bq_export_options]: https://cloud.google.com/bigquery/docs/reference/standard-sql/export-statements#gcs_s3_export_option
 [link_gcloud_initialize]: https://cloud.google.com/sdk/docs/initializing
 [link_gcloud_install]: https://cloud.google.com/sdk/docs/install
 [link_iso_8601]: https://en.wikipedia.org/wiki/ISO_8601
 [link_lesson_swc_sql]: https://swcarpentry.github.io/sql-novice-survey/
 [link_schema_users]: ./users.md
-[link_schema_user_runs]: ./user_runs.md
-[link_schema_user_trials]: ./user_trials.md
+[link_schema_user_runs]: ./user-runs.md
+[link_schema_user_scores]: ./user-scores.md
+[link_schema_user_trials]: ./user-trials.md
 [link_schema_districts]: ./districts.md
 [link_schema_schools]: ./schools.md
 [link_schema_classes]: ./classes.md
