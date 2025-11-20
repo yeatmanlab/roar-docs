@@ -37,6 +37,6 @@ The BigQuery view `gse-roar-admin.admin.user_assignments` conforms to the follow
 | username                        | STRING         |          | The user's username                                                                                       |
 | user_birth_month                | STRING         |          | The user's birth month                                                                                    |
 | user_birth_year                 | STRING         |          | The user's birth year                                                                                     |
-| user_age_months_at_assignment   | STRING         |          | The user's age in months at the time the assignment was started                                           |
-| user_grade_at_assignment        | STRING         |          | The user's grade at the time the assignment was started                                                   |
+| user_age_months_at_assignment   | STRING         |          | The user's age in months at the time the assignment was assigned                                          |
+| user_grade_at_assignment        | STRING         |          | The user's grade at the time the assignment was assigned                                                  |
 | user_school_level               | STRING         |          | The user's school level                                                                                   |
