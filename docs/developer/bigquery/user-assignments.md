@@ -5,7 +5,6 @@ The BigQuery view `gse-roar-admin.admin.user_assignments` conforms to the follow
 | Field name                      | Data type      | Key type | Description                                                                                               |
 | :------------------------------ | :------------- | :------: | :-------------------------------------------------------------------------------------------------------- |
 | roar_uid                        | STRING         |    FK    | The user's unique ID in the ROAR system                                                                   |
-| age_months_at_assignment        | STRING         |          | The user's age in months at the time the assignment was started                                           |
 | assessment_pid                  | STRING         |          | The user's human-readable assessment PID                                                                  |
 | assessment_uid                  | STRING         |          | The user's auto-generated assessment UID                                                                  |
 | assessments                     | ARRAY\<STRING> |    FK    | A serialized (stringified) JSON object containing the array of assessment IDs included in this assignment |
@@ -38,5 +37,6 @@ The BigQuery view `gse-roar-admin.admin.user_assignments` conforms to the follow
 | username                        | STRING         |          | The user's username                                                                                       |
 | user_birth_month                | STRING         |          | The user's birth month                                                                                    |
 | user_birth_year                 | STRING         |          | The user's birth year                                                                                     |
-| user_grade_at_assignment        | STRING         |          | The user's grade at the time the assignment was started                                                   |
+| user_age_months_at_assignment   | STRING         |          | The user's age in months at the time the assignment was assigned                                          |
+| user_grade_at_assignment        | STRING         |          | The user's grade at the time the assignment was assigned                                                  |
 | user_school_level               | STRING         |          | The user's school level                                                                                   |
