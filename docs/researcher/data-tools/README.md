@@ -1,6 +1,374 @@
 # Data Tools
 The purpose of this page is to get researchers familiar with various tools often used in the lab. If you have any questions regarding any of these tools, please refer to the [Data Requests Page](https://yeatmanlab.github.io/roar-docs/researcher/data-requests/). 
 
+## BigQuery 
+The purpose of this section is to get researchers familiar with BigQuery (a tool to help researchers pull ROAR data in an efficient way), SQL (the coding language used to query data), and using the terminal to query ROAR data and Google Buckets to store the ROAR data. 
+
+- Please read Adam’s documentation and introduction to [BigQuery](https://yeatmanlab.github.io/roar-docs/developer/bigquery/). 
+    1. [Installing BigQuery](https://yeatmanlab.github.io/roar-docs/developer/bigquery/#installation-and-initialization)
+    2. [Learning SQL to query data](https://yeatmanlab.github.io/roar-docs/developer/bigquery/#querying-data)
+    3. [Exporting data to a google cloud bucket](https://yeatmanlab.github.io/roar-docs/developer/bigquery/#exporting-large-queries-to-a-google-cloud-bucket) 
+    4. Learn more about ROAR data through the BigQuery Schemas 
+
+### General Information for Pulling Data
+1. Copy the code chunks you would like to use.  
+**Note**: The extra code dealing with “assigning_” unpacks the JSON strings associated with those variables. Other variables such as “scores” are handled post pull.
+**Note**: Remove --comments before running query. 
+2. Input the correct text for each of the empty variables (e.g., google_bucket_name, year-month-day, assessment_abbreviation) 
+3. Copy and paste the edited code into your terminal. 
+4. Once you run this code in your terminal, you should direct yourself to the google bucket where you saved the data. 
+5. In the google bucket, you will find a large set of csv’s which should be labeled with year-month-day_assessment_abbreviation_###############.csv (or other csv name you have designated). 
+6. Select all of the ones you would like to download. Google bucket will create code for you to download to your system. 
+7. Create a singular folder with all downloaded csv’s.
+8. Direct yourself to the GitHub Repository “[Clean-ROAR-Data](https://github.com/yeatmanlab/Clean-ROAR-Data)”. 
+9.  Clone the repository by clicking the “<> Code” button → “Open with GitHub Desktop” OR “Clone using the web URL”. If you have issues please refer to the [GitHub tool section](https://yeatmanlab.github.io/roar-docs/researcher/data-tools/#github)
+10. Find the Rmd file that matches the assessment suite of the data you have pulled. (e.g., if you pull Morphology runs, direct yourself to Clean_ROARComp_Runs.Rmd). 
+11. Find the code chunks that match the assessment of the data you have pulled. 
+12. Run the necessary chunks for your data. NOTE: Play close attention to any changes in data file names that may change based off of your pull. 
+
+
+### Pulling All Runs of a Single Assessment
+```sql
+bq query --nouse_legacy_sql \
+'EXPORT DATA
+OPTIONS(
+  uri="gs://google_bucket_name/yyyy-mm-dd_assessment_abbreviation_allruns_*.csv", --sets the Google Bucket and the csv names 
+  format="CSV", --sets the output format
+  overwrite=true
+) AS
+SELECT --selects the variables the user wants and which dataframe they are coming from
+  u.assessment_pid, 
+  ur.* EXCEPT( --removes these variables from the selection
+      assigning_districts,
+      assigning_schools,
+      assigning_classes,
+      assigning_groups,
+      assigning_families
+  ),
+  TO_JSON_STRING(ur.assigning_districts) AS assigning_districts, --turns the variables from JSONs into strings 
+  TO_JSON_STRING(ur.assigning_schools) AS assigning_schools,
+  TO_JSON_STRING(ur.assigning_classes) AS assigning_classes,
+  TO_JSON_STRING(ur.assigning_groups) AS assigning_groups,
+  TO_JSON_STRING(ur.assigning_families) AS assigning_families
+FROM 
+  `gse-roar-assessment.assessment.users` AS u --assigns the users dataframe to the name "u"
+JOIN 
+  `gse-roar-assessment.assessment.user_runs` AS ur --assigns the user_runs dataframe to the name "ur"
+ON 
+  u.roar_uid = ur.roar_uid --merges the dataframes based on the variable roar_uid
+WHERE 
+  ur.task_id ="assessment_abbreviation"  --filters the dataframe to only the given task_id
+'
+```
+
+### Pulling All Trials of a Single Assessment
+```sql
+bq query --nouse_legacy_sql \
+'EXPORT DATA
+OPTIONS(
+ uri="gs://google_bucket_name/yyyy-mm-dd_assessment_abbreviation_alltrials_*.csv", --sets the Google Bucket and the csv names
+ format="csv", --sets the output format
+ overwrite=true
+) AS
+SELECT --selects the variables the user wants and which dataframe they come from 
+  u.assessment_pid,
+  u.birth_month,
+  u.birth_year,
+  u.grade,
+  ur.time_started,
+  ur.time_finished,
+  ut.*
+FROM
+  `gse-roar-assessment.assessment.users` AS u --assigns the users dataframe to the name "u" 
+JOIN
+ `gse-roar-assessment.assessment.user_trials` AS ut --assigns the user_trials dataframe to the name "ut" 
+ON
+  u.roar_uid = ut.roar_uid --merges the users and user_trials dataframes based on the variable roar_uid
+JOIN
+  `gse-roar-assessment.assessment.user_runs` AS ur --assigns the user_runs dataframe to the name "ur" 
+ON
+  ur.run_id = ut.run_id --merges the user_trials + user merged dataframe to create a large data frame with user_runs
+WHERE
+ ut.task_id = "assessment_abbreviation" --filters the dataframe to only the given task_id
+'
+```
+
+### Pulling All Runs of a Single Assessment by Date and Schools
+**Note**: The current output will go to your home directory saved as "output.csv". You can change the starting settings to save to a Google Bucket using the same format as above. 
+
+```sql
+bq query --nouse_legacy_sql --format=csv \
+'SELECT 
+  ur.roar_uid, 
+  u.roar_uid,
+  u.assessment_pid,
+  ur.run_id, 
+  ur.task_id, 
+  ur.time_started,
+  ur.time_finished,
+  ur.user_grade,
+  ur.age_months, 
+  ur.reliable,
+  ur.best_run, 
+  ur.completed, 
+  ur.engagement_flags, 
+  ur.user_school_level, 
+  TO_JSON_STRING(ur.assigning_districts) as assigning_districts,
+  TO_JSON_STRING(ur.assigning_schools) as assigning_schools, 
+  JSON_VALUE(ur.scores,"$.computed.composite.roarScore") AS swr_roar_score,
+  JSON_VALUE(ur.scores,"$.computed.composite.thetaEstimate") AS theta_estimate_run
+FROM `gse-roar-assessment.assessment.user_runs` AS ur
+JOIN `gse-roar-assessment.assessment.users` AS u
+ON u.roar_uid = ur.roar_uid
+WHERE 
+  task_id = "swr" 
+AND 
+  time_started > "2025-03-26" 
+AND 
+  "wsYCwr1E0goNR5yDvLak" IN UNNEST(assigning_schools)
+LIMIT 10' > output.csv
+```
+
+### Pulling All Runs for the 25-26 School Year to Determine the Student Count for Specific Runs 
+The [script](https://github.com/yeatmanlab/Clean-ROAR-Data/blob/main/CheckDataCount.Rmd) below helps pull the data for the 25-26 School Year, combines the BigQuery output and cleans the data so the researcher can calculate the number of students who have run all four foundational assessments and three (swr, pa, letter) of the foundational reading assessments. 
+
+**Note**: This code can be generalized to any specific date to determine the student count for any range of dates and any specific tasks. 
+
+```sql
+bq query --nouse_legacy_sql \
+'EXPORT DATA
+OPTIONS(
+ uri="gs://google_bucket_name/YYYY-MM-DD_checkdata_runs_*.csv",
+ format="csv",
+ overwrite=true
+) AS
+SELECT
+  u.assessment_pid,
+  ur.* EXCEPT(
+      assigning_districts,
+      assigning_schools,
+      assigning_classes,
+      assigning_groups,
+      assigning_families
+  ),
+  TO_JSON_STRING(ur.assigning_districts) AS assigning_districts,
+  TO_JSON_STRING(ur.assigning_schools) AS assigning_schools,
+  TO_JSON_STRING(ur.assigning_classes) AS assigning_classes,
+  TO_JSON_STRING(ur.assigning_groups) AS assigning_groups,
+  TO_JSON_STRING(ur.assigning_families) AS assigning_families
+FROM `gse-roar-assessment.assessment.user_runs` AS ur
+JOIN `gse-roar-assessment.assessment.users` AS u
+ON
+  u.roar_uid = ur.roar_uid
+WHERE
+  time_started > "2025-06-30"
+'
+```
+
+```r
+# All run csv's pulled from BigQuery will have the same run column names 
+# Set the run column names now
+run_colnames <- c("assessment_pid",	"document_name",	"timestamp",	"age_months_at_run",
+                  "assignment_id",	"best_run",	"cloud_sync_timestamp",	"completed",
+                  "engagement_flags", "is_demo_data", "is_test_data",
+                  "reliable",	"run_id",	"scores",	"task_id",
+                  "task_version",	"time_finished",	"time_started",	"user_birth_month",
+                  "user_birth_year",	"user_grade_at_run",	"user_school_level",
+                  "variant_id",	"roar_uid",	"assigning_districts",	
+                  "assigning_schools",	"assigning_classes",	"assigning_groups",
+                  "assigning_families")
+```
+
+```r
+# Define the base file name and the file path
+# You will have to change the date at the beginning of the base file name if you pulled on a different date 
+checkdata_run_base <- "YYYY-MM-DD_checkdata_runs_"
+checkdata_run_file_path <- "~/Documents/ROAR Primary Research Data/Check Data Count"
+
+# For loop creates a list of data file csv's that we will read in all at once 
+checkdata_run_data_list <- list()
+
+# Change the number after the colon (:) to be however many csv's downloaded out of the query from BigQuery 
+for (i in 0:48) {
+  file_name <- sprintf("%s%012d.csv", checkdata_run_base, i) # Create a string of zeros 
+  full_path <- file.path(checkdata_run_file_path, file_name) # Connect the file paths (base and file name)
+  
+  if (file.exists(full_path)) {
+    checkdata_run_data_list[[i + 1]] <- read.csv(full_path, header = FALSE, col.names = run_colnames) # Read in each separate csv 
+  } else {
+    warning(paste("File", full_path, "does not exist.")) # Print a warning if file does not exist 
+  }
+}
+
+# Combine all the separate data files into one 
+checkdata_run_combined_data <- do.call(rbind, checkdata_run_data_list) 
+```
+
+```r
+# Keep only the foundational reading measures 
+all_foundation_data <- checkdata_run_combined_data %>% 
+  filter(task_id %in% c("swr", "pa", "letter", "sre"))
+
+# Clean the data for complete and best reliable runs 
+# Count how many assessments each student has taken in a single administration 
+all_foundation_data_2526 <- all_foundation_data %>% 
+  group_by(assessment_pid, assignment_id) %>% 
+  filter(best_run=="true") %>% 
+  filter(reliable=="true") %>% 
+  filter(completed=="true") %>% 
+  filter(is_demo_data=="false") %>% 
+  filter(is_test_data=="false") %>% 
+  mutate(total_assessments = n())
+
+# Select important variables 
+all_foundation_data_2526 <- all_foundation_data_2526 %>% 
+  select(c(assessment_pid, task_id, assignment_id, total_assessments))
+
+# Filter for only students who have completed all 4 foundational assessments and 
+# keep only unique pids 
+foundational_only <- all_foundation_data_2526 %>% 
+  distinct(assessment_pid, .keep_all = TRUE) %>% 
+  filter(total_assessments==4)
+#925
+
+# Filter for only students who have completed 3 foundational assessments and 
+# keep only unique pids 
+three_foundation <- all_foundation_data_2526 %>% 
+  group_by(assessment_pid, assignment_id) %>% 
+  filter(task_id %in% c("swr", "pa", "letter")) %>%
+  mutate(total_assessments = n()) %>%
+  filter(total_assessments==3)
+#3291
+```
+
+### Pulling All Time All Runs Across All Assessments 
+This data pull is massive and pulls all runs across all students across all time periods across all assessments. 
+
+This may be helpful in determining how many students have taken at least one ROAR measure. The researcher can pull this and then run ```r length(unique(df$assessment_pid))``` to determine the number of unique students who have taken ROAR. 
+
+**Note: Pulling this amount of data is extremely costly! Please check to make sure that the existing datasets do not already exist in the Primary ROAR Research Data Google Drive or within other researchers local drives before pulling.**
+
+```sql
+bq query --nouse_legacy_sql \
+'EXPORT DATA
+OPTIONS(
+ uri="gs://google_bucket_name/YYYY-MM-DD_all_runs_*.csv",
+ format="csv",
+ overwrite=true
+) AS
+SELECT
+  u.assessment_pid,
+  ur.* EXCEPT(
+      assigning_districts,
+      assigning_schools,
+      assigning_classes,
+      assigning_groups,
+      assigning_families
+  ),
+  TO_JSON_STRING(ur.assigning_districts) AS assigning_districts,
+  TO_JSON_STRING(ur.assigning_schools) AS assigning_schools,
+  TO_JSON_STRING(ur.assigning_classes) AS assigning_classes,
+  TO_JSON_STRING(ur.assigning_groups) AS assigning_groups,
+  TO_JSON_STRING(ur.assigning_families) AS assigning_families
+FROM `gse-roar-assessment.assessment.user_runs` AS ur
+JOIN `gse-roar-assessment.assessment.users` AS u
+ON
+  u.roar_uid = ur.roar_uid
+'
+```
+
+### Pulling Demographic Data 
+Demographic data will include race, ethnicity, ELL status, IEP status, FRL status, home language, gender variables for students where the data was provided (via Clever/ClassLink or CSV upload).
+
+```sql
+bq query --nouse_legacy_sql \
+'EXPORT DATA
+OPTIONS(
+ uri="gs://google_bucket_name/YYYY-MM-DD_demographics_*.csv",
+ format="csv",
+ overwrite=true
+) AS
+SELECT au.* EXCEPT(classes_current, classes_all, districts_current, districts_all, families_current, families_all, groups_current, groups_all, schools_current, schools_all, race, tasks, variants, home_language),
+  TO_JSON_STRING(au.classes_current) AS classes_current,
+  TO_JSON_STRING(au.classes_all) AS classes_all,
+  TO_JSON_STRING(au.districts_current) AS districts_current,
+  TO_JSON_STRING(au.districts_all) AS districts_all,
+  TO_JSON_STRING(au.families_current) AS families_current,
+  TO_JSON_STRING(au.families_all) AS families_all,
+  TO_JSON_STRING(au.groups_current) AS groups_current,
+  TO_JSON_STRING(au.groups_all) AS groups_all,
+  TO_JSON_STRING(au.schools_current) AS schools_current,
+  TO_JSON_STRING(au.schools_all) AS schools_all,
+  TO_JSON_STRING(au.race) AS race,
+  TO_JSON_STRING(au.tasks) AS tasks,
+  TO_JSON_STRING(au.variants) AS variants,
+  TO_JSON_STRING(au.home_language) AS home_language
+FROM `gse-roar-admin.admin.users` AS au
+'
+```
+
+#### Cleaning Demographic Data 
+The demographics data can be difficult to wrangle for many reasons. Like most demographics data, there are opportunities for participants and researchers to enter data through open text boxes or drop downs with infinite options. Particularly, the race and ethnicity variables are often times filled with typing errors, grammatical errors, varying cases, and a variety of outcomes. The researcher will want to clean these variables and all other demographic variables to capture all the information they can while creating a concise and clean dataframe. 
+
+Feel free to explore and build off of this [cleaning script](https://github.com/yeatmanlab/Clean-ROAR-Data/blob/main/Clean_Demographics.Rmd) for cleaning demographics pulled from BigQuery. 
+
+### Pulling District Data
+This will help determine how many unique districts have been linked with ROAR. 
+
+**Note**: not all districts will have ROAR data. For example many districts will link via Clever, however, they might not yet or might never run ROAR. Additionally, the researcher will want to remove any test, demo, QA, and pilot districts. 
+
+```sql
+bq query --nouse_legacy_sql \
+'EXPORT DATA
+OPTIONS(
+ uri="gs://google_bucket_name/YYYY-MM-DD_districts_*.csv",
+ format="csv",
+ overwrite=true
+) AS
+SELECT
+  d.district_id,
+  d.is_demo_data,
+  d.is_test_data,
+  d.location_state,
+  d.name,
+  d.public_name
+FROM `gse-roar-assessment.assessment.districts` AS d
+'
+```
+
+### Pulling Schools Data
+This will help determine how many unique schools have been linked with ROAR. 
+
+**Note**: not all schools will have ROAR data. For example many schools will link via Clever, however, they might not yet or might never run ROAR. Additionally, the researcher will want to remove any test, demo, QA, and pilot schools. 
+
+```sql
+bq query --nouse_legacy_sql \
+'EXPORT DATA
+OPTIONS(
+ uri="gs://google_bucket_name/YYYY-MM-DD_schools_*.csv",
+ format="csv",
+ overwrite=true
+) AS
+SELECT
+  s.school_id,
+  s.district_id,
+  s.is_demo_data,
+  s.is_test_data,
+  s.location_state,
+  s.name
+FROM `gse-roar-assessment.assessment.schools` AS s
+'
+```
+
+## ROAR Data Dashboard 
+This section introduced researchers to the [ROAR Data Dashbaord](https://kelwentz.shinyapps.io/roar_data_dashboard/). The ROAR Data Dashboard is maintained by the ROAR Data Scientist using the All Time All Runs Across All Assessments query. 
+
+The ROAR Data Dashboard acts as an informative dashboard for researchers to determine completion rates, distributions, and overall look into the ROAR data without requiring expensive queries and data processing time. 
+
+The ROAR Data Dashboard has features for filtering including date filters, grade selections, assessment selection, and variant filters for each assessment selected. 
+
+The ROAR Data Dashboard visualizes data by unique runs or by unique students. There are grade distributions and tables, district distributions with deidentified district ids, distributions of runs/students across time, and a demographics table that depicts the percent of data that researchers have access to for each demographic variable. 
+
 ## GitHub 
 This section will get researchers acquainted with using GitHub for research projects, IRB modifications, documentation updates, etc. 
 
