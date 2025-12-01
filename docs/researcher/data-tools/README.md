@@ -361,7 +361,7 @@ FROM `gse-roar-assessment.assessment.schools` AS s
 ```
 
 ## ROAR Data Dashboard 
-This section introduced researchers to the [ROAR Data Dashbaord](https://kelwentz.shinyapps.io/roar_data_dashboard/). The ROAR Data Dashboard is maintained by the ROAR Data Scientist using the All Time All Runs Across All Assessments query. 
+This section introduced researchers to the [ROAR Data Dashboard](https://kelwentz.shinyapps.io/roar_data_dashboard/). The ROAR Data Dashboard is maintained by the ROAR Data Scientist using the All Time All Runs Across All Assessments query. 
 
 The ROAR Data Dashboard acts as an informative dashboard for researchers to determine completion rates, distributions, and overall look into the ROAR data without requiring expensive queries and data processing time. 
 

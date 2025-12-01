@@ -13,7 +13,7 @@ The Data Request Form helps data scientists organize requests/questions coming i
 
 The Data Request Form helps create a flow for documentation and ensures users have read documentation prior to asking for help. 
 
-## WHy a Data Task Management Project Board 
+## Why a Data Task Management Project Board 
 The task management system helps researchers see where their tasks are in order of priority. 
 
 The task management system allows researchers to see where the ROAR Data Scientist is at in the process of completing the task (To Do, In Progress, Done, Blocked).
