@@ -43,7 +43,7 @@ df <- df %>%
   distinct()
 ```
 
-5. Remove test, demo, QA, pilot, and opt-out student accounts. Test aaccounts are often created for the interal developers and partnerships teams to test the assessments for correct features and outputs. Demo accounts are often created for organization administrators to explore ROAR and determine if the assessments are fitting for their students. QA accounts are often created for the QA testers to test any changes across the different variants or updates to the dashboard. Pilot accounts are typically created for school districts that are running a small set of students to determine if ROAR is a good fit for their organization. Opt-out accounts are students who have taken ROAR and their data will be used by the school, but their parents/guardians have opted out their data from research use and purposes. 
+5. Remove test, demo, QA, pilot, and **opt-out** student accounts. Test aaccounts are often created for the interal developers and partnerships teams to test the assessments for correct features and outputs. Demo accounts are often created for organization administrators to explore ROAR and determine if the assessments are fitting for their students. QA accounts are often created for the QA testers to test any changes across the different variants or updates to the dashboard. Pilot accounts are typically created for school districts that are running a small set of students to determine if ROAR is a good fit for their organization. Opt-out accounts are students who have taken ROAR and their data will be used by the school, but their parents/guardians have opted out their data from research use and purposes. 
 
 ```r
 # remove using is_test and is_demo 
