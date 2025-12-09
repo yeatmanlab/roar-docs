@@ -73,6 +73,7 @@ export default defineUserConfig({
           { text: "Data Tools", link: "/researcher/data-tools/" },
           { text: "Data Organization", link: "/researcher/data-organization/" },
           { text: "Data Requests", link: "/researcher/data-requests/" },
+          { text: "Data Cleaning", link: "/researcher/data-cleaning/" },
         ],
       },
       {
@@ -339,6 +340,12 @@ export default defineUserConfig({
           link: "/researcher/data-organization/",
           collapsible: true,
           children: getChildren("./docs/researcher/data-organization"),
+        },
+        {
+          text: "Data Cleaning",
+          link: "/researcher/data-cleaning/",
+          collapsible: true,
+          children: getChildren("./docs/researcher/data-cleaning"),
         },
         {
           text: "Data Requests",
