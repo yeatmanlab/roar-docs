@@ -24,15 +24,63 @@ The purpose of this section is to get researchers familiar with BigQuery (a tool
 9.  Clone the repository by clicking the “<> Code” button → “Open with GitHub Desktop” OR “Clone using the web URL”. If you have issues please refer to the [GitHub tool section](https://yeatmanlab.github.io/roar-docs/researcher/data-tools/#github)
 10. Find the Rmd file that matches the assessment suite of the data you have pulled. (e.g., if you pull Morphology runs, direct yourself to Clean_ROARComp_Runs.Rmd). 
 11. Find the code chunks that match the assessment of the data you have pulled. 
-12. Run the necessary chunks for your data. NOTE: Play close attention to any changes in data file names that may change based off of your pull. 
+12. Run the necessary chunks for your data. NOTE: Play close attention to any changes in data file names that may change based off of your pull.
 
+### Pulling Data: user_scores schema  
+The [user_scores schema]((https://yeatmanlab.github.io/roar-docs/developer/bigquery/user-scores.html)) allows researchers to query run-level data without having to unpack the JSON column scores. When pulled from BigQuery, the data is in long format with variables such as type (values include: computed or raw), domain (values include: lab, composite, DEL, FSM, LSM...), name (values include: sreScore, percentile, numAttempted, numCorrect), value (values are the numeric value of the score), and assessment_stage (values include: practice, test for raw scores).
 
-### Pulling All Runs of a Single Assessment
+In order to get the dataframe in wide format that is similar (but not the same as when pulling and unpacking data via the user_runs schema), researchers must pivot the dataframe wide by type, domain, and name and assign values to value. (see code in "New Procedure" sections of the [Clean-ROAR-Data GitHub repository](https://github.com/yeatmanlab/Clean-ROAR-Data)). There are 3 rows for every run_id.  The  assessment_stage column differs (NA for computed data and test or practice for raw data), If the researcher is working with raw data rather than composite, they can filter by assessment_stage for the scores that they need.
+
+#### Pulling All Runs of a Single Assessment w/o Unpacking
+
 ```sql
 bq query --nouse_legacy_sql \
 'EXPORT DATA
 OPTIONS(
-  uri="gs://google_bucket_name/yyyy-mm-dd_assessment_abbreviation_allruns_*.csv", --sets the Google Bucket and the csv names 
+ uri="gs://[google_bucket_name]/YYYY-MM-DD_[task]_allruns_*.csv",
+ format="csv",
+ overwrite=true
+) AS
+SELECT
+  u.assessment_pid,
+  us.*,
+  ur.age_months_at_run,
+  ur.is_demo_data,
+  ur.is_test_data,
+  ur.reliable,
+  ur.completed,
+  ur.best_run,
+  ur.time_started,
+  ur.time_finished,
+  ur.user_birth_month,
+  ur.user_birth_year,
+  ur.user_grade_at_run,
+  TO_JSON_STRING(ur.assigning_districts) AS assigning_districts,
+  TO_JSON_STRING(ur.assigning_schools) AS assigning_schools,
+  TO_JSON_STRING(ur.assigning_classes) AS assigning_classes,
+  TO_JSON_STRING(ur.assigning_groups) AS assigning_groups,
+  TO_JSON_STRING(ur.assigning_families) AS assigning_families
+FROM `gse-roar-assessment.assessment.user_runs` AS ur
+JOIN `gse-roar-assessment.assessment.users` AS u
+ON
+  u.roar_uid = ur.roar_uid
+JOIN `gse-roar-assessment.assessment.user_scores` AS us
+ON
+  ur.run_id = us.run_id
+WHERE
+  us.task_id = "[core_task]"
+'
+```
+
+### Pulling Data: user_runs schema 
+Pulling data from the [user_runs schema](https://yeatmanlab.github.io/roar-docs/developer/bigquery/user-runs.html) requires researchers to unpack/unnest JSON columns to access scores. The data is unpacked into a wide format with each score variable as a separate unique column (see code in "Old Procedure" sections of the [Clean-ROAR-Data GitHub repository](https://github.com/yeatmanlab/Clean-ROAR-Data) to learn how to unpack JSON columns).
+
+#### Pulling All Runs of a Single Assessment
+```sql
+bq query --nouse_legacy_sql \
+'EXPORT DATA
+OPTIONS(
+  uri="gs://google_bucket_name/yyyy-mm-dd_[task]_allruns_*.csv", --sets the Google Bucket and the csv names 
   format="CSV", --sets the output format
   overwrite=true
 ) AS
@@ -57,43 +105,11 @@ JOIN
 ON 
   u.roar_uid = ur.roar_uid --merges the dataframes based on the variable roar_uid
 WHERE 
-  ur.task_id ="assessment_abbreviation"  --filters the dataframe to only the given task_id
+  ur.task_id = "assessment_abbreviation"  --filters the dataframe to only the given task_id
 '
 ```
 
-### Pulling All Trials of a Single Assessment
-```sql
-bq query --nouse_legacy_sql \
-'EXPORT DATA
-OPTIONS(
- uri="gs://google_bucket_name/yyyy-mm-dd_assessment_abbreviation_alltrials_*.csv", --sets the Google Bucket and the csv names
- format="csv", --sets the output format
- overwrite=true
-) AS
-SELECT --selects the variables the user wants and which dataframe they come from 
-  u.assessment_pid,
-  u.birth_month,
-  u.birth_year,
-  u.grade,
-  ur.time_started,
-  ur.time_finished,
-  ut.*
-FROM
-  `gse-roar-assessment.assessment.users` AS u --assigns the users dataframe to the name "u" 
-JOIN
- `gse-roar-assessment.assessment.user_trials` AS ut --assigns the user_trials dataframe to the name "ut" 
-ON
-  u.roar_uid = ut.roar_uid --merges the users and user_trials dataframes based on the variable roar_uid
-JOIN
-  `gse-roar-assessment.assessment.user_runs` AS ur --assigns the user_runs dataframe to the name "ur" 
-ON
-  ur.run_id = ut.run_id --merges the user_trials + user merged dataframe to create a large data frame with user_runs
-WHERE
- ut.task_id = "assessment_abbreviation" --filters the dataframe to only the given task_id
-'
-```
-
-### Pulling All Runs of a Single Assessment by Date and Schools
+#### Pulling All Runs of a Single Assessment by Date and Schools
 **Note**: The current output will go to your home directory saved as "output.csv". You can change the starting settings to save to a Google Bucket using the same format as above. 
 
 ```sql
@@ -129,7 +145,7 @@ AND
 LIMIT 10' > output.csv
 ```
 
-### Pulling All Runs for the 25-26 School Year to Determine the Student Count for Specific Runs 
+#### Pulling All Runs for the 25-26 School Year to Determine the Student Count for Specific Runs 
 The [script](https://github.com/yeatmanlab/Clean-ROAR-Data/blob/main/CheckDataCount.Rmd) below helps pull the data for the 25-26 School Year, combines the BigQuery output and cleans the data so the researcher can calculate the number of students who have run all four foundational assessments and three (swr, pa, letter) of the foundational reading assessments. 
 
 **Note**: This code can be generalized to any specific date to determine the student count for any range of dates and any specific tasks. 
@@ -241,7 +257,7 @@ three_foundation <- all_foundation_data_2526 %>%
 #3291
 ```
 
-### Pulling All Time All Runs Across All Assessments 
+#### Pulling All Time All Runs Across All Assessments 
 This data pull is massive and pulls all runs across all students across all time periods across all assessments. 
 
 This may be helpful in determining how many students have taken at least one ROAR measure. The researcher can pull this and then run ```r length(unique(df$assessment_pid))``` to determine the number of unique students who have taken ROAR. 
@@ -277,6 +293,40 @@ ON
 '
 ```
 
+### Pulling Data: user_trials schema 
+
+#### Pulling All Trials of a Single Assessment
+```sql
+bq query --nouse_legacy_sql \
+'EXPORT DATA
+OPTIONS(
+ uri="gs://google_bucket_name/yyyy-mm-dd_assessment_abbreviation_alltrials_*.csv", --sets the Google Bucket and the csv names
+ format="csv", --sets the output format
+ overwrite=true
+) AS
+SELECT --selects the variables the user wants and which dataframe they come from 
+  u.assessment_pid,
+  u.birth_month,
+  u.birth_year,
+  u.grade,
+  ur.time_started,
+  ur.time_finished,
+  ut.*
+FROM
+  `gse-roar-assessment.assessment.users` AS u --assigns the users dataframe to the name "u" 
+JOIN
+ `gse-roar-assessment.assessment.user_trials` AS ut --assigns the user_trials dataframe to the name "ut" 
+ON
+  u.roar_uid = ut.roar_uid --merges the users and user_trials dataframes based on the variable roar_uid
+JOIN
+  `gse-roar-assessment.assessment.user_runs` AS ur --assigns the user_runs dataframe to the name "ur" 
+ON
+  ur.run_id = ut.run_id --merges the user_trials + user merged dataframe to create a large data frame with user_runs
+WHERE
+ ut.task_id = "assessment_abbreviation" --filters the dataframe to only the given task_id
+'
+```
+
 ### Pulling Demographic Data 
 Demographic data will include race, ethnicity, ELL status, IEP status, FRL status, home language, gender variables for students where the data was provided (via Clever/ClassLink or CSV upload).
 
@@ -306,11 +356,6 @@ SELECT au.* EXCEPT(classes_current, classes_all, districts_current, districts_al
 FROM `gse-roar-admin.admin.users` AS au
 '
 ```
-
-#### Cleaning Demographic Data 
-The demographics data can be difficult to wrangle for many reasons. Like most demographics data, there are opportunities for participants and researchers to enter data through open text boxes or drop downs with infinite options. Particularly, the race and ethnicity variables are often times filled with typing errors, grammatical errors, varying cases, and a variety of outcomes. The researcher will want to clean these variables and all other demographic variables to capture all the information they can while creating a concise and clean dataframe. 
-
-Feel free to explore and build off of this [cleaning script](https://github.com/yeatmanlab/Clean-ROAR-Data/blob/main/Clean_Demographics.Rmd) for cleaning demographics pulled from BigQuery. 
 
 ### Pulling District Data
 This will help determine how many unique districts have been linked with ROAR. 
