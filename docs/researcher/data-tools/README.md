@@ -569,3 +569,19 @@ Try to create an issue related to the current repository, it can be anything. As
 
 ### Try out GitHub
 The repository [github-learning](https://github.com/yeatmanlab/github-learning) is a way for researchers to get hands-on experience with GitHub without the fear of messing up research code or lab materials. Feel free to mess around with it as much as possible, get comfortable with this fake repository, so you are confident in the real repository with real data. 
+
+## roarutility R Package 
+
+The roarutility R package was developed by ROAR Data Scientist, Kelly Wentzlof. The package includes convenience functions to improve and simplify common cleaning and data processing tasks. 
+
+The package includes the following functions: 
+- roar.read.csv: reads ROAR data using read.csv() function and removes opt-outs from the dataframe using a provided Google Drive link and authentication; filters the participants who opt-out of research 
+- clean_strings: removes extra characters from assigning_* organizational variables and converts empty string to NA values 
+- remove_empty_cols: removes columns with all NA values that are not necessary for analyses 
+- remove_duplicates: removes duplicate rows within the dataframe 
+- remove_test_accounts: removes test, demo, QA, and pilot accounts 
+- remove_na_accounts: removes NA values in assessment_pid column 
+- estimate_grade: estimates grade using age_months_at_run
+- standardize_grade: cleans grade to uniform values (e.g., "2", "two", "2nd" all become "2") 
+- filter_assessments: keeps best_run, reliable, and/or complete assessments for the assessments where these features are active
+- standardize_demographics: creates uniform values for demographic variables (e.g., race variable includes values "Chinese", "Japanese", "Asian" all become "Asian")
