@@ -579,8 +579,7 @@ The package includes the following functions:
 - clean_strings: removes extra characters from assigning_* organizational variables and converts empty string to NA values 
 - remove_empty_cols: removes columns with all NA values that are not necessary for analyses 
 - remove_duplicates: removes duplicate rows within the dataframe 
-- remove_test_accounts: removes test, demo, QA, and pilot accounts 
-- remove_na_accounts: removes NA values in assessment_pid column 
+- remove_accounts: removes test, demo, QA, pilot accounts, and NA assessment_pid 
 - estimate_grade: estimates grade using age_months_at_run
 - standardize_grade: cleans grade to uniform values (e.g., "2", "two", "2nd" all become "2") 
 - filter_assessments: keeps best_run, reliable, and/or complete assessments for the assessments where these features are active
