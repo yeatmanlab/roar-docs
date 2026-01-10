@@ -80,7 +80,7 @@ Pulling data from the [user_runs schema](https://yeatmanlab.github.io/roar-docs/
 bq query --nouse_legacy_sql \
 'EXPORT DATA
 OPTIONS(
-  uri="gs://google_bucket_name/yyyy-mm-dd_[task]_allruns_*.csv", --sets the Google Bucket and the csv names 
+  uri="gs://[google_bucket_name]/YYYY-MM-DD_[task]_allruns_*.csv", --sets the Google Bucket and the csv names 
   format="CSV", --sets the output format
   overwrite=true
 ) AS
@@ -154,7 +154,7 @@ The [script](https://github.com/yeatmanlab/Clean-ROAR-Data/blob/main/CheckDataCo
 bq query --nouse_legacy_sql \
 'EXPORT DATA
 OPTIONS(
- uri="gs://google_bucket_name/YYYY-MM-DD_checkdata_runs_*.csv",
+ uri="gs://[google_bucket_name]/YYYY-MM-DD_checkdata_runs_*.csv",
  format="csv",
  overwrite=true
 ) AS
@@ -268,7 +268,7 @@ This may be helpful in determining how many students have taken at least one ROA
 bq query --nouse_legacy_sql \
 'EXPORT DATA
 OPTIONS(
- uri="gs://google_bucket_name/YYYY-MM-DD_all_runs_*.csv",
+ uri="gs://[google_bucket_name]/YYYY-MM-DD_all_runs_*.csv",
  format="csv",
  overwrite=true
 ) AS
@@ -300,7 +300,7 @@ ON
 bq query --nouse_legacy_sql \
 'EXPORT DATA
 OPTIONS(
- uri="gs://google_bucket_name/yyyy-mm-dd_assessment_abbreviation_alltrials_*.csv", --sets the Google Bucket and the csv names
+ uri="gs://[google_bucket_name]/YYYY-MM-DD_assessment_abbreviation_alltrials_*.csv", --sets the Google Bucket and the csv names
  format="csv", --sets the output format
  overwrite=true
 ) AS
@@ -334,7 +334,7 @@ Demographic data will include race, ethnicity, ELL status, IEP status, FRL statu
 bq query --nouse_legacy_sql \
 'EXPORT DATA
 OPTIONS(
- uri="gs://google_bucket_name/YYYY-MM-DD_demographics_*.csv",
+ uri="gs://[google_bucket_name]/YYYY-MM-DD_demographics_*.csv",
  format="csv",
  overwrite=true
 ) AS
@@ -366,7 +366,7 @@ This will help determine how many unique districts have been linked with ROAR.
 bq query --nouse_legacy_sql \
 'EXPORT DATA
 OPTIONS(
- uri="gs://google_bucket_name/YYYY-MM-DD_districts_*.csv",
+ uri="gs://[google_bucket_name]/YYYY-MM-DD_districts_*.csv",
  format="csv",
  overwrite=true
 ) AS
@@ -390,7 +390,7 @@ This will help determine how many unique schools have been linked with ROAR.
 bq query --nouse_legacy_sql \
 'EXPORT DATA
 OPTIONS(
- uri="gs://google_bucket_name/YYYY-MM-DD_schools_*.csv",
+ uri="gs://[google_bucket_name]/YYYY-MM-DD_schools_*.csv",
  format="csv",
  overwrite=true
 ) AS
