@@ -228,6 +228,7 @@ df <- df %>%
 ```
 
 ## BigQuery Demographics 
+The demographics data can be difficult to wrangle for many reasons. Like most demographics data, there are opportunities for participants and researchers to enter data through open text boxes or drop downs with infinite options. Particularly, the race and ethnicity variables are often times filled with typing errors, grammatical errors, varying cases, and a variety of outcomes. The researcher will want to clean these variables and all other demographic variables to capture all the information they can while creating a concise and clean dataframe. 
 
 1. Filter only student demographics. Across Clever and ClassLink, BigQuery stores demographic information for students, teachers, and administrators. Researchers likely only care about the student demographic data. 
 
