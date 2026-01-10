@@ -24,7 +24,7 @@ The purpose of this section is to get researchers familiar with BigQuery (a tool
 9.  Clone the repository by clicking the “<> Code” button → “Open with GitHub Desktop” OR “Clone using the web URL”. If you have issues please refer to the [GitHub tool section](https://yeatmanlab.github.io/roar-docs/researcher/data-tools/#github)
 10. Find the Rmd file that matches the assessment suite of the data you have pulled. (e.g., if you pull Morphology runs, direct yourself to Clean_ROARComp_Runs.Rmd). 
 11. Find the code chunks that match the assessment of the data you have pulled. 
-12. Run the necessary chunks for your data. NOTE: Play close attention to any changes in data file names that may change based off of your pull.
+12. Run the necessary chunks for your data. NOTE: Pay close attention to any changes in data file names that may change based off of your pull.
 
 ### Pulling Data: user_scores schema  
 The [user_scores schema]((https://yeatmanlab.github.io/roar-docs/developer/bigquery/user-scores.html)) allows researchers to query run-level data without having to unpack the JSON column scores. When pulled from BigQuery, the data is in long format with variables such as type (values include: computed or raw), domain (values include: lab, composite, DEL, FSM, LSM...), name (values include: sreScore, percentile, numAttempted, numCorrect), value (values are the numeric value of the score), and assessment_stage (values include: practice, test for raw scores).
