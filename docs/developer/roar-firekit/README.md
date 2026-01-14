@@ -645,3 +645,496 @@ All methods include:
 - Complete implementation checklist with 50+ items
 
 The migration strategy prioritizes assessment initialization and completion (HIGH priority) before parent registration (MEDIUM priority) and configuration checks (LOW priority).
+
+---
+
+## Appendix A: Detailed Assessment Run Methods (RoarAppkit)
+
+This appendix provides detailed documentation of the lower-level assessment methods available through the RoarAppkit instance returned by `startAssessment()`. These methods handle the actual assessment execution, trial recording, and score tracking.
+
+### A.1 Run Lifecycle Methods
+
+#### A.1.1 `appkit.startRun()`
+
+**Description**: Creates a new run document in Firestore and initializes trial tracking. Must be called before any trial data can be written.
+
+**Parameters**:
+- `additionalRunMetadata?: { [key: string]: string }` - Optional metadata to attach to run
+
+**Return Type**: `Promise<void>`
+
+**Firestore Operations**:
+- **READ**: `users/{roarUid}` - Get user data (grade, assessmentPid, etc.)
+- **WRITE**: `users/{roarUid}/runs/{runId}` - Create run document with:
+  - `id`, `assignmentId`, `assigningOrgs`, `readOrgs`
+  - `taskId`, `taskVersion`, `variantId`
+  - `completed: false`, `reliable: false`
+  - `timeStarted: serverTimestamp()`
+  - `userData: { grade, assessmentPid, birthMonth, birthYear, schoolLevel }`
+  - `testData`, `demoData` flags
+- **WRITE**: `users/{roarUid}` - Update `tasks` and `variants` arrays
+- **WRITE**: `users/{roarUid}` - Update `lastUpdated` timestamp
+
+**Called From**:
+- Assessments: Before jsPsych timeline starts
+- Example: `await firekit.startRun({ customField: 'value' });`
+
+**Backend Equivalent**:
+- **SDK Command**: `sdk.run.create(assignmentId, taskId, variantId, metadata)`
+- **REST Endpoint**: `POST /api/v1/runs`
+  - Request body: `{ assignmentId, taskId, variantId, metadata }`
+  - Response: `{ runId, createdAt }`
+
+**Notes**:
+- Sets internal `_started` flag to true
+- Propagates test/demo flags from user, task, and variant
+- Migration: Backend should handle org resolution and user data extraction
+- Real-time: Not required; standard request/response
+
+---
+
+#### A.1.2 `appkit.writeTrial()`
+
+**Description**: Saves individual trial data to Firestore and updates run-level scores. Core method called after each assessment trial.
+
+**Parameters**:
+- `trialData: Record<string, unknown>` - Trial data object containing:
+  - **Required**: `assessment_stage: string` - 'practice_response' or 'test_response'
+  - **Required**: `correct: boolean` - Whether answer was correct
+  - **Optional**: `subtask: string` - Subtask name (e.g., 'FSM', 'LSM', 'DEL' for PA)
+  - **Optional**: `thetaEstimate: number` - IRT ability estimate
+  - **Optional**: `thetaSE: number` - Standard error of theta
+  - **Optional**: Any other trial-specific data
+- `computedScoreCallback?: (rawScores: RawScores) => Promise<ComputedScores>` - Custom scoring function
+
+**Return Type**: `Promise<void>`
+
+**Firestore Operations**:
+- **WRITE**: `users/{roarUid}/runs/{runId}/trials/{trialId}` - Create trial document with:
+  - All trial data (converted for Firestore compatibility)
+  - `taskId`, `testData`, `demoData` flags
+  - `serverTimestamp`
+  - Interaction data (`interaction_blur`, `interaction_focus`, etc.)
+- **WRITE**: `users/{roarUid}/runs/{runId}` - Update run scores:
+  - `scores.raw.{subtask}.{stage}.thetaEstimate`
+  - `scores.raw.{subtask}.{stage}.thetaSE`
+  - `scores.raw.{subtask}.{stage}.numAttempted` (increment)
+  - `scores.raw.{subtask}.{stage}.numCorrect` (increment)
+  - `scores.raw.{subtask}.{stage}.numIncorrect` (increment)
+  - `scores.computed.*` (custom computed scores)
+- **WRITE**: `users/{roarUid}/runs/{runId}` - Update interaction counters:
+  - `interactions.{stage}.blur` (increment)
+  - `interactions.{stage}.focus` (increment)
+  - `interactions.{stage}.fullscreenenter` (increment)
+  - `interactions.{stage}.fullscreenexit` (increment)
+- **WRITE**: `users/{roarUid}` - Update `lastUpdated` timestamp
+
+**Called From**:
+- Assessments: jsPsych `on_finish` or `on_data_update` callbacks
+- Example:
+  ```javascript
+  {
+    type: 'image-keyboard-response',
+    on_finish: (data) => firekit.writeTrial(data)
+  }
+  ```
+
+**Backend Equivalent**:
+- **SDK Command**: `sdk.trial.record(runId, trialData)`
+- **REST Endpoint**: `POST /api/v1/runs/{runId}/trials`
+  - Request body: `{ trialData, computedScores }`
+  - Response: `{ trialId, updatedScores }`
+
+**Notes**:
+- Handles subtask-based scoring (e.g., PA has FSM, LSM, DEL)
+- Default subtask is 'composite' if not specified
+- Automatically calculates default computed scores (numCorrect - numIncorrect)
+- Validates required fields before writing
+- Converts URL objects to strings for Firestore compatibility
+- Migration: Backend should handle score aggregation and interaction tracking
+- Real-time: Not required for trials; batch writes acceptable
+
+**Score Calculation Details**:
+- For each trial, updates both subtask-specific scores and composite scores
+- Raw scores track: `numAttempted`, `numCorrect`, `numIncorrect`, `thetaEstimate`, `thetaSE`
+- Computed scores can be customized via callback or default to `numCorrect - numIncorrect`
+- Supports adaptive assessments with theta estimates
+
+---
+
+#### A.1.3 `appkit.finishRun()`
+
+**Description**: Marks a run as completed in Firestore. Called when assessment ends.
+
+**Parameters**:
+- `finishingMetaData?: { [key: string]: unknown }` - Optional metadata (e.g., final scores, completion reason)
+
+**Return Type**: `Promise<boolean | undefined>`
+
+**Firestore Operations**:
+- **WRITE**: `users/{roarUid}/runs/{runId}` - Update:
+  - `completed: true`
+  - `timeFinished: serverTimestamp()`
+  - Any additional metadata from `finishingMetaData`
+- **WRITE**: `users/{roarUid}` - Update `lastUpdated` timestamp
+
+**Called From**:
+- Assessments: jsPsych `on_finish` callback
+- Example:
+  ```javascript
+  jsPsych.init({
+    timeline: exp,
+    on_finish: () => firekit.finishRun({ reason: 'completed' })
+  });
+  ```
+
+**Backend Equivalent**:
+- **SDK Command**: `sdk.run.finish(runId, metadata)`
+- **REST Endpoint**: `PATCH /api/v1/runs/{runId}/finish`
+  - Request body: `{ metadata }`
+  - Response: `{ finishedAt }`
+
+**Notes**:
+- Sets internal `completed` flag to true
+- Cannot finish if run is aborted
+- Migration: Simple state update, no complex logic
+- Real-time: Not required; standard request/response
+
+---
+
+#### A.1.4 `appkit.abortRun()`
+
+**Description**: Prevents further writes to a run. Used when assessment is abandoned or encounters error.
+
+**Parameters**: None
+
+**Return Type**: `void` (synchronous)
+
+**Firestore Operations**: None (client-side only flag)
+
+**Called From**:
+- Assessments: Error handlers, user abandonment
+
+**Backend Equivalent**:
+- **SDK Command**: `sdk.run.abort(runId)` (optional)
+- **REST Endpoint**: Not strictly necessary; could be `PATCH /api/v1/runs/{runId}/abort`
+
+**Notes**:
+- Sets internal `aborted` flag to true
+- Prevents `finishRun()` and `writeTrial()` from executing
+- Does NOT write to Firestore (client-side guard only)
+- Migration: Could add server-side abort status for tracking
+
+---
+
+### A.2 Engagement & Interaction Methods
+
+#### A.2.1 `appkit.addInteraction()`
+
+**Description**: Logs user interaction events (blur, focus, fullscreen) for current trial. Tracks engagement quality.
+
+**Parameters**:
+- `interaction: InteractionEvent` - Object containing:
+  - `event: 'blur' | 'focus' | 'fullscreenenter' | 'fullscreenexit'`
+  - `trial: number` - Trial number
+  - `time: number` - Timestamp of interaction
+
+**Return Type**: `void` (synchronous)
+
+**Firestore Operations**: None (buffered until `writeTrial()`)
+
+**Called From**:
+- Assessments: Window/document event listeners
+- Example:
+  ```javascript
+  window.addEventListener('blur', () => {
+    firekit.addInteraction({ event: 'blur', trial: currentTrial, time: Date.now() });
+  });
+  ```
+
+**Backend Equivalent**:
+- **SDK Command**: `sdk.interaction.track(event, trial, time)` (client-side buffer)
+- **REST Endpoint**: None (sent with trial data in `writeTrial`)
+
+**Notes**:
+- Interactions buffered in memory until `writeTrial()` is called
+- Written to trial document as `interaction_blur`, `interaction_focus`, etc.
+- Run-level counters incremented in `interactions.{stage}.{event}`
+- Migration: Can remain client-side buffering, sent with trial data
+
+---
+
+#### A.2.2 `appkit.updateEngagementFlags()`
+
+**Description**: Sets engagement quality flags on run (e.g., 'rushed', 'distracted') and optionally marks run as reliable.
+
+**Parameters**:
+- `flagNames: string[]` - Array of engagement flag names
+- `markAsReliable?: boolean` - Whether to mark run as reliable (default: false)
+- `reliableByBlock?: object` - Block-specific reliability (e.g., `{ FSM: true, LSM: false }`)
+
+**Return Type**: `Promise<void>`
+
+**Firestore Operations**:
+- **WRITE**: `users/{roarUid}/runs/{runId}` - Update:
+  - `engagementFlags: { [flagName]: true, ... }`
+  - `reliable: boolean`
+  - `reliableByBlock?: { [blockName]: boolean }` (if provided)
+
+**Called From**:
+- Assessments: After scoring/analysis determines engagement quality
+- Example:
+  ```javascript
+  await firekit.updateEngagementFlags(['rushed', 'low_accuracy'], false);
+  ```
+
+**Backend Equivalent**:
+- **SDK Command**: `sdk.run.setEngagement(runId, flags, reliable, reliableByBlock)`
+- **REST Endpoint**: `PATCH /api/v1/runs/{runId}/engagement`
+  - Request body: `{ flags, reliable, reliableByBlock }`
+
+**Notes**:
+- Overwrites previous engagement flags (not additive)
+- Used for data quality filtering in reports
+- Migration: Simple metadata update
+
+---
+
+### A.3 Task & Variant Methods
+
+#### A.3.1 `appkit.validateParameters()`
+
+**Description**: Validates variant parameters against JSON schema before starting assessment.
+
+**Parameters**:
+- `parameterSchema: JSONSchemaType<unknown>` - JSON Schema (draft 2020-12)
+
+**Return Type**: `Promise<void>` (throws on validation error)
+
+**Firestore Operations**: None (client-side validation)
+
+**Called From**:
+- Assessments: Before `startRun()` to validate config
+
+**Backend Equivalent**:
+- **SDK Command**: `sdk.variant.validate(params, schema)` (client-side)
+- **REST Endpoint**: None (validation should happen client-side)
+
+**Notes**:
+- Uses AJV 2020 for validation
+- Throws detailed error messages for invalid params
+- Migration: Keep as client-side validation
+
+---
+
+#### A.3.2 `appkit.updateTaskParams()`
+
+**Description**: Updates variant parameters mid-assessment and creates new variant if needed.
+
+**Parameters**:
+- `newParams: { [key: string]: unknown }` - New parameter values
+
+**Return Type**: `Promise<void>`
+
+**Firestore Operations**:
+- **WRITE**: `tasks/{taskId}/variants/*` - Create new variant if params don't match existing
+- **WRITE**: `users/{roarUid}` - Remove old variant, add new variant to arrays
+- **WRITE**: `users/{roarUid}/runs/{runId}` - Update `variantId`
+
+**Called From**:
+- Assessments: Adaptive assessments that modify parameters during run
+
+**Backend Equivalent**:
+- **SDK Command**: `sdk.variant.update(runId, newParams)`
+- **REST Endpoint**: `PATCH /api/v1/runs/{runId}/variant`
+  - Request body: `{ params }`
+  - Response: `{ variantId }`
+
+**Notes**:
+- Must be called after `startRun()`
+- Creates new variant document if params don't match existing
+- Updates run to reference new variant
+- Migration: Backend should handle variant lookup/creation
+
+---
+
+#### A.3.3 `appkit.getStorageDownloadUrl()`
+
+**Description**: Gets download URL for files in Firebase Storage (e.g., stimuli, audio files).
+
+**Parameters**:
+- `filePath: string` - Path to file in storage
+
+**Return Type**: `Promise<string>` - Download URL
+
+**Firestore Operations**: None
+**Storage Operations**:
+- **READ**: Firebase Storage `getDownloadURL(ref(storage, filePath))`
+
+**Called From**:
+- Assessments: Loading stimuli, audio, images
+
+**Backend Equivalent**:
+- **SDK Command**: `sdk.storage.getUrl(filePath)`
+- **REST Endpoint**: `GET /api/v1/storage/url?path={filePath}`
+  - Response: `{ url: string, expiresAt: string }`
+
+**Notes**:
+- Returns signed URL with expiration
+- Migration: Backend should proxy storage URLs or return signed URLs
+
+---
+
+#### A.3.4 `appkit.updateUser()`
+
+**Description**: Updates user profile data (grade, assessmentPid, metadata).
+
+**Parameters**:
+- `tasks?: string[]` - Tasks to add to user's task list
+- `variants?: string[]` - Variants to add to user's variant list
+- `assessmentPid?: string` - Assessment participant ID
+- `...userMetadata` - Additional user fields
+
+**Return Type**: `Promise<void>`
+
+**Firestore Operations**:
+- **WRITE**: `users/{roarUid}` - Update user document with provided fields
+
+**Called From**:
+- Assessments: Updating user profile during assessment
+- Dashboard: User profile management
+
+**Backend Equivalent**:
+- **SDK Command**: `sdk.user.update(userId, updates)`
+- **REST Endpoint**: `PATCH /api/v1/users/{userId}`
+  - Request body: `{ updates }`
+
+**Notes**:
+- Requires authentication
+- Migration: Standard user update endpoint
+
+---
+
+### A.4 Method Dependency Chains
+
+#### Starting an Assessment Run:
+```
+roarfirekit.startAssessment()
+  ├─> Reads: users/{uid}/assignments/{adminId}
+  ├─> Reads: tasks/{taskId}
+  ├─> Reads: tasks/{taskId}/variants/*
+  ├─> Creates: RoarAppkit instance
+  └─> Returns: appkit
+
+appkit.startRun()
+  ├─> Reads: users/{uid}
+  ├─> Creates: users/{uid}/runs/{runId}
+  ├─> Updates: users/{uid} (tasks, variants arrays)
+  └─> Sets: _started = true
+```
+
+#### Recording Trial Data:
+```
+appkit.writeTrial(trialData)
+  ├─> Requires: _started = true
+  ├─> Creates: users/{uid}/runs/{runId}/trials/{trialId}
+  ├─> Updates: users/{uid}/runs/{runId} (scores, interactions)
+  └─> Updates: users/{uid} (lastUpdated)
+```
+
+#### Completing an Assessment:
+```
+appkit.finishRun()
+  ├─> Requires: _started = true
+  ├─> Updates: users/{uid}/runs/{runId} (completed, timeFinished)
+  └─> Updates: users/{uid} (lastUpdated)
+
+roarfirekit.completeAssessment()
+  ├─> Reads: users/{uid}/assignments/{adminId}
+  ├─> Updates: users/{uid}/assignments/{adminId}/assessments[i] (completedOn)
+  └─> If all complete: Updates assignment (completed: true)
+```
+
+---
+
+### A.5 Real-time vs Request/Response Patterns
+
+**Current Implementation**: All assessment methods use request/response pattern. No real-time listeners are used for assessment data.
+
+**Potential Real-time Use Cases** (not currently implemented):
+- Live progress monitoring (admin watching student take assessment)
+- Multi-user collaborative assessments
+- Real-time leaderboards
+
+**Migration Strategy**: All methods can be migrated to REST API endpoints without requiring real-time capabilities.
+
+---
+
+### A.6 Complete REST API Endpoints for Assessment Methods
+
+| Method | Endpoint | HTTP Method | Purpose |
+|--------|----------|-------------|---------|
+| startAssessment | `/api/v1/assignments/{id}/assessments/{taskId}/start` | POST | Start assessment session |
+| startRun | `/api/v1/runs` | POST | Create run document |
+| writeTrial | `/api/v1/runs/{runId}/trials` | POST | Record trial data |
+| finishRun | `/api/v1/runs/{runId}/finish` | PATCH | Mark run complete |
+| completeAssessment | `/api/v1/assignments/{id}/assessments/{taskId}/complete` | PATCH | Complete assessment |
+| updateEngagement | `/api/v1/runs/{runId}/engagement` | PATCH | Set engagement flags |
+| updateVariant | `/api/v1/runs/{runId}/variant` | PATCH | Update variant params |
+| getStorageUrl | `/api/v1/storage/url` | GET | Get file URL |
+| updateUser | `/api/v1/users/{userId}` | PATCH | Update user data |
+| updateAssessmentRewardShown | `/api/v1/assignments/{id}/assessments/{taskId}/reward-shown` | PATCH | Mark reward shown |
+
+---
+
+### A.7 Migration Priorities for AppKit Methods
+
+**High Priority (Core Assessment Flow)**:
+1. `startRun()` - Required before any trial data
+2. `writeTrial()` - Core data collection method
+3. `finishRun()` - Essential for marking completion
+
+**Medium Priority (Engagement & Quality)**:
+4. `addInteraction()` - Important for data quality
+5. `updateEngagementFlags()` - Used for reliability marking
+
+**Low Priority (Advanced Features)**:
+6. `updateTaskParams()` - Only for adaptive assessments
+7. `validateParameters()` - Can remain client-side
+8. `getStorageDownloadUrl()` - Can use direct storage access
+9. `updateUser()` - Standard user management
+
+---
+
+### A.8 Key Backend Implementation Considerations
+
+#### Score Calculation
+- `writeTrial()` handles complex score aggregation
+- Supports subtask-based scoring (e.g., PA: FSM, LSM, DEL)
+- Default computed score: `numCorrect - numIncorrect`
+- Custom scoring via callback function
+- Backend should replicate this logic server-side
+
+#### Interaction Tracking
+- Client-side buffering of interactions
+- Batch written with trial data
+- Run-level counters incremented
+- Backend should support this pattern
+
+#### Data Flags Propagation
+- Test/demo data flags propagate from user → task → variant → run
+- Backend must handle flag inheritance correctly
+
+#### Variant Management
+- Variants identified by parameter hash
+- `updateTaskParams()` may create new variants
+- Backend should handle variant lookup/creation
+
+#### Transactions
+- Several methods use Firestore transactions for atomicity
+- Backend should maintain transactional integrity
+- Example: Score updates must be atomic with trial creation
+
+---
+
+## End of Appendix A
