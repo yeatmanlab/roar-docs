@@ -28,6 +28,8 @@
 
 ### startAssessment Method
 
+Note: startAssessment will become obsolete in the new backend SDK, because we don't use Assignments anymore. 
+
 ### Method Signature
 
 ```typescript
@@ -90,9 +92,35 @@ All task component `startTask()` functions:
 
 **SDK Command:** `StartAssessmentCommand`
 
-**REST Endpoint:** `POST /api/assessments/start`
+**We can have this endpoint to update the record to have a created_at timestamp.**
 
-**Request Payload:**
+**REST Endpoint:** `POST /runs/{userId, taskId}` // we will have to use this to update the record to have a created_at timestamp
+
+// MOVE THIS TO START RUN ENDPOINT
+
+**New Request Payload**
+NOTE: user_id and task_id are not provided in the payload, the backend computes them and will write them into the new run record
+```json
+{
+    administation_id: "uuid",
+    task_variant_id: "uuid",
+    task_version: "task_version"
+    metadata?: {  
+    }
+}
+```
+
+**New Response**
+NOTE: the backend will take care of updating the run record with a created_at timestamp
+
+```json
+{
+    run_id: "uuid"
+}
+// trigger a created_at updated_at completed_at timestamp update on the row
+```
+
+<!-- **Request Payload:**
 ```json
 {
   "adminId": "string",
@@ -122,7 +150,7 @@ All task component `startTask()` functions:
   "sessionToken": "string",
   "expiresAt": "ISO8601"
 }
-```
+``` -->
 ---
 
 ### appKit Object Structure
@@ -762,7 +790,13 @@ This appendix provides detailed documentation of the lower-level assessment meth
 
 ---
 
-#### A.1.3 `appkit.finishRun()`
+#### A.1.3 `appkit.finishRun()` // becomes a patch request
+
+// endpoint: PATCH /runs/{runId}
+
+// request body: { completed: true, metadata?: { [key: string]: unknown } }
+
+// response: { }
 
 **Description**: Marks a run as completed in Firestore. Called when assessment ends.
 
