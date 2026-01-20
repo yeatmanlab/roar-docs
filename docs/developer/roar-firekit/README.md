@@ -108,8 +108,16 @@ Dashboard task pages’ `startTask()` flows (Task*.vue), e.g.:
 
   ```json
   {
-    "type": "run_metadata",
+    "type": "start",
     "metadata": {}
+  }
+  ```
+
+  **Response**
+  ```json
+  {
+    "run_id": "uuid",
+    "started_at": "server_timestamp"
   }
   ```
 ---
@@ -158,13 +166,11 @@ Dashboard task pages’ `startTask()` flows (Task*.vue), e.g.:
 ```
 ---
 
-## 4) `appkit.abortRun()`
-
-// ASK
+## 4) appkit.abortRun()
 
 ### Status
-**OPTIONAL / MAYBE DEPRECATE**  
-Keep client-side guard, and optionally log a server event for analytics/debugging.
+**DEPRECATE**  
+The function is listed on the apps but is not used.
 
 ### Method name
 `appkit.abortRun() : void`
@@ -179,32 +185,11 @@ None
 ### Return type
 `void`
 
-### Backend equivalent (optional)
-**SDK:** `sdk.runs.events.abort(runId, { reason })`  
-**REST:** `POST /v1/runs/{run_id}/events`
-
-**Request**
-```json
-{
-  "type": "abort",
-  "metadata": {
-    "reason": "user_exit|error|timeout"
-  }
-}
-```
-
-**Response**
-```json
-{ "ok": true }
-```
-
 ---
 
 # Trial & Interaction Recording
 
 ## 5) appkit.writeTrial(trialData, computedScoreCallback?)
-
-// ASK
 
 ### Status
 **MIGRATE** (core of the measurement pipeline)
@@ -236,7 +221,7 @@ None
 
 ### Backend equivalent
 **SDK:** `sdk.runs.events.trial(runId, payload)`  
-**REST:** `POST /v1/runs/{run_id}/events` // ASK if trials should also be considered events
+**REST:** `POST /v1/runs/{run_id}/events`
 
 **Request**
 ```json
@@ -258,11 +243,7 @@ None
 **Response**
 ```json
 {
-  "trial_id": "uuid",
-  "updated_run": {
-    "scores": { "raw": {}, "computed": {} },
-    "interaction_counts": {}
-  }
+  "status": "success | ok"
 }
 ```
 
@@ -342,7 +323,7 @@ None directly; send buffered interactions with the **trial event**.
 
 **Response**
 ```json
-{ "ok": true }
+{ "status": "success | ok" }
 ```
 
 ### Notes to ASK
@@ -354,12 +335,17 @@ None directly; send buffered interactions with the **trial event**.
 
 ## 8) appkit.validateParameters(parameterSchema)
 
+### Status
+**DEPRECATE**
+We will use the variantId to update the parameters.
+
 ### Backend equivalent
 **SDK:** `sdk.tasks.validateParameters(taskId, params)`
 **REST:** `POST /v1/tasks/{task_id}/validate`
 
 ### Status
-**CLIENT-SIDE / DEPRECATE**
+**DEPRECATE**
+We will use the variantId to validate the parameters. 
 
 ### Method name
 `appkit.validateParameters(schema) : Promise<void>`
@@ -368,13 +354,13 @@ None directly; send buffered interactions with the **trial event**.
 - Validates variant params
 - Throws on validation error
 
-// ASK ABOUT PAYLOAD AND RESPONSE
 ---
 
 ## 9) appkit.updateTaskParams(newParams)
 
 ### Status
-**MIGRATE (ask if needed)**
+**DEPRECATE**
+We will use the variantId to update the parameters.
 
 ### Method name
 `appkit.updateTaskParams(newParams) : Promise<void>`
@@ -383,27 +369,6 @@ None directly; send buffered interactions with the **trial event**.
 - Finds/creates a new variant for updated params
 - Updates run to reference new variant id
 - Updates user task/variant tracking
-
-### Backend equivalent
-**SDK:** `sdk.runs.events.variantUpdate(runId, { params })`  
-**REST:** `POST /v1/tasks/{task_id}/variants/{variant_id}/update`
-
-**Request**
-```json
-{
-  "params": { "difficulty": 2 }
-}
-```
-
-**Response**
-```json
-{
-  "task_variant_id": "uuid"
-}
-```
-
-### Notes
-- Backend should own variant lookup/creation rules.
 
 ---
 
@@ -423,16 +388,46 @@ None directly; send buffered interactions with the **trial event**.
 # User/Profile Updates
 
 ## 11) appkit.updateUser(...)
-// ASK
 
 ### Status
-**CURRENTLY LIVES IN APPKIT AND IN USER.TS SO I DON'T THINK IS IS RELATED TO THE ASSESSMENT SDK**
+**MIGRATE**
+We currently have a class `RoarAppUser` in user.ts and we use it on appkit.ts to update the user metadata.
+It is currently being used in ROAR Apps (SWR, SRE, PA, ROAM-apps, COMP-apps, etc.)
 
 ### Method name
 `appkit.updateUser(updates) : Promise<void>`
 
 ### What it does (today)
 - Updates user metadata (sometimes in multiple Firebase projects)
+
+### Backend equivalent
+**SDK:** `sdk.runs.events.reliability(runId, payload)`  
+**REST:** `POST /v1/runs/{run_id}/events`
+
+export interface UserUpdateInput {
+  /** These are keys that all users can update */
+  tasks?: string[];
+  variants?: string[];
+  /** And these are keys that only guest users will be able to create/update */
+  assessmentPid?: string;
+  [key: string]: unknown;
+}
+
+**Request**
+```json
+{
+  "type": "update_user",
+  "tasks?: string[]",
+  "variants?: string[]",
+  "assessmentPid?: string"
+}
+```
+
+**Response**
+```json
+    { "status": "success | ok" }
+```
+
 ---
 
 # Parent Registration Verification
@@ -502,21 +497,21 @@ Real-time listeners (claims/token) are **out of scope** for the assessment SDK.
 
 | Method | Decision |
 |---|---|
-| `roarfirekit.startAssessment` | DEPRECATE NEVER USED |
-| `roarfirekit.completeAssessment` | DEPRECATE NEVER USED |
-| `roarfirekit.updateAssessmentRewardShown` | DEPRECATE NEVER USED |
-| `roarfirekit.startAssignment` | DEPRECATE NEVER USED |
-| `roarfirekit.completeAssignment` | DEPRECATE NEVER USED |
+| `roarfirekit.startAssessment` | DEPRECATE IN THE NEW MODEL |
+| `roarfirekit.completeAssessment` | DEPRECATE IN THE NEW MODEL |
+| `roarfirekit.updateAssessmentRewardShown` | DEPRECATE IN THE NEW MODEL |
+| `roarfirekit.startAssignment` | DEPRECATE IN THE NEW MODEL |
+| `roarfirekit.completeAssignment` | DEPRECATE IN THE NEW MODEL |
 | `roarfirekit.verifyParentRegistration` | NOT RELATED TO ASSESSMENT SDK |
 | `appkit.startRun` | MIGRATE → `POST /v1/runs` |
 | `appkit.writeTrial` | MIGRATE → `events: trial` |
-| `appkit.addInteraction` | CLIENT-SIDE MANAGED BY WRITE TRIAL |
+| `appkit.addInteraction` | MANAGED BY WRITE TRIAL |
 | `appkit.finishRun` | MIGRATE → `events: complete` |
-| `appkit.abortRun` | OPTIONAL → `events: abort` |
+| `appkit.abortRun` | NOT USED |
 | `appkit.updateEngagementFlags` | MIGRATE → `events: reliability` |
-| `appkit.validateParameters` | ASK |
-| `appkit.updateTaskParams` | MIGRATE (if needed) → `events: variant_update` |
+| `appkit.validateParameters` | DEPRECATE IN THE NEW MODEL |
+| `appkit.updateTaskParams` | DEPRECATE IN THE NEW MODEL |
 | `appkit.getStorageDownloadUrl` | NOT USED |
-| `appkit.updateUser` | NOT RELATED TO ASSESSMENT SDK |
+| `appkit.updateUser` | MIGRATE |
 
 ---
