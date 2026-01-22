@@ -18,18 +18,42 @@ This matches the current backend direction from Adam: `POST /v1/runs/{run_id}/ev
 
 ---
 
-## Table of contents
+## Table of contents (by function / method)
 
-1. [Assessment Initialization](#assessment-initialization)
-2. [Run Lifecycle](#run-lifecycle)
-3. [Trial & Interaction Recording](#trial--interaction-recording)
-4. [Engagement & Reliability](#engagement--reliability)
-5. [Task/Variant Utilities](#taskvariant-utilities)
-6. [User/Profile Updates](#userprofile-updates)
-7. [Parent Registration Verification](#parent-registration-verification)
-8. [Deprecated Assignment Methods](#deprecated-assignment-methods)
-9. [Dependencies Between Methods](#dependencies-between-methods)
-10. [Real-time vs Request/Response](#real-time-vs-requestresponse)
+### Assessment & AppKit Initialization
+1. [`roarfirekit.startAssessment`](#1-roarfirekitstartassessmentadminid-taskid-version-launchid)
+2. [`appkit.startRun`](#2-appkitstartrunadditionalrunmetadata)
+3. [`appkit.finishRun`](#3-appkitfinishrunfinishingmetadata)
+4. [`appkit.abortRun`](#4-appkitabortrun)
+
+### Trial & Interaction Recording
+5. [`appkit.writeTrial`](#5-appkitwritetrialtrialdata-computedscorecallback)
+6. [`appkit.addInteraction`](#6-appkitaddinteractioninteraction)
+
+### Engagement & Reliability
+7. [`appkit.updateEngagementFlags`](#7-appkitupdateengagementflagsflagnames-markasreliable-reliablebyblock)
+
+### Task / Variant Utilities
+8. [`appkit.validateParameters`](#8-appkitvalidateparametersparameterschema)
+9. [`appkit.updateTaskParams`](#9-appkitupdatetaskparamsnewparams)
+10. [`appkit.getStorageDownloadUrl`](#10-appkitgetstoragedownloadurlfilepath)
+
+### User & Profile Updates
+11. [`appkit.updateUser`](#11-appkitupdateuser)
+
+### Parent / Non-Assessment Utilities
+12. [`roarfirekit.verifyParentRegistration`](#12-roarfirekitverifyparentregistration)
+
+### Deprecated Assignment APIs
+13. [`roarfirekit.startAssignment`](#13-roarfirekitstartassignmentadministrationid)
+14. [`roarfirekit.completeAssignment`](#14-roarfirekitcompleteassignmentadministrationid)
+15. [`roarfirekit.updateAssessmentRewardShown`](#15-roarfirekitupdateassessmentrewardshownadministrationid-taskid)
+
+### Architecture & Flow
+16. [Dependencies Between Methods](#dependencies-between-methods)
+17. [Real-time vs Request/Response](#real-time-vs-requestresponse)
+18. [Quick Decision Matrix](#quick-decision-matrix)
+
 
 ---
 
@@ -435,7 +459,7 @@ export interface UserUpdateInput {
 ## 12) roarfirekit.verifyParentRegistration()
 
 ### Status
-**ASK, I DONT THINK THIS IS RELATED TO THE ASSESSMENT SDK**
+**NOT RELATED TO THE ASSESSMENT SDK**
 
 ### Method name
 `roarfirekit.verifyParentRegistration() : Promise<boolean | object>`
