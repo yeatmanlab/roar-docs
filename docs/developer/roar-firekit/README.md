@@ -128,12 +128,15 @@ Dashboard task pages’ `startTask()` flows (Task*.vue), e.g.:
 
 **When using a type as suggested**
 - **SDK:** `sdk.runs.events.metadata(runId, metadata)`
-- **REST:** `POST /v1/runs/{run_id}/events`
+- **REST:** `POST /v1/runs/`
 
   ```json
   {
     "type": "start",
-    "metadata": {}
+    "variant_id": "variant_id",
+    "task_version": "task_version",
+    "administration_id?": "administration_id",
+    "metadata?": {}
   }
   ```
 
@@ -141,12 +144,11 @@ Dashboard task pages’ `startTask()` flows (Task*.vue), e.g.:
   ```json
   {
     "run_id": "uuid",
-    "started_at": "server_timestamp"
   }
   ```
 ---
 
-## 3) `appkit.finishRun(finishingMetaData?)`
+## 3) appkit.finishRun(finishingMetaData?)
 
 ### Status
 **MIGRATE** (run completion is a backend event; backend sets timestamp)
@@ -184,8 +186,7 @@ Dashboard task pages’ `startTask()` flows (Task*.vue), e.g.:
 **Response**
 ```json
 {
-  "run_id": "uuid",
-  "completed_at": "server_timestamp"
+  "status": "200"
 }
 ```
 ---
@@ -267,7 +268,7 @@ None
 **Response**
 ```json
 {
-  "status": "success | ok"
+  "status": "200"
 }
 ```
 
@@ -347,7 +348,7 @@ None directly; send buffered interactions with the **trial event**.
 
 **Response**
 ```json
-{ "status": "success | ok" }
+{ "status": "200" }
 ```
 
 ### Notes to ASK
@@ -425,7 +426,7 @@ It is currently being used in ROAR Apps (SWR, SRE, PA, ROAM-apps, COMP-apps, etc
 - Updates user metadata (sometimes in multiple Firebase projects)
 
 ### Backend equivalent
-**SDK:** `sdk.runs.events.reliability(runId, payload)`  
+**SDK:** `sdk.runs.events.reliability(runId)`  
 **REST:** `POST /v1/runs/{run_id}/events`
 
 export interface UserUpdateInput {
@@ -440,16 +441,14 @@ export interface UserUpdateInput {
 **Request**
 ```json
 {
-  "type": "update_user",
-  "tasks?: string[]",
-  "variants?: string[]",
-  "assessmentPid?: string"
+  "type": "update_run_metadata",
+  "metadata": {},
 }
 ```
 
 **Response**
 ```json
-    { "status": "success | ok" }
+    { "status": "200" }
 ```
 
 ---
