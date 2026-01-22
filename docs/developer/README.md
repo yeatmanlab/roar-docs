@@ -51,6 +51,9 @@ actions:
   - text: Clowder Implementation
     link: /developer/clowder-implementation/
     type: secondary
+  - text: RoarFirekit
+    link: /developer/roar-firekit/
+    type: secondary
 ---
 
 <p style="text-align: center;">This section provides technical documentation for developers contributing to ROAR. To suggest edits, please open a pull request on the <a href="https://github.com/yeatmanlab/roar-docs" target="_blank">GitHub repository</a>.</p>
