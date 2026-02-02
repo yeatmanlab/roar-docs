@@ -6,6 +6,9 @@ actions:
   - text: Tech Specs
     link: /developer/tech-specs/
     type: secondary
+  - text: Data Flow Diagram
+    link: /developer/data-flow-diagram/
+    type: secondary
   - text: Databases
     link: /developer/databases/
     type: secondary
