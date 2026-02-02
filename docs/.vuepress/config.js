@@ -28,6 +28,7 @@ export default defineUserConfig({
         collapsible: true,
         children: [
           { text: "Tech Specs", link: "/developer/tech-specs/" },
+          { text: "Data Flow Diagram", link: "/developer/data-flow-diagram/" },
           { text: "Databases", link: "/developer/databases/" },
           { text: "BigQuery", link: "/developer/bigquery/" },
           { text: "Workflows", link: "/developer/workflows/" },
@@ -96,6 +97,12 @@ export default defineUserConfig({
           link: "/developer/tech-specs/",
           collapsible: true,
           children: getChildren("./docs/developer/tech-specs"),
+        },
+        {
+          text: "Data Flow Diagram",
+          link: "/developer/data-flow-diagram/",
+          collapsible: true,
+          children: getChildren("./docs/developer/data-flow-diagram"),
         },
         {
           text: "Databases",
