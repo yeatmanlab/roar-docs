@@ -65,6 +65,7 @@ export default defineUserConfig({
             link: "/developer/logging-and-querying/",
           },
           { text: "Emulation", link: "/developer/emulation/" },
+          { text: "ROAR Firekit", link: "/developer/roar-firekit/" },
         ],
       },
       {
@@ -333,6 +334,12 @@ export default defineUserConfig({
           link: "/developer/clowder-implementation/",
           collapsible: true,
           children: getChildren("./docs/developer/clowder-implementation"),
+        },
+        {
+          text: "ROAR Firekit",
+          link: "/developer/roar-firekit/",
+          collapsible: true,
+          children: getChildren("./docs/developer/roar-firekit"),
         },
       ],
       "/researcher/": [
