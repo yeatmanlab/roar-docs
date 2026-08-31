@@ -75,6 +75,10 @@ export default defineUserConfig({
           { text: "Data Organization", link: "/researcher/data-organization/" },
           { text: "Data Requests", link: "/researcher/data-requests/" },
           { text: "Data Cleaning", link: "/researcher/data-cleaning/" },
+          {
+            text: "Assessment Environment",
+            link: "/researcher/assessment-environment/",
+          },
         ],
       },
       {
@@ -359,6 +363,12 @@ export default defineUserConfig({
           link: "/researcher/data-requests/",
           collapsible: true,
           children: getChildren("./docs/researcher/data-requests"),
+        },
+        {
+          text: "Assessment Environment",
+          link: "/researcher/assessment-environment/",
+          collapsible: true,
+          children: getChildren("./docs/researcher/assessment-environment"),
         },
       ],
       "/process/": [

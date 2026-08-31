@@ -15,6 +15,9 @@ actions:
   - text: Data Cleaning 
     link: /researcher/data-cleaning/
     type: secondary
+  - text: Assessment Environment
+    link: /researcher/assessment-environment/
+    type: secondary
 ---
 
 This section provides technical documentation for researchers contributing to ROAR. To suggest edits, please open a pull request on the [GitHub repository][link_roar_docs_github].
