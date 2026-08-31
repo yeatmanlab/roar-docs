@@ -58,7 +58,7 @@ You will also need:
 Run this once, from the directory of the assessment you care about:
 
 ```bash
-cd apps/assessments/roar-pa
+cd apps/assessments/roar-swr
 npm run setup
 ```
 
@@ -172,13 +172,12 @@ Each assessment reads a local `taskVariantParameters.json` to decide which varia
 ```json
 [
   {
-    "variantName": "English-Fixed-v3",
+    "variantName": "English-v7",
     "params": {
-      "language": "en",
-      "scoringVersion": 3,
-      "userMode": "fixed",
-      "isAdaptive": false,
-      "itemSelect": "fixed",
+      "lng": "en",
+      "scoringVersion": 7,
+      "userMode": "shortAdaptive",
+      "consent": true,
       "skipInstructions": true
     }
   }
@@ -186,6 +185,8 @@ Each assessment reads a local `taskVariantParameters.json` to decide which varia
 ```
 
 The committed `taskVariantParameters.example.json` beside it documents **every** parameter with its valid values and sensible defaults. Start there.
+
+For SWR, `lng` does something extra: it decides **which task** the variant belongs to. English and Spanish are separate tasks, not one task with a language setting — which is why SWR's example file holds five entries, one per language.
 
 Validation happens when the variant is seeded, and a missing file, an unknown parameter key, or an invalid value fails with an error that **names the offending key**. Variants are matched by name, so seeding is idempotent and additive: an existing variant is skipped and a new entry is added alongside it.
 
@@ -223,9 +224,11 @@ The picker is scoped to the task(s) this assessment's dev server serves, so even
 With no `variantId` in the URL, the assessment resolves its **declared default variant** — a per-task name in the assessment's `serve/serve.js`:
 
 ```javascript
-// apps/assessments/roar-pa/serve/serve.js
+// apps/assessments/roar-swr/serve/serve.js — one entry per language task
 const DEFAULT_VARIANT_NAMES = {
-  [pa.PA_TASK_ID]: "English-Fixed-v3",
+  [SWR_LANGUAGES.en.taskId]: "English-v7",
+  [SWR_LANGUAGES.es.taskId]: "Spanish-v1",
+  // …it, pt, de
 };
 ```
 
@@ -363,7 +366,7 @@ FROM app_assessment_fdw.runs r
 JOIN app.users u ON u.id = r.user_id
 JOIN app.task_variants tv ON tv.id = r.task_variant_id
 JOIN app.tasks t ON t.id = tv.task_id
-WHERE t.slug = 'pa'
+WHERE t.slug = 'swr'          -- English only; LIKE 'swr%' for all five
   AND r.deleted_at IS NULL
 ORDER BY r.created_at DESC;
 ```
@@ -392,7 +395,7 @@ Records are soft-deleted rather than removed, so include `AND deleted_at IS NULL
 
 ### Two things that silently mislead
 
-**Task slugs are not always a single value.** Some assessments treat language as a separate task (`swr` and `swr-es`), and multi-task assessments have several slugs. Matching with `=` gives a clean-looking result set that is quietly incomplete:
+**Task slugs are not always a single value.** Some assessments treat language as a separate task — SWR is five tasks, not one (`swr`, `swr-es`, `swr-it`, `swr-pt`, `swr-de`) — and multi-task assessments have several slugs. Matching with `=` gives a clean-looking result set that is quietly incomplete:
 
 ```sql
 WHERE t.slug = 'swr'      -- misses every Spanish run, silently
@@ -448,7 +451,7 @@ Trials, scores, and interactions all cascade from `runs`, so this one statement 
 The stack is shared and persistent, so moving from one assessment to another tears nothing down:
 
 1. **Ctrl+C** — frees port 8000; the stack and your data stay up.
-2. **`cd ../roar-swr`** (or whichever assessment you want).
+2. **`cd ../roar-pa`** (or whichever assessment you want).
 3. **`npm run seed:tasks`** — first visit only. Create its config first if you never have, by copying its example file.
 4. **`npm start`** — same stack, same database.
 

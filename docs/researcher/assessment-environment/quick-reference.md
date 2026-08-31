@@ -1,6 +1,6 @@
 # Quick Reference
 
-Lookup only — for what any of it means, see the [Assessment Environment guide](./README.md). Run every command from the assessment's directory, e.g. `apps/assessments/roar-pa/`.
+Lookup only — for what any of it means, see the [Assessment Environment guide](./README.md). Run every command from the assessment's directory, e.g. `apps/assessments/roar-swr/`.
 
 ## Commands
 
@@ -88,11 +88,12 @@ FROM app_assessment_fdw.runs r
 JOIN app.users u ON u.id = r.user_id
 JOIN app.task_variants tv ON tv.id = r.task_variant_id
 JOIN app.tasks t ON t.id = tv.task_id
-WHERE t.slug = 'pa' AND r.deleted_at IS NULL
+WHERE t.slug = 'swr'   -- English only; LIKE 'swr%' for all five
+  AND r.deleted_at IS NULL
 ORDER BY r.created_at DESC;
 ```
 
-Anonymous runs have no name — `assessment_pid` is the identifier. Language-as-task assessments use suffixed slugs (`swr`, `swr-es`), so match with `LIKE 'swr%'` or list them; a single `=` silently misses runs.
+Anonymous runs have no name — `assessment_pid` is the identifier. Language-as-task assessments use suffixed slugs — SWR is five tasks (`swr`, `swr-es`, `swr-it`, `swr-pt`, `swr-de`) — so match with `LIKE 'swr%'` or list them; a single `=` silently misses runs.
 
 ### Trials for one run · `roar_assessment`
 
